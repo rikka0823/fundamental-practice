@@ -1,6 +1,8 @@
 package weHelpCoding;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 // https://wehelp.tw/coding
@@ -71,22 +73,205 @@ public class WeHelpCoding {
         System.out.println(Arrays.toString(fill(new String[]{"no empty"}, "word")));
          */
 
+        /*
         // 10. 用前一個有效值填滿空字串
         System.out.println(Arrays.toString(ffill(new String[]{"", "a", "", "", "c"})));
         System.out.println(Arrays.toString(ffill(new String[]{"a", "b", "", "c", ""})));
         System.out.println(Arrays.toString(ffill(new String[]{"", "", "a"})));
+         */
+
+        /*
+        // 11. 找到目標數字所在的索引位置
+        System.out.println(findIndex(new int[]{3, 2, 1, 5, 10}, 1));
+        System.out.println(findIndex(new int[]{5, 2, 3}, 4));
+        System.out.println(findIndex(new int[]{-5, 2, -5, 1, 3}, -5));
+         */
+
+        /*
+        // 12. 找到目標數字所在的多個索引位置
+        System.out.println(Arrays.toString(findIndexes(new int[]{3, 2, 1, 5, 10}, 1)));
+        System.out.println(Arrays.toString(findIndexes(new int[]{5, 2, 3}, 4)));
+        System.out.println(Arrays.toString(findIndexes(new int[]{-5, 2, -5, 1, -5}, -5)));
+         */
+
+        /*
+        // 13. 翻轉一個字串
+        System.out.println(reverseString("Hello"));
+        System.out.println(reverseString("abcd"));
+        System.out.println(reverseString("Good Job"));
+         */
+
+        /*
+        // 14. 整數陣列 / 列表中，兩兩相乘的最大值
+        System.out.println(findMaxProduct(new int[]{2, -1, 0}));
+        System.out.println(findMaxProduct(new int[]{-2, -10, 1, 2}));
+        System.out.println(findMaxProduct(new int[]{-3, 1, 9, 4, 5}));
+         */
+
+        // 15. 檢查輸入的密碼是否合乎規範
+        System.out.println(checkPassword("abcD"));
+        System.out.println(checkPassword("aBcdefg8$"));
+        System.out.println(checkPassword("12345678"));
+    }
+
+    /**
+     * 15. 檢查輸入的密碼是否合乎規範
+     * 輸入一個字串代表密碼，你的函式能檢查輸入的字串是否合乎以下規範：
+     *
+     * 只能包含大小寫英文字母、數字、以及以下特殊符號 ! @ # $ %
+     * 至少要包含一個大寫和一個小寫字母
+     * 至少要包含一個數字
+     * 至少要包含一個特殊符號
+     * 必須大於等於 8 個字元、小於等於 16 個字元。
+     * 若輸入的密碼符合規範，回傳真值，不符合規範，則回傳假值。
+     *
+     * 輸入範例一：abcD
+     * 回傳：假
+     *
+     * 輸入範例二：aBcdefg8$
+     * 回傳：真
+     *
+     * 輸入範例一：12345678
+     * 回傳：假
+     */
+    public static boolean checkPassword(String str) {
+        String regex = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%])[a-zA-Z\\d!@#$%]{8,16}";
+
+        if (!str.matches(regex)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 14. 整數陣列 / 列表中，兩兩相乘的最大值
+     * 輸入一個至少包含兩個整數的陣列 / 列表，其中可能包含重複的數字if，你的函式能算出並回傳兩兩數字相乘後最大的乘積。
+     *
+     * 輸入範例一：[2, -1, 0]
+     * 回傳：0
+     *
+     * 輸入範例二：[-2, -10, 1, 2]
+     * 回傳：20
+     *
+     * 輸入範例一：[3, 1, 9, 4, 5]
+     * 回傳：45
+     */
+    public static int findMaxProduct(int[] nums) {
+        int max1 = Integer.MIN_VALUE;
+        int max2 = Integer.MIN_VALUE;
+        int min1 = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
+
+        for (int num : nums) {
+            if (num > max1) {
+                max2 = max1;
+                max1 = num;
+            }
+            if (max1 > num && num > max2) {
+                max2 = num;
+            }
+
+            if (num < min1) {
+                min2 = min1;
+                min1 = num;
+            }
+            if (min1 < num && num < min2) {
+                min2 = num;
+            }
+        }
+
+        return Math.max(max1 * max2, min1 * min2);
+    }
+
+    /**
+     * 13. 翻轉一個字串
+     * 輸入一個字串，你的函式能夠翻轉這個字串。
+     *
+     * 輸入範例一：Hello
+     * 回傳：olleH
+     *
+     * 輸入範例二：abcd
+     * 回傳：dcba
+     *
+     * 輸入範例一：Good Job
+     * 回傳：boJ dooG
+     */
+    public static String reverseString(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        return sb.reverse().toString();
+    }
+
+    /**
+     * 12. 找到目標數字所在的多個索引位置
+     * 輸入一個整數陣列 / 列表和要找的目標數字，你的函式能找到並回傳目標數字所在的零到多個索引位置。
+     * <p>
+     * 回傳包含多個索引位置的陣列 / 列表，由小到大排列，若目標數字不存在於陣列 / 列表中，回傳空陣列 / 空列表。
+     * <p>
+     * 輸入範例一：[3, 2, 1, 5, 10]、目標數字 1
+     * 回傳：[2]
+     * <p>
+     * 輸入範例二：[5, 2, 3]、目標數字 4
+     * 回傳：[]
+     * <p>
+     * 輸入範例一：[-5, 2, -5, 1, -5]，目標數字 -5
+     * 回傳：[0, 2, 4]
+     */
+    public static int[] findIndexes(int[] nums, int target) {
+        List<Integer> indexes = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                indexes.add(i);
+            }
+        }
+
+        if (indexes.isEmpty()) {
+            return new int[]{};
+        }
+
+        int[] result = new int[indexes.size()];
+        for (int i = 0; i < indexes.size(); i++) {
+            result[i] = indexes.get(i);
+        }
+
+        return result;
+    }
+
+    /**
+     * 11. 找到目標數字所在的索引位置
+     * 輸入一個整數陣列 / 列表和要找的目標數字，你的函式能找到並回傳目標數字所在的索引位置。
+     * <p>
+     * 若該數字不存在於陣列 / 列表中，回傳 -1；若該數字重複出現多次，以第一個出現的位置為準。
+     * <p>
+     * 輸入範例一：[3, 2, 1, 5, 10]、目標數字 1
+     * 回傳：2
+     * <p>
+     * 輸入範例二：[5, 2, 3]、目標數字 4
+     * 回傳：-1
+     * <p>
+     * 輸入範例一：[-5, 2, -5, 1, 3]，目標數字 -5
+     * 回傳：0
+     */
+    public static int findIndex(int[] nums, int target) {
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
      * 10. 用前一個有效值填滿空字串
      * 輸入一個可能包含空字串的字串陣列 / 列表，你的函式能把陣列 / 列表中的空字串用前一個有效值 ( 非空字串 ) 取代。若沒有前一個有效值，則保持空字串不變。
-     *
+     * <p>
      * 輸入範例一：["", "a", "", "", "c"]
      * 回傳：["", "a", "a", "a", "c"]
-     *
+     * <p>
      * 輸入範例二：["a", "b", "", "c", ""]
      * 回傳：["a", "b", "b", "c", "c"]
-     *
+     * <p>
      * 輸入範例一：["", "", "a"]
      * 回傳：["", "", "a"]
      */
@@ -114,13 +299,13 @@ public class WeHelpCoding {
     /**
      * 9. 用預設值填滿空字串
      * 輸入一個可能包含空字串的字串陣列 / 列表，以及一個預設值，你的函式能把陣列 / 列表中的空字串用預設值取代。
-     *
+     * <p>
      * 輸入範例一：["Hello", "World", ""]、以及預設值 "test"
      * 回傳：["Hello", "World", "test"]
-     *
+     * <p>
      * 輸入範例二：["", "ok", ""]、以及預設值 "failed"
      * 回傳：["failed", "ok", "failed"]
-     *
+     * <p>
      * 輸入範例一：["no empty"]、以及預設值 "word"
      * 回傳：["no empty"]
      */
@@ -137,13 +322,13 @@ public class WeHelpCoding {
     /**
      * 8. 計算等差數列的總和
      * 輸入等差數列中最小的整數、最大的整數、以及公差，計算數列中每個數字的總和。可以假設輸入的最大數字一定大於最小數字。
-     *
+     * <p>
      * 輸入範例一：最小 2、最大 8、公差 2，計算 2+4+6+8 的總和
      * 回傳：20
-     *
+     * <p>
      * 輸入範例二：最小 -2、最大 3、公差 1，計算 (-2)+(-1)+0+1+2+3 的總和
      * 回傳：3
-     *
+     * <p>
      * 輸入範例一：最小 10、最大 14、公差 3，計算 10+13 的總和
      * 回傳：23
      */
@@ -168,13 +353,13 @@ public class WeHelpCoding {
     /**
      * 7. 將整數陣列 / 列表，轉換為逗號隔開的字串
      * 輸入一個整數陣列，你的函式能將其轉換為逗號隔開的單一字串。
-     *
+     * <p>
      * 輸入範例一：[3, 5, -4, 2]
      * 回傳：3,5,-4,2
-     *
+     * <p>
      * 輸入範例二：[]
      * 回傳：空字串
-     *
+     * <p>
      * 輸入範例一：[1000]
      * 回傳：1000
      */
@@ -187,7 +372,7 @@ public class WeHelpCoding {
 ////            }
 ////
 ////            if (i == nums.length -1) {
-////                sb.append(nums[nums.length - 1]);
+////                sb.append(nums[nums.length-1]);
 ////            }
 //
 //            sb.append(nums[i]);
@@ -212,13 +397,13 @@ public class WeHelpCoding {
     /**
      * 6. 找到最小公倍數
      * 輸入兩個正整數，你的函式能找到並回傳這兩個正整數的最小公倍數。
-     *
+     * <p>
      * 輸入範例一：6 和 4
      * 回傳：12
-     *
+     * <p>
      * 輸入範例二：5 和 16
      * 回傳：80
-     *
+     * <p>
      * 輸入範例一：12 和 6
      * 回傳：12
      */
@@ -260,13 +445,13 @@ public class WeHelpCoding {
     /**
      * 5. 找到最大公因數
      * 輸入兩個正整數，你的函式能找到並回傳這兩個正整數的最大公因數。
-     *
+     * <p>
      * 輸入範例一：6 和 4
      * 回傳：2
-     *
+     * <p>
      * 輸入範例二：5 和 16
      * 回傳：1
-     *
+     * <p>
      * 輸入範例一：12 和 6
      * 回傳：6
      */
@@ -302,13 +487,13 @@ public class WeHelpCoding {
     /**
      * 4. 找到第二大的整數
      * 輸入包含至少兩個不同整數的陣列 / 列表，找到並回傳其中第二大的整數。
-     *
+     * <p>
      * 輸入範例一：[1, 3, 3, 2, 5, -2]
      * 回傳：3
-     *
+     * <p>
      * 輸入範例二：[-5, -10, -8, 1, -1]
      * 回傳：-1
-     *
+     * <p>
      * 輸入範例一：[0, 2]
      * 回傳：0
      */
@@ -336,13 +521,13 @@ public class WeHelpCoding {
     /**
      * 3. 找到最大的整數
      * 輸入包含至少一個整數的陣列 / 列表，找到並回傳其中最大的整數。
-     *
+     * <p>
      * 輸入範例一：[1, 3, 3, 2, 5, -2]
      * 回傳：5
-     *
+     * <p>
      * 輸入範例二：[-5, -10, -8, -1, -2]
      * 回傳：-1
-     *
+     * <p>
      * 輸入範例一：[0, 2, 2]
      * 回傳：2
      */
@@ -367,18 +552,18 @@ public class WeHelpCoding {
     /**
      * 2. 檢查輸入的領取金額是否合乎規範
      * 輸入一個正整數代表想要從 ATM 機領取的金額，你的函式能檢查輸入的金額是否合乎以下規範：
-     *
+     * <p>
      * 輸入的金額必須是 100 的倍數。
      * 輸入的金額必須大於等於 100。
      * 輸入的金額必須小於等於 100000。
      * 若輸入的金額符合規範，回傳真值，不符合規範，則回傳假值。
-     *
+     * <p>
      * 輸入範例：30
      * 回傳：假
-     *
+     * <p>
      * 輸入範例：2000
      * 回傳：真
-     *
+     * <p>
      * 輸入範例：6150
      * 回傳：假
      */
@@ -393,19 +578,19 @@ public class WeHelpCoding {
 //
 //        return true;
 
-         return amount >= 100 && amount <= 100000 && amount % 100 == 0;
+        return amount >= 100 && amount <= 100000 && amount % 100 == 0;
     }
 
     /**
      * 1. 檢查字串是否以 https:// 開頭
      * 輸入一個字串，你的函式能檢查該字串是否以 https:// 開頭，不考慮大小寫。若是以 https:// 開頭，回傳真值，否則回傳假值。
-     *
+     * <p>
      * 輸入範例一：https://test.com/
      * 回傳：真
-     *
+     * <p>
      * 輸入範例二：test.com
      * 回傳：假
-     *
+     * <p>
      * 輸入範例一：HTTPs://test.com/
      * 回傳：真
      */
@@ -414,6 +599,6 @@ public class WeHelpCoding {
             return false;
         }
 
-       return str.toLowerCase().startsWith("https://");
+        return str.toLowerCase().startsWith("https://");
     }
 }
