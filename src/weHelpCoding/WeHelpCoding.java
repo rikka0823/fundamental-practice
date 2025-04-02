@@ -108,29 +108,232 @@ public class WeHelpCoding {
         System.out.println(findMaxProduct(new int[]{-3, 1, 9, 4, 5}));
          */
 
+        /*
         // 15. 檢查輸入的密碼是否合乎規範
         System.out.println(checkPassword("abcD"));
         System.out.println(checkPassword("aBcdefg8$"));
         System.out.println(checkPassword("12345678"));
+         */
+
+        /*
+        // 16. 偶數測試
+        System.out.println(checkEven(0));
+        System.out.println(checkEven(-7));
+        System.out.println(checkEven(102));
+         */
+
+        /*
+        // 17. 質數測試
+        System.out.println(checkPrime(1));
+        System.out.println(checkPrime(2));
+        System.out.println(checkPrime(75));
+         */
+
+        /*
+        // 18. 將數字用固定小數位數的格式輸出
+        System.out.println(formatFloat(0));
+        System.out.println(formatFloat(5.4658));
+        System.out.println(formatFloat(-3.123));
+        System.out.println(formatFloat(100.1));
+         */
+
+        /*
+        // 19. 計算有幾個英文單字
+        System.out.println(countWords("Today is a good day"));
+        System.out.println(countWords(" My name is John"));
+        System.out.println(countWords(" Good "));
+        System.out.println(countWords(" "));
+         */
+
+        System.out.println(checkArithmeticSequence(new int[]{3, 2, 1}));
+        System.out.println(checkArithmeticSequence(new int[]{0, 0, 0, 0}));
+        System.out.println(checkArithmeticSequence(new int[]{-17, -13, -9, -5}));
+        System.out.println(checkArithmeticSequence(new int[]{1, 3, 6}));
+
+    }
+
+    /**
+     * 20. 檢查是否為等差數列
+     * 輸入包含至少三個整數的陣列 / 列表，你的函式能判斷其中的整數是否形成一個等差數列。若是，回傳真，若否，回傳假。
+     *
+     * 輸入範例一：[3, 2, 1]
+     * 回傳：真
+     *
+     * 輸入範例二：[0, 0, 0, 0]
+     * 回傳：真
+     *
+     * 輸入範例一：[-17, -13, -9, -5]
+     * 回傳：真
+     *
+     * 輸入範例一：[1, 3, 6]
+     * 回傳：假
+     */
+    public static boolean checkArithmeticSequence(int[] nums) {
+        int n = nums.length;
+
+        if (n < 3) {
+            return false;
+        }
+
+        int differ = nums[1] - nums[0];
+
+        for (int i = 2; i < n; i++) {
+            if (nums[i] - nums[i - 1] != differ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * 19. 計算有幾個英文單字
+     * 輸入一個只包含英文字和空白的字串，你的函式能找出這個字串中有幾個英文單字。
+     *
+     * 不考慮英文單字是否真的存在，且假設英文單字間用一個空白隔開，字串的前後有可能包含零到多個空白。
+     *
+     * 輸入範例一："Today is a good day"
+     * 回傳：5
+     *
+     * 輸入範例二：" My name is John"
+     * 回傳：4
+     *
+     * 輸入範例一：" Good "
+     * 回傳：1
+     *
+     * 輸入範例一：" "
+     * 回傳：0
+     */
+    public static int countWords(String str) {
+        if (str == null || str.isBlank()) {
+            return 0;
+        }
+
+//        String[] strs = str.split(" ");
+//        int i = 0;
+//        for (String s : strs) {
+//            if (!s.isBlank()) {
+//                i++;
+//            }
+//        }
+
+        String[] strs = str.trim().split("\\s+");
+        return strs.length;
+    }
+
+    /**
+     * 18. 將數字用固定小數位數的格式輸出
+     * 輸入一個數字，可能是整數或浮點數，你的函式必須將這個數字轉換為固定顯示 2 個小數位數的字串格式。
+     *
+     * 若輸入的數字超過 2 個小數位數，則以四捨五入處理。
+     *
+     * 輸入範例：0
+     * 回傳：0.00
+     *
+     * 輸入範例：5.4658
+     * 回傳：5.47
+     *
+     * 輸入範例：-3.123
+     * 回傳：-3.12
+     *
+     * 輸入範例：100.1
+     * 回傳：100.10
+     */
+    public static String formatFloat(double n) {
+        return String.format("%2f", n);
+    }
+
+    /**
+     * 17. 質數測試
+     * 輸入一個正整數，若輸入的正整數是質數，回傳真；否則，回傳假。
+     * <p>
+     * 質數定義：在大於 1 的正整數中，除了 1 和該數自身外，無法被其他正整數整除的數。1 本身非質數。
+     * <p>
+     * 輸入範例：1
+     * 回傳：假
+     * <p>
+     * 輸入範例：2
+     * 回傳：真
+     * <p>
+     * 輸入範例：75
+     * 回傳：假
+     */
+    public static boolean checkPrime(int n) {
+//        if (n <= 1) {
+//            return false;
+//        }
+//
+//        if (n == 2) {
+//            return true;
+//        }
+//
+//        for (int i = 2; i < n; i++) {
+//            if (n % i == 0) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+
+        if (n <= 1) {
+            return false;
+        }
+
+        if (n == 2) {
+            return true;
+        }
+
+        if (n % 2 == 0) {
+            return false;
+        }
+
+        for (int i = 3; i * i <= n; i += 2) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * 16. 偶數測試
+     * 輸入一個整數，若輸入的整數是偶數，回傳真；否則，回傳假。
+     * <p>
+     * 輸入範例一：0
+     * 回傳：真
+     * <p>
+     * 輸入範例二：-7
+     * 回傳：假
+     * <p>
+     * 輸入範例一：102
+     * 回傳：真
+     */
+    public static boolean checkEven(int n) {
+        if (n % 2 == 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * 15. 檢查輸入的密碼是否合乎規範
      * 輸入一個字串代表密碼，你的函式能檢查輸入的字串是否合乎以下規範：
-     *
+     * <p>
      * 只能包含大小寫英文字母、數字、以及以下特殊符號 ! @ # $ %
      * 至少要包含一個大寫和一個小寫字母
      * 至少要包含一個數字
      * 至少要包含一個特殊符號
      * 必須大於等於 8 個字元、小於等於 16 個字元。
      * 若輸入的密碼符合規範，回傳真值，不符合規範，則回傳假值。
-     *
+     * <p>
      * 輸入範例一：abcD
      * 回傳：假
-     *
+     * <p>
      * 輸入範例二：aBcdefg8$
      * 回傳：真
-     *
+     * <p>
      * 輸入範例一：12345678
      * 回傳：假
      */
@@ -147,13 +350,13 @@ public class WeHelpCoding {
     /**
      * 14. 整數陣列 / 列表中，兩兩相乘的最大值
      * 輸入一個至少包含兩個整數的陣列 / 列表，其中可能包含重複的數字if，你的函式能算出並回傳兩兩數字相乘後最大的乘積。
-     *
+     * <p>
      * 輸入範例一：[2, -1, 0]
      * 回傳：0
-     *
+     * <p>
      * 輸入範例二：[-2, -10, 1, 2]
      * 回傳：20
-     *
+     * <p>
      * 輸入範例一：[3, 1, 9, 4, 5]
      * 回傳：45
      */
@@ -187,13 +390,13 @@ public class WeHelpCoding {
     /**
      * 13. 翻轉一個字串
      * 輸入一個字串，你的函式能夠翻轉這個字串。
-     *
+     * <p>
      * 輸入範例一：Hello
      * 回傳：olleH
-     *
+     * <p>
      * 輸入範例二：abcd
      * 回傳：dcba
-     *
+     * <p>
      * 輸入範例一：Good Job
      * 回傳：boJ dooG
      */
