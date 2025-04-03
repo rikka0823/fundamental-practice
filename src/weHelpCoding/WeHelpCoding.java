@@ -1,8 +1,6 @@
 package weHelpCoding;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // https://wehelp.tw/coding
@@ -145,11 +143,439 @@ public class WeHelpCoding {
         System.out.println(countWords(" "));
          */
 
+        /*
+        // 20. 檢查是否為等差數列
         System.out.println(checkArithmeticSequence(new int[]{3, 2, 1}));
         System.out.println(checkArithmeticSequence(new int[]{0, 0, 0, 0}));
         System.out.println(checkArithmeticSequence(new int[]{-17, -13, -9, -5}));
         System.out.println(checkArithmeticSequence(new int[]{1, 3, 6}));
+         */
 
+        /*
+        // 21. 最大連續 0 的數量
+        System.out.println(findMaxZero(new int[]{1, 1, 1}));
+        System.out.println(findMaxZero(new int[]{0, 0, 0, 0, 1, 0}));
+        System.out.println(findMaxZero(new int[]{0, 1, 0, 0, 0, 1, 0, 1}));
+         */
+
+        /*
+        // 22. 平方根，四捨五入取整數
+        System.out.println(sqrt(9));
+        System.out.println(sqrt(12));
+        System.out.println(sqrt(15));
+         */
+
+        /*
+        // 23. 總秒數轉換為日、時、分、秒
+        System.out.println(Arrays.toString(convertSeconds(0)));
+        System.out.println(Arrays.toString(convertSeconds(65)));
+        System.out.println(Arrays.toString(convertSeconds(7500)));
+        System.out.println(Arrays.toString(convertSeconds(100000)));
+         */
+
+        /*
+        // 24. Stack &#x5806;&#x758A;&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;
+        System.out.println(Arrays.toString(processStackOperations("push 5,push 4,pop")));
+        System.out.println(Arrays.toString(processStackOperations("pop,push 1,push -3,push 5,pop,push 10")));
+        System.out.println(Arrays.toString(processStackOperations("push 3,push -2,pop,pop,pop")));
+         */
+
+        /*
+        // 25. Queue 佇列的基本操作
+        System.out.println(processQueueOperations("enq 5,enq 4,deq"));
+        System.out.println(processQueueOperations("deq,enq 1,enq -3,enq 5,deq,enq 10"));
+        System.out.println(processQueueOperations("enq 3,enq -2,deq,deq,deq"));
+         */
+
+        /*
+        // 26. 檢查整數是否落在某個區間
+        System.out.println(isInside(5, 10 ,8));
+        System.out.println(isInside(-5, 5, -6));
+        System.out.println(isInside(2, 100 , 2));
+         */
+
+        /*
+        // 27. 檢查兩個區間是否重疊
+        System.out.println(isOverlapping(new int[]{5, 10}, new int[]{9, 11}));
+        System.out.println(isOverlapping(new int[]{-5, 5}, new int[]{8, 10}));
+        System.out.println(isOverlapping(new int[]{-5, 5}, new  int[]{-6, -5}));
+         */
+
+        /*
+        // 28. 撲克牌比點數大小
+        System.out.println(comparePokerFigure("K", "3"));
+        System.out.println(comparePokerFigure("J", "Q"));
+        System.out.println(comparePokerFigure("2", "A"));
+        System.out.println(comparePokerFigure("10", "10"));
+         */
+
+        /*
+        // 29. 撲克牌比點數、花色大小
+        System.out.println(comparePokerCard("KC", "3H"));
+        System.out.println(comparePokerCard("JS", "QS"));
+        System.out.println(comparePokerCard("2S", "2D"));
+        System.out.println(comparePokerCard("10C", "10H"));
+         */
+
+        // 30. 二十四小時的推移
+        System.out.println(addHours(2, 5));
+        System.out.println(addHours(16, 10));
+        System.out.println(addHours(1, -5));
+        System.out.println(addHours(3, -30));
+        System.out.println(addHours(23, 100));
+
+
+    }
+
+    /**
+     * 30. 二十四小時的推移
+     * 二十四小時的表示法中，整數 0 ~ 23 代表一天內的小時數。
+     *
+     * 輸入一個 0 ~ 23 之間的整數，代表目前的小時數；以及一個任意整數，代表小時數的推移量。你的函式能夠計算並回傳經過推移後的小時數 ( 使用二十四小時表示法 )。
+     *
+     * 輸入範例：2、5
+     * 回傳：7
+     *
+     * 輸入範例：16、10
+     * 回傳：2
+     *
+     * 輸入範例：1、-5
+     * 回傳：20
+     *
+     * 輸入範例：3、-30
+     * 回傳：21
+     *
+     * 輸入範例：23、100
+     * 回傳：3
+     */
+    public static int addHours(int current, int offset) {
+        int totalHours = current + offset;
+
+        int time = totalHours % 24;
+
+        if (time < 0) {
+            time += 24;
+        }
+
+        return time;
+    }
+
+    /**
+     * 29. 撲克牌比點數、花色大小
+     * 假設在一個撲克牌遊戲中，點數由小到大的排序是 2、3、4、...、10、J、Q、K、A。若點數相同，則考慮花色，花色由小到大的排序是 C ( 梅花 )、D ( 方塊 )、H ( 紅心 )、S ( 黑桃 )。
+     *
+     * 輸入兩個字串，依序代表兩張撲克牌的點數和花色，你的函式可以判斷是否第一張比第二張大，若是，回傳真；否則，回傳假。
+     *
+     * 輸入範例："KC"、"3H"
+     * 回傳：真
+     *
+     * 輸入範例："JS"、"QS"
+     * 回傳：假
+     *
+     * 輸入範例："2S"、"2D"
+     * 回傳：真
+     *
+     * 輸入範例："10C"、"10H"
+     * 回傳：假
+     */
+    public static boolean comparePokerCard(String c1, String c2) {
+        Map<String, Integer> cards = new HashMap<>();
+        cards.put("2", 2);
+        cards.put("3", 3);
+        cards.put("4", 4);
+        cards.put("5", 5);
+        cards.put("6", 6);
+        cards.put("7", 7);
+        cards.put("8", 8);
+        cards.put("9", 9);
+        cards.put("10", 10);
+        cards.put("J", 11);
+        cards.put("Q", 12);
+        cards.put("K", 13);
+        cards.put("A", 14);
+
+        Map<String, Integer> colors = new HashMap<>();
+        colors.put("C", 15);
+        colors.put("D", 16);
+        colors.put("H", 17);
+        colors.put("S", 18);
+
+        String c1Number = c1.substring(0, c1.length() - 1);
+        String c2Number = c2.substring(0, c2.length() - 1);
+        String c1Color = String.valueOf(c1.charAt(c1.length() - 1));
+        String c2Color = String.valueOf(c2.charAt(c2.length() - 1));
+
+        if (cards.get(c1Number) > cards.get(c2Number)) {
+            return true;
+        }
+
+        if (cards.get(c1Number) == cards.get(c2Number) &&
+                colors.get(c1Color) > colors.get(c2Color)) {
+            return true;
+        }
+
+        return  false;
+    }
+
+    /**
+     * 28. 撲克牌比點數大小
+     * 假設在一個撲克牌遊戲中，不考慮花色，點數由小到大的排序是 2、3、4、...、10、J、Q、K、A。
+     *
+     * 輸入兩個字串，依序代表兩張撲克牌的點數，你的函式可以判斷是否第一張比第二張大，若是，回傳真；否則，回傳假。
+     *
+     * 輸入範例："K"、"3"
+     * 回傳：真
+     *
+     * 輸入範例："J"、"Q"
+     * 回傳：假
+     *
+     * 輸入範例："2"、"A"
+     * 回傳：假
+     *
+     * 輸入範例："10"、"10"
+     * 回傳：假
+     */
+    public static boolean comparePokerFigure(String f1, String f2) {
+        Map<String, Integer> cards = new HashMap<>();
+        cards.put("2", 2);
+        cards.put("3", 3);
+        cards.put("4", 4);
+        cards.put("5", 5);
+        cards.put("6", 6);
+        cards.put("7", 7);
+        cards.put("8", 8);
+        cards.put("9", 9);
+        cards.put("10", 10);
+        cards.put("J", 11);
+        cards.put("Q", 12);
+        cards.put("K", 13);
+        cards.put("A", 14);
+
+        return cards.get(f1) > cards.get(f2);
+    }
+
+    /**
+     * 27. 檢查兩個區間是否重疊
+     * 輸入兩個陣列 / 列表，分別代表兩個整數區間的最小值和最大值 [min1, max1] 和 [min2, max2]，你的函式能判斷兩個整數區間是否重疊，包含最小或最大值落在同一個整數的狀況。
+     *
+     * 可以假設每個區間的最大值一定大於最小值。
+     *
+     * 輸入範例：[5, 10]，[9, 11]
+     * 回傳：真
+     *
+     * 輸入範例：[-5, 5]，[8, 10]
+     * 回傳：假
+     *
+     * 輸入範例：[-5, 5]，[-6, -5]
+     * 回傳：真
+     */
+    public static boolean isOverlapping(int[] range1, int[] range2) {
+        int min1 = range1[0];
+        int max1 = range1[1];
+        int min2 = range2[0];
+        int max2 = range2[1];
+
+       return !(max2 < min1 || min2 > max1);
+    }
+
+    /**
+     * 26. 檢查整數是否落在某個區間
+     * 輸入一個整數區間的最小值和最大值，以及要檢查的目標數，你的函式能判斷目標數是否落在最小值和最大值的中間，包含最小和最大值。
+     *
+     * 可以假設輸入的最大值一定大於最小值。
+     *
+     * 輸入範例：最小 5，最大 10，目標 8
+     * 回傳：真
+     *
+     * 輸入範例：最小 -5，最大 5，目標 -6
+     * 回傳：假
+     *
+     * 輸入範例：最小 2，最大 100，目標 2
+     * 回傳：真
+     */
+    public static boolean isInside(int min, int max, int target) {
+//        if (min > max) {
+//            int temp = min;
+//            min = max;
+//            max = temp;
+//        }
+//
+//        if (!(target >= min && target <= max)) {
+//            return false;
+//        }
+//
+//        return true;
+
+        return target >= min && target <= max;
+    }
+
+    /**
+     * 25. Queue 佇列的基本操作
+     * Queue 佇列是一種基礎資料結構，我們使用陣列 / 列表來實作時，定義 Enq (Enqueue) 操作，代表將資料放到陣列 / 列表的尾巴；定義 Deq (Dequeue) 操作，代表將資料從陣列 / 列表的前面取出。
+     *
+     * 輸入一個逗號隔開的字串，每個欄位代表一個操作，若是 Enq (Enqueue) 操作，會空一格後表示要操作的整數資料。你的函式必須使用陣列 / 列表實作一個 Queue，回傳經過輸入的操作之後產生的最終結果。
+     *
+     * 請注意最後放進 Queue 中的資料是整數的型態。
+     *
+     * 輸入範例："enq 5,enq 4,deq"
+     * 回傳：[4]
+     *
+     * 輸入範例："deq,enq 1,enq -3,enq 5,deq,enq 10"
+     * 回傳：[-3, 5, 10]
+     *
+     * 輸入範例："enq 3,enq -2,deq,deq,deq"
+     * 回傳：[]
+     */
+    public static List<Integer> processQueueOperations(String ops) {
+        String[] strs = ops.split(",");
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        for (String str : strs) {
+            if (str.trim().startsWith("enq")) {
+                deque.add(Integer.parseInt(str.substring(3).trim()));
+            }
+
+            if (!deque.isEmpty() && str.trim().equals("deq")) {
+                deque.remove();
+            }
+        }
+
+        return new ArrayList<>(deque);
+    }
+
+    /**
+     * 24. Stack 堆疊的基本操作
+     * Stack 堆疊是一種基礎資料結構，我們使用陣列 / 列表來實作時，定義 Push 操作，代表將資料放到陣列 / 列表的尾巴；定義 Pop 操作，代表將資料從陣列 / 列表的尾巴取出。
+     *
+     * 輸入一個逗號隔開的字串，每個欄位代表一個操作，若是 Push 操作，會空一格後表示要操作的整數資料。你的函式必須使用陣列 / 列表實作一個 Stack，回傳經過輸入的操作之後產生的最終結果。
+     *
+     * 請注意最後放進 Stack 中的資料是整數的型態。
+     *
+     * 輸入範例："push 5,push 4,pop"
+     * 回傳：[5]
+     *
+     * 輸入範例："pop,push 1,push -3,push 5,pop,push 10"
+     * 回傳：[1, -3, 10]
+     *
+     * 輸入範例："push 3,push -2,pop,pop,pop"
+     * 回傳：[]
+     */
+    public static int[] processStackOperations(String ops) {
+        String[] strs = ops.split(",");
+        Stack<Integer> stack = new Stack<>();
+
+        for (String str : strs) {
+            if (str.trim().startsWith("push")) {
+                stack.push(Integer.parseInt(str.substring(4).trim()));
+            }
+
+            if (!stack.isEmpty() && str.trim().equals("pop")) {
+                stack.pop();
+            }
+        }
+
+        int[] array = stack.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
+
+        return array;
+    }
+
+    /**
+     * 23. 總秒數轉換為日、時、分、秒
+     * 輸入一個非負整數代表一段時間的總秒數，請將這個總秒數轉換為：日、時、分、秒，四個欄位，按照順序用陣列 / 列表的格式輸出。
+     *
+     * 輸入範例：0
+     * 回傳：[0, 0, 0, 0]
+     *
+     * 輸入範例：65
+     * 回傳：[0, 0, 1, 5]
+     *
+     * 輸入範例：7500
+     * 回傳：[0, 2, 5, 0]
+     *
+     * 輸入範例：100000
+     * 回傳：[1, 3, 46, 40]
+     */
+    public static int[] convertSeconds(int sec) {
+        int i = 5 / sec;
+        if (sec < 0) {
+            return null;
+        }
+
+        int secondsInDay = 24 * 60 * 60;
+        int secondsInHour = 60 * 60;
+        int secondsInMinute = 60;
+
+        int days = sec / secondsInDay;
+        int remainMinutes = sec % secondsInDay;
+
+        int hours = remainMinutes / secondsInHour;
+        remainMinutes %= secondsInHour;
+
+        int minutes = remainMinutes / secondsInMinute;
+
+        int secs = remainMinutes % secondsInMinute;
+
+        return new int[]{days, hours, minutes, secs};
+    }
+
+    /**
+     * 22. 平方根，四捨五入取整數
+     * 輸入一個正整數，你的函式可以計算這個正整數的平方根，但請四捨五入到整數的部份。
+     *
+     * 輸入範例二：9
+     * 回傳：3
+     *
+     * 輸入範例一：12
+     * 回傳：12
+     *
+     * 輸入範例一：15
+     * 回傳：4
+     */
+    public static int sqrt(int n) {
+//        return Integer.parseInt(String.format("%.0f", Math.sqrt(n)));
+        return (int) Math.round(Math.sqrt(n));
+    }
+
+    /**
+     * 21. 最大連續 0 的數量
+     * 輸入一個只包含 0 和 1 的陣列 / 列表，你的函式要找出並回傳最大連續 0 的數量。
+     *
+     * 輸入範例二：[1, 1, 1]
+     * 回傳：0
+     *
+     * 輸入範例一：[0, 0, 0, 0, 1, 0]
+     * 回傳：4
+     *
+     * 輸入範例一：[0, 1, 0, 0, 0, 1, 0, 1]
+     * 回傳：3
+     */
+    public static int findMaxZero(int[] nums) {
+        int count = 0;
+        int maxCount = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+               count++;
+            }
+
+            if (nums[i] != 0) {
+//                if (count > maxCount) {
+//                    maxCount = count;
+//                }
+                maxCount = Math.max(maxCount, count);
+                count = 0;
+            }
+        }
+
+//        if (count > maxCount) {
+//            maxCount = count;
+//        }
+        maxCount = Math.max(maxCount, count);
+
+
+        return maxCount;
     }
 
     /**
@@ -240,7 +666,7 @@ public class WeHelpCoding {
      * 回傳：100.10
      */
     public static String formatFloat(double n) {
-        return String.format("%2f", n);
+        return String.format("%.2f", n);
     }
 
     /**
