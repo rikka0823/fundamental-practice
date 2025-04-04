@@ -217,34 +217,250 @@ public class WeHelpCoding {
         System.out.println(comparePokerCard("10C", "10H"));
          */
 
+        /*
         // 30. 二十四小時的推移
         System.out.println(addHours(2, 5));
         System.out.println(addHours(16, 10));
         System.out.println(addHours(1, -5));
         System.out.println(addHours(3, -30));
         System.out.println(addHours(23, 100));
+         */
 
+        /*
+        // 31. 交換資料的位置
+        System.out.println(exchange(new int[]{2, 4}));
+        System.out.println(exchange(new int[]{1, -5}));
+        System.out.println(exchange(new int[]{0, 100}));
+         */
 
+        /*
+        // 32. 基礎四則運算
+        System.out.println(calculate(3, 2, "+"));
+        System.out.println(calculate(10, 3, "/"));
+        System.out.println(calculate(-6, 8, "/"));
+        System.out.println(calculate(-5, 2, "*"));
+         */
+
+        /*
+        // 33. 計算 X 的 Y 次方
+        System.out.println(power(3, 4));
+        System.out.println(power(-5, 0));
+        System.out.println(power(-10, 3));
+         */
+
+        /*
+        // 34. 計算百分比
+        System.out.println(toPercentage(0 ,20));
+        System.out.println(toPercentage(21, 40));
+        System.out.println(toPercentage(3, 11));
+        System.out.println(toPercentage(60, 60));
+         */
+
+        /*
+        // 35. 班級成績的及格率
+        System.out.println(getPassRate(new int[]{70, 0, 33, 60, 2, 59}));
+        System.out.println(getPassRate(new int[]{65, 77, 81, 100}));
+        System.out.println(getPassRate(new int[]{51, 40, 10}));
+         */
+    }
+
+    /**
+     * 35. 班級成績的及格率
+     * 輸入一個整數陣列 / 列表，代表一個班級中所有學生的數學成績，其中成績為 0 ~ 100 之間的整數，且大於等於 60 分為及格。
+     * <p>
+     * 你的函式能計算並回傳班級成績的及格率，使用百分比的字串格式輸出，無條件捨去到整數的部份。
+     * <p>
+     * 輸入範例：[70, 0, 33, 60, 2, 59]
+     * 回傳："33%"
+     * <p>
+     * 輸入範例：[65, 77, 81, 100]
+     * 回傳："100%"
+     * <p>
+     * 輸入範例：[51, 40, 10]
+     * 回傳："0%"
+     */
+    public static String getPassRate(int[] grades) {
+        if (grades.length == 0) {
+            return "0%";
+        }
+
+        int count = 0;
+        for (int grade : grades) {
+            if (grade < 0) {
+                throw new IllegalArgumentException();
+            }
+
+            if (grade >= 60) {
+                count++;
+            }
+        }
+        return (int) ((double) count / grades.length * 100) + "%";
+    }
+
+    /**
+     * 34. 計算百分比
+     * 輸入兩個非負整數，第一個代表完成的工作項目數量，第二個代表總共有多少工作項目。你的函式能計算出工作項目的完成率，並且用百分比的字串格式輸出，無條件捨去到整數的部份。
+     * <p>
+     * 輸入範例：0、20
+     * 回傳："0%"
+     * <p>
+     * 輸入範例：21、40
+     * 回傳："52%"
+     * <p>
+     * 輸入範例：3、11
+     * 回傳："27%"
+     * <p>
+     * 輸入範例：60、60
+     * 回傳："100%"
+     */
+    public static String toPercentage(int completed, int total) {
+        if (completed < 0 || total < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (total == 0) {
+            throw new IllegalArgumentException();
+        }
+
+//        double c = completed;
+//        double t = total;
+//
+//        return (int) (c / t * 100) + "%";
+
+        int percentage = (int) ((double) completed / total * 100);
+
+        return percentage + "%";
+    }
+
+    /**
+     * 33. 計算 X 的 Y 次方
+     * 輸入兩個整數 X 和 Y，計算並回傳 X 的 Y 次方計算結果。
+     * <p>
+     * 其中 X 介於 -30 ~ 30 之間，Y 介於 0 ~ 10 之間。
+     * <p>
+     * 輸入範例：3、4
+     * 回傳：81
+     * <p>
+     * 輸入範例：-5、0
+     * 回傳：1
+     * <p>
+     * 輸入範例：-10、3
+     * 回傳：-1000
+     */
+    public static int power(int x, int y) {
+        if (!(x >= -30 && x <= 30 && y >= 0 && y <= 10)) {
+            throw new IllegalArgumentException();
+        }
+
+        return (int) Math.pow(x, y);
+    }
+
+    /**
+     * 32. 基礎四則運算
+     * 輸入兩個整數，以及一個字串代表要做的運算是加、減、乘、除中的哪一個，計算並回傳運算的結果。
+     * <p>
+     * 輸入的字串可能是 + - * / 的其中一個符號，分別代表加、減、乘、除的運算。其中除法的結果，使用無條件捨去取整數。
+     * <p>
+     * 輸入範例：3、2、"+"
+     * 回傳：5
+     * <p>
+     * 輸入範例：10、3、"/"
+     * 回傳：3
+     * <p>
+     * 輸入範例：-6、8、"/"
+     * 回傳：-1
+     * <p>
+     * 輸入範例：-5、2、"*"
+     * 回傳：-10
+     */
+    public static int calculate(int n1, int n2, String op) {
+//        if (op.equals("+")) {
+//            return n1 + n2;
+//        }
+//
+//        if (op.equals("-")) {
+//            return n1 - n2;
+//        }
+//
+//        if (op.equals("*")) {
+//            return n1 * n2;
+//        }
+//
+//        if (op.equals("/")) {
+//            if (n2 == 0) {
+//                throw new ArithmeticException();
+//            }
+//
+//            double N1 = n1;
+//            double N2 = n2;
+//            return (int) Math.round(N1 / N2);
+//        }
+//
+//        throw new IllegalArgumentException();
+
+        switch (op) {
+            case "+":
+                return n1 + n2;
+            case "-":
+                return n1 - n2;
+            case "*":
+                return n1 * n2;
+            case "/":
+                if (n2 == 0) {
+                    throw new ArithmeticException();
+                }
+                double N1 = n1;
+                double N2 = n2;
+                return (int) Math.round(N1 / N2);
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * 31. 交換資料的位置
+     * 輸入一個包含兩個整數的陣列 / 列表，將其中的兩個整數互相交換位置，回傳交換後的陣列 / 列表。
+     * <p>
+     * 輸入範例：[2, 4]
+     * 回傳：[4, 2]
+     * <p>
+     * 輸入範例：[1, -5]
+     * 回傳：[-5, 1]
+     * <p>
+     * 輸入範例：[0, 100]
+     * 回傳：[100, 0]
+     */
+    public static List<Integer> exchange(int[] ns) {
+        int temp = ns[0];
+        ns[0] = ns[1];
+        ns[1] = temp;
+
+//        List<Integer> result = Arrays.stream(ns)
+//                .boxed()
+//                .collect(Collectors.toList());
+//
+//        return result;
+        return Arrays.asList(ns[0], ns[1]);
     }
 
     /**
      * 30. 二十四小時的推移
      * 二十四小時的表示法中，整數 0 ~ 23 代表一天內的小時數。
-     *
+     * <p>
      * 輸入一個 0 ~ 23 之間的整數，代表目前的小時數；以及一個任意整數，代表小時數的推移量。你的函式能夠計算並回傳經過推移後的小時數 ( 使用二十四小時表示法 )。
-     *
+     * <p>
      * 輸入範例：2、5
      * 回傳：7
-     *
+     * <p>
      * 輸入範例：16、10
      * 回傳：2
-     *
+     * <p>
      * 輸入範例：1、-5
      * 回傳：20
-     *
+     * <p>
      * 輸入範例：3、-30
      * 回傳：21
-     *
+     * <p>
      * 輸入範例：23、100
      * 回傳：3
      */
@@ -263,18 +479,18 @@ public class WeHelpCoding {
     /**
      * 29. 撲克牌比點數、花色大小
      * 假設在一個撲克牌遊戲中，點數由小到大的排序是 2、3、4、...、10、J、Q、K、A。若點數相同，則考慮花色，花色由小到大的排序是 C ( 梅花 )、D ( 方塊 )、H ( 紅心 )、S ( 黑桃 )。
-     *
+     * <p>
      * 輸入兩個字串，依序代表兩張撲克牌的點數和花色，你的函式可以判斷是否第一張比第二張大，若是，回傳真；否則，回傳假。
-     *
+     * <p>
      * 輸入範例："KC"、"3H"
      * 回傳：真
-     *
+     * <p>
      * 輸入範例："JS"、"QS"
      * 回傳：假
-     *
+     * <p>
      * 輸入範例："2S"、"2D"
      * 回傳：真
-     *
+     * <p>
      * 輸入範例："10C"、"10H"
      * 回傳：假
      */
@@ -314,24 +530,24 @@ public class WeHelpCoding {
             return true;
         }
 
-        return  false;
+        return false;
     }
 
     /**
      * 28. 撲克牌比點數大小
      * 假設在一個撲克牌遊戲中，不考慮花色，點數由小到大的排序是 2、3、4、...、10、J、Q、K、A。
-     *
+     * <p>
      * 輸入兩個字串，依序代表兩張撲克牌的點數，你的函式可以判斷是否第一張比第二張大，若是，回傳真；否則，回傳假。
-     *
+     * <p>
      * 輸入範例："K"、"3"
      * 回傳：真
-     *
+     * <p>
      * 輸入範例："J"、"Q"
      * 回傳：假
-     *
+     * <p>
      * 輸入範例："2"、"A"
      * 回傳：假
-     *
+     * <p>
      * 輸入範例："10"、"10"
      * 回傳：假
      */
@@ -357,15 +573,15 @@ public class WeHelpCoding {
     /**
      * 27. 檢查兩個區間是否重疊
      * 輸入兩個陣列 / 列表，分別代表兩個整數區間的最小值和最大值 [min1, max1] 和 [min2, max2]，你的函式能判斷兩個整數區間是否重疊，包含最小或最大值落在同一個整數的狀況。
-     *
+     * <p>
      * 可以假設每個區間的最大值一定大於最小值。
-     *
+     * <p>
      * 輸入範例：[5, 10]，[9, 11]
      * 回傳：真
-     *
+     * <p>
      * 輸入範例：[-5, 5]，[8, 10]
      * 回傳：假
-     *
+     * <p>
      * 輸入範例：[-5, 5]，[-6, -5]
      * 回傳：真
      */
@@ -375,21 +591,21 @@ public class WeHelpCoding {
         int min2 = range2[0];
         int max2 = range2[1];
 
-       return !(max2 < min1 || min2 > max1);
+        return !(max2 < min1 || min2 > max1);
     }
 
     /**
      * 26. 檢查整數是否落在某個區間
      * 輸入一個整數區間的最小值和最大值，以及要檢查的目標數，你的函式能判斷目標數是否落在最小值和最大值的中間，包含最小和最大值。
-     *
+     * <p>
      * 可以假設輸入的最大值一定大於最小值。
-     *
+     * <p>
      * 輸入範例：最小 5，最大 10，目標 8
      * 回傳：真
-     *
+     * <p>
      * 輸入範例：最小 -5，最大 5，目標 -6
      * 回傳：假
-     *
+     * <p>
      * 輸入範例：最小 2，最大 100，目標 2
      * 回傳：真
      */
@@ -412,17 +628,17 @@ public class WeHelpCoding {
     /**
      * 25. Queue 佇列的基本操作
      * Queue 佇列是一種基礎資料結構，我們使用陣列 / 列表來實作時，定義 Enq (Enqueue) 操作，代表將資料放到陣列 / 列表的尾巴；定義 Deq (Dequeue) 操作，代表將資料從陣列 / 列表的前面取出。
-     *
+     * <p>
      * 輸入一個逗號隔開的字串，每個欄位代表一個操作，若是 Enq (Enqueue) 操作，會空一格後表示要操作的整數資料。你的函式必須使用陣列 / 列表實作一個 Queue，回傳經過輸入的操作之後產生的最終結果。
-     *
+     * <p>
      * 請注意最後放進 Queue 中的資料是整數的型態。
-     *
+     * <p>
      * 輸入範例："enq 5,enq 4,deq"
      * 回傳：[4]
-     *
+     * <p>
      * 輸入範例："deq,enq 1,enq -3,enq 5,deq,enq 10"
      * 回傳：[-3, 5, 10]
-     *
+     * <p>
      * 輸入範例："enq 3,enq -2,deq,deq,deq"
      * 回傳：[]
      */
@@ -446,17 +662,17 @@ public class WeHelpCoding {
     /**
      * 24. Stack 堆疊的基本操作
      * Stack 堆疊是一種基礎資料結構，我們使用陣列 / 列表來實作時，定義 Push 操作，代表將資料放到陣列 / 列表的尾巴；定義 Pop 操作，代表將資料從陣列 / 列表的尾巴取出。
-     *
+     * <p>
      * 輸入一個逗號隔開的字串，每個欄位代表一個操作，若是 Push 操作，會空一格後表示要操作的整數資料。你的函式必須使用陣列 / 列表實作一個 Stack，回傳經過輸入的操作之後產生的最終結果。
-     *
+     * <p>
      * 請注意最後放進 Stack 中的資料是整數的型態。
-     *
+     * <p>
      * 輸入範例："push 5,push 4,pop"
      * 回傳：[5]
-     *
+     * <p>
      * 輸入範例："pop,push 1,push -3,push 5,pop,push 10"
      * 回傳：[1, -3, 10]
-     *
+     * <p>
      * 輸入範例："push 3,push -2,pop,pop,pop"
      * 回傳：[]
      */
@@ -484,16 +700,16 @@ public class WeHelpCoding {
     /**
      * 23. 總秒數轉換為日、時、分、秒
      * 輸入一個非負整數代表一段時間的總秒數，請將這個總秒數轉換為：日、時、分、秒，四個欄位，按照順序用陣列 / 列表的格式輸出。
-     *
+     * <p>
      * 輸入範例：0
      * 回傳：[0, 0, 0, 0]
-     *
+     * <p>
      * 輸入範例：65
      * 回傳：[0, 0, 1, 5]
-     *
+     * <p>
      * 輸入範例：7500
      * 回傳：[0, 2, 5, 0]
-     *
+     * <p>
      * 輸入範例：100000
      * 回傳：[1, 3, 46, 40]
      */
@@ -523,13 +739,13 @@ public class WeHelpCoding {
     /**
      * 22. 平方根，四捨五入取整數
      * 輸入一個正整數，你的函式可以計算這個正整數的平方根，但請四捨五入到整數的部份。
-     *
+     * <p>
      * 輸入範例二：9
      * 回傳：3
-     *
+     * <p>
      * 輸入範例一：12
      * 回傳：12
-     *
+     * <p>
      * 輸入範例一：15
      * 回傳：4
      */
@@ -541,13 +757,13 @@ public class WeHelpCoding {
     /**
      * 21. 最大連續 0 的數量
      * 輸入一個只包含 0 和 1 的陣列 / 列表，你的函式要找出並回傳最大連續 0 的數量。
-     *
+     * <p>
      * 輸入範例二：[1, 1, 1]
      * 回傳：0
-     *
+     * <p>
      * 輸入範例一：[0, 0, 0, 0, 1, 0]
      * 回傳：4
-     *
+     * <p>
      * 輸入範例一：[0, 1, 0, 0, 0, 1, 0, 1]
      * 回傳：3
      */
@@ -557,7 +773,7 @@ public class WeHelpCoding {
 
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == 0) {
-               count++;
+                count++;
             }
 
             if (nums[i] != 0) {
@@ -581,16 +797,16 @@ public class WeHelpCoding {
     /**
      * 20. 檢查是否為等差數列
      * 輸入包含至少三個整數的陣列 / 列表，你的函式能判斷其中的整數是否形成一個等差數列。若是，回傳真，若否，回傳假。
-     *
+     * <p>
      * 輸入範例一：[3, 2, 1]
      * 回傳：真
-     *
+     * <p>
      * 輸入範例二：[0, 0, 0, 0]
      * 回傳：真
-     *
+     * <p>
      * 輸入範例一：[-17, -13, -9, -5]
      * 回傳：真
-     *
+     * <p>
      * 輸入範例一：[1, 3, 6]
      * 回傳：假
      */
@@ -615,18 +831,18 @@ public class WeHelpCoding {
     /**
      * 19. 計算有幾個英文單字
      * 輸入一個只包含英文字和空白的字串，你的函式能找出這個字串中有幾個英文單字。
-     *
+     * <p>
      * 不考慮英文單字是否真的存在，且假設英文單字間用一個空白隔開，字串的前後有可能包含零到多個空白。
-     *
+     * <p>
      * 輸入範例一："Today is a good day"
      * 回傳：5
-     *
+     * <p>
      * 輸入範例二：" My name is John"
      * 回傳：4
-     *
+     * <p>
      * 輸入範例一：" Good "
      * 回傳：1
-     *
+     * <p>
      * 輸入範例一：" "
      * 回傳：0
      */
@@ -650,18 +866,18 @@ public class WeHelpCoding {
     /**
      * 18. 將數字用固定小數位數的格式輸出
      * 輸入一個數字，可能是整數或浮點數，你的函式必須將這個數字轉換為固定顯示 2 個小數位數的字串格式。
-     *
+     * <p>
      * 若輸入的數字超過 2 個小數位數，則以四捨五入處理。
-     *
+     * <p>
      * 輸入範例：0
      * 回傳：0.00
-     *
+     * <p>
      * 輸入範例：5.4658
      * 回傳：5.47
-     *
+     * <p>
      * 輸入範例：-3.123
      * 回傳：-3.12
-     *
+     * <p>
      * 輸入範例：100.1
      * 回傳：100.10
      */
