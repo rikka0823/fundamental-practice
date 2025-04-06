@@ -262,6 +262,222 @@ public class WeHelpCoding {
         System.out.println(getPassRate(new int[]{65, 77, 81, 100}));
         System.out.println(getPassRate(new int[]{51, 40, 10}));
          */
+
+        /*
+        // 36. 找出不一樣的資料
+        System.out.println(findUnique(new int[]{5, 5, 0}));
+        System.out.println(findUnique(new int[]{1, 2, 1, 1, 1}));
+        System.out.println(findUnique(new int[]{-5, 8, 8, 8}));
+         */
+
+        /*
+        // 37. 找出眾數
+        System.out.println(findMode(new int[]{1, 2, 1, 3, 1}));
+        System.out.println(findMode(new int[]{6, 0, 8, 8, 10}));
+        System.out.println(findMode(new int[]{0, 2, 0, 1, 1, 20, 0}));
+         */
+
+        /*
+        // 38. 檢查是否為迴文
+        System.out.println(checkPalindrome("abccba"));
+        System.out.println(checkPalindrome(""));
+        System.out.println(checkPalindrome("aba"));
+        System.out.println(checkPalindrome("aaaccc"));
+         */
+
+        /*
+        // 39. 去除重複的資料
+        System.out.println(removeDuplicates(new int[]{3, 2, -6, 2, 3, 5, 2}));
+        System.out.println(removeDuplicates(new int[]{0, 0, 0, 0}));
+        System.out.println(removeDuplicates(new int[]{1, -3, -5, 2, -5, 1}));
+         */
+
+        System.out.println(isOverlapping1(new int[]{0, 0, 10, 10}, new int[]{-5, 5, 5, 5}));
+        System.out.println(isOverlapping1(new int[]{10, 0, 10, 5}, new int[]{30, 5, 10, 5}));
+        System.out.println(isOverlapping1(new int[]{-5, -5, 20, 10}, new int[]{0, -10, 5, 5}));
+
+    }
+
+    /**
+     * 40. 檢查方形是否有重疊的部份
+     * 輸入兩個陣列 / 列表代表兩個平面座標上的方形區塊，格式為 [x, y, w, h]，其中 x 和 y 為整數，代表方形區塊左上角的座標點；w 和 h 為正整數，代表往右下方延伸的寬度和高度。
+     * <p>
+     * 你的函式能判斷兩個方形區塊是否有重疊的部份，若有，回傳真；否則，回傳假。其中，邊線剛好碰到的情況也算是重疊。
+     * <p>
+     * 平面座標定義：X 軸往右是正數、往左是負數；Y 軸往上是正數、往下是負數。
+     * <p>
+     * 輸入範例：
+     * 方形一：[0, 0, 10, 10]
+     * 方形二：[-5, 5, 5, 5]
+     * 回傳：真
+     * <p>
+     * 輸入範例：
+     * 方形一：[10, 0, 10, 5]
+     * 方形二：[30, 5, 10, 5]
+     * 回傳：假
+     * <p>
+     * 輸入範例：
+     * 方形一：[-5, -5, 20, 10]
+     * 方形二：[0, -10, 5, 5]
+     * 回傳：真
+     */
+    public static boolean isOverlapping1(int[] rect1, int[] rect2) {
+        int x1Right = rect1[0] + rect1[2];
+        int y1Bottom = rect1[1] + rect1[3];
+
+        int x2Right = rect2[0] + rect2[2];
+        int y2Bottom = rect2[1] + rect2[3];
+
+        // 水平方向上是否有交集: rect1[0] < x2Right && x1Right > rect2[0]
+        // 垂直方向上是否有交集: rect1[1] < y2Bottom && y1Bottom > rect2[1]
+        if (rect1[0] <= x2Right && x1Right >= rect2[0] &&
+                rect1[1] <= y2Bottom && y1Bottom >= rect2[1]) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 39. 去除重複的資料
+     * 輸入一個整數陣列 / 列表，其中包含的整數在 -20 ~ 20 之間，你的函式能夠去除重複出現的整數，只保留最前面 ( 最小索引 ) 的資料，回傳去除重複資料後的陣列 / 列表。
+     * <p>
+     * 輸入範例：[3, 2, -6, 2, 3, 5, 2]
+     * 回傳：[3, 2, -6, 5]
+     * <p>
+     * 輸入範例：[0, 0, 0, 0]
+     * 回傳：[0]
+     * <p>
+     * 輸入範例：[1, -3, -5, 2, -5, 1]
+     * 回傳：[1, -3, -5, 2]
+     */
+    public static List<Integer> removeDuplicates(int[] ns) {
+//        Set<Integer> set = Arrays.stream(ns)
+//                .boxed()
+//                .collect(Collectors.toCollection(LinkedHashSet::new));
+//      return new ArrayList<>(set);
+        return Arrays.stream(ns)
+                .boxed()
+                .collect(Collectors.toCollection(LinkedHashSet::new))
+                .stream()
+                .toList();
+    }
+
+    /**
+     * 38. 檢查是否為迴文
+     * 輸入一個包含英數字的字串，你的函式能夠檢查這個字串是否為一個「迴文」，若是，回傳真；否則，回傳假。
+     * <p>
+     * 迴文：從中間切開，左右兩邊對稱的字串。
+     * <p>
+     * 輸入範例："abccba"
+     * 回傳：真
+     * <p>
+     * 輸入範例：""
+     * 回傳：真
+     * <p>
+     * 輸入範例："aba"
+     * 回傳：真
+     * <p>
+     * 輸入範例："aaaccc"
+     * 回傳：假
+     */
+    public static boolean checkPalindrome(String str) {
+//        if (str == null || str.length() <= 1) {
+//            return true;
+//        }
+//
+//        int length = str.length();
+//        if (length % 2 == 0) {
+//            String s1 = str.substring(0, length / 2);
+//            String s2 = str.substring(length / 2);
+//            StringBuilder sb = new StringBuilder(s2);
+//            if (s1.contentEquals(sb.reverse())) {
+//                return true;
+//            }
+//        }
+//
+//
+//        String s1 = str.substring(0, (length / 2));
+//        String s2 = str.substring((length / 2) + 1);
+//        StringBuilder sb = new StringBuilder(s2);
+//        if (s1.contentEquals(sb.reverse())) {
+//            return true;
+//        }
+//
+//        return false;
+
+        if (str == null || str.length() <= 1) {
+            return true;
+        }
+
+        for (int i = 0; i < str.length() / 2; i++) {
+            if (str.charAt(i) != str.charAt(str.length() - 1 - i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * 37. 找出眾數
+     * 輸入一個非負整數陣列 / 列表，其中包含的非負整數在 0 ~ 20 之間，找出並回傳其中的眾數：即出現次數最多的整數值。
+     * <p>
+     * 你可以假設不會同時有多個眾數出現。
+     * <p>
+     * 輸入範例：[1, 2, 1, 3, 1]
+     * 回傳：1
+     * <p>
+     * 輸入範例：[6, 0, 8, 8, 10]
+     * 回傳：8
+     * <p>
+     * 輸入範例：[0, 2, 0, 1, 1, 20, 0]
+     * 回傳：0
+     */
+    public static int findMode(int[] ns) {
+        int mode = Integer.MIN_VALUE;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : ns) {
+            map.merge(n, 1, Integer::sum);
+        }
+
+        int i = 0;
+        for (int key : map.keySet()) {
+            if (map.get(key) > i) {
+                i = map.get(key);
+                mode = key;
+            }
+        }
+
+        return mode;
+    }
+
+    /**
+     * 36. 找出不一樣的資料
+     * 輸入一個至少有三筆資料的整數陣列 / 列表，其中包含唯一一個和其他所有資料不同的整數。你的函式能找出並回傳這個整數所在的索引位置。
+     * <p>
+     * 輸入範例：[5, 5, 0]
+     * 回傳：2
+     * <p>
+     * 輸入範例：[1, 2, 1, 1, 1]
+     * 回傳：1
+     * <p>
+     * 輸入範例：[-5, 8, 8, 8]
+     * 回傳：0
+     */
+    public static int findUnique(int[] ns) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < ns.length; i++) {
+            map.merge(ns[i], 1, Integer::sum);
+        }
+
+        for (int i = 0; i < ns.length; i++) {
+            if (map.get(ns[i]) == 1) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     /**
