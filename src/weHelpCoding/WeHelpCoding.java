@@ -292,10 +292,254 @@ public class WeHelpCoding {
         System.out.println(removeDuplicates(new int[]{1, -3, -5, 2, -5, 1}));
          */
 
+        /*
+        // 40. 檢查方形是否有重疊的部份
         System.out.println(isOverlapping1(new int[]{0, 0, 10, 10}, new int[]{-5, 5, 5, 5}));
         System.out.println(isOverlapping1(new int[]{10, 0, 10, 5}, new int[]{30, 5, 10, 5}));
         System.out.println(isOverlapping1(new int[]{-5, -5, 20, 10}, new int[]{0, -10, 5, 5}));
+         */
 
+        /*
+        // 41. 計算兩個區間的重疊區域
+        System.out.println(Arrays.toString(getOverlappingRange(new int[]{5, 10}, new int[]{9, 11})));
+        System.out.println(Arrays.toString(getOverlappingRange(new int[]{-5, 5}, new int[]{8, 10})));
+        System.out.println(Arrays.toString(getOverlappingRange(new int[]{-5, 5}, new int[]{-6, -5})));
+         */
+
+        /*
+        // 42. 蛇形命名轉換為大駝峰命名
+        System.out.println(snakeToUpperCamel("test"));
+        System.out.println(snakeToUpperCamel("hello_world"));
+        System.out.println(snakeToUpperCamel("get_weather_data"));
+         */
+
+        /*
+        // 43. 大駝峰命名轉換為蛇形命名
+        System.out.println(upperCamelToSnake("Test"));
+        System.out.println(upperCamelToSnake("HelloWorld"));
+        System.out.println(upperCamelToSnake("GetWeatherData"));
+         */
+
+        /*
+        // 44. 費式數列的第 N 個數
+        System.out.println(getFibNumber(0));
+        System.out.println(getFibNumber(4));
+        System.out.println(getFibNumber(9));
+         */
+
+        /*
+        // 45. 關鍵字推薦
+        System.out.println(suggestKey(new String[]{"abc", "xyz", "zzz", "ac", "aa"}, "a"));
+        System.out.println(suggestKey(new String[]{"xyz", "ooo", "test", "cba"}, "k"));
+        System.out.println(suggestKey(new String[]{"test", "zbz", "pply", "zbaa", "zxy"}, "zb"));
+         */
+
+    }
+
+    /**
+     * 45. 關鍵字推薦
+     * 輸入一個包含小寫英文字母的字串陣列 / 列表，代表所有可能的潛在關鍵字；再輸入一個英文字串，代表目前的提示字。
+     *
+     * 你的函式能從所有潛在的關鍵字中，找到並回傳以目前提示字為前綴的所有關鍵字陣列 / 列表。須按照字母順序由小到大排列，但長度短的關鍵字要排前面。
+     *
+     * 輸入範例：["abc", "xyz", "zzz", "ac", "aa"]、"a"
+     * 回傳：["aa", "ac", "abc"]
+     *
+     * 輸入範例：["xyz", "ooo", "test", "cba"]、"k"
+     * 回傳：[]
+     *
+     * 輸入範例：["test", "zbz", "pply", "zbaa", "zxy"]、"zb"
+     * 回傳：["zbz", "zbaa"]
+     */
+    public static List<String> suggestKey(String[] candidates, String prompt) {
+//        Set<String> set = new TreeSet<>((s1, s2) -> {
+//            int compare = Integer.compare(s1.length(), s2.length());
+//            if (compare != 0) {
+//                return compare;
+//            }
+//            return s1.compareTo(s2);
+//        });
+
+        Set<String> set = new TreeSet<>(
+                Comparator.comparingInt(String::length)
+                .thenComparing(s -> s)
+        );
+
+        for (String str : candidates) {
+            if (str.startsWith(prompt)) {
+                set.add(str);
+            }
+        }
+
+        return new ArrayList<>(set);
+    }
+
+    /**
+     * 44. 費式數列的第 N 個數
+     * 輸入一個非負整數 N，你的函式能取得費式數列中的第 N 個整數並回傳。費式數列定義如下：
+     *
+     * 第 0 個數 = 1
+     * 第 1 個數 = 1
+     * 第 N 個數 = 第 N-1 個數 + 第 N-2 個數
+     * 根據以上定義，得到 1、1、2、3、5、8、13、21、34、55 以此類推，即費式數列 / 。( Fibonacci Sequence )
+     *
+     * 輸入範例：0
+     * 回傳：1
+     *
+     * 輸入範例：4
+     * 回傳：5
+     *
+     * 輸入範例：9
+     * 回傳：55
+     *
+     * 注意事項：
+     * 你必須實作一個時間複雜度為 O(N) 的演算法，否則將會因執行逾時而失敗。
+     */
+    public static int getFibNumber(int n) {
+        // f(0) = 1
+        // f(1) = 1
+        // f(2) = f(1) + f(0)
+        // f(3) = f(2) + f(1)
+        // f(4) = f(3) + f(2)
+
+//        if (n == 0 || n == 1) {
+//            return 1;
+//        }
+//
+//        return getFibNumber(n - 1) + getFibNumber(n - 2);
+
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+
+        int a = 1;
+        int b = 1;
+
+        for (int i = 2; i <= n; i++) {
+            int temp = a + b;
+            a = b;
+            b = temp;
+        }
+
+        return  b;
+    }
+
+    /**
+     * 43. 大駝峰命名轉換為蛇形命名
+     * 輸入一個包含大小寫英數字的字串，代表程式語言中常見的大駝峰命名法，你的函式能將此字串轉換為另外一種常見、包含底線的蛇形命名法。
+     * <p>
+     * 大駝峰命名法：多個英文單字的第一個字母皆大寫。
+     * 蛇形命名法：用底線隔開多個全小寫的英文單字。
+     * <p>
+     * 輸入範例："Test"
+     * 回傳："test"
+     * <p>
+     * 輸入範例："HelloWorld"
+     * 回傳："hello_world"
+     * <p>
+     * 輸入範例："GetWeatherData"
+     * 回傳："get_weather_data"
+     */
+    public static String upperCamelToSnake(String name) {
+//        String[] strs = name.split("(?=[A-Z])");
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < strs.length; i++) {
+//            sb.append(strs[i].substring(0, 1).toLowerCase())
+//                    .append(strs[i].substring(1).toLowerCase());
+//
+//            if (i < strs.length - 1) {
+//                sb.append("_");
+//            }
+//        }
+//
+//        return sb.toString();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < name.length(); i++) {
+            if (Character.isUpperCase(name.charAt(i))) {
+                if (i != 0) {
+                    sb.append("_");
+                }
+                sb.append(Character.toLowerCase(name.charAt(i)));
+            }
+
+            if (Character.isLowerCase(name.charAt(i))){
+                sb.append(name.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 42. 蛇形命名轉換為大駝峰命名
+     * 輸入一個包含小寫英數字和底線的字串，代表程式語言中常見的蛇形命名法，你的函式能將此字串轉換為另外一種常見的大駝峰命名法。
+     * <p>
+     * 蛇形命名法：用底線隔開多個全小寫的英文單字。
+     * 大駝峰命名法：多個英文單字的第一個字母皆大寫。
+     * <p>
+     * 輸入範例："test"
+     * 回傳："Test"
+     * <p>
+     * 輸入範例："hello_world"
+     * 回傳："HelloWorld"
+     * <p>
+     * 輸入範例："get_weather_data"
+     * 回傳："GetWeatherData"
+     */
+    public static String snakeToUpperCamel(String name) {
+        String[] strs = name.split("_");
+        StringBuilder sb = new StringBuilder();
+        for (String str : strs) {
+            sb.append(str.substring(0, 1).toUpperCase())
+                    .append(str.substring(1).toLowerCase());
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * 41. 計算兩個區間的重疊區域
+     * 輸入兩個陣列 / 列表，分別代表兩個整數區間的最小值和最大值 [min1, max1] 和 [min2, max2]，你的函式能計算並回傳兩個整數區間的重疊區域範圍，重疊區域包含最小或最大值落在同一個整數的狀況，回傳的重疊區域格式為 [min, max]。
+     * <p>
+     * 可以假設每個區間的最大值一定大於最小值。若兩個區間沒有重疊，回傳空陣列 / 列表。
+     * <p>
+     * 輸入範例：[5, 10]，[9, 11]
+     * 回傳：[9, 10]
+     * <p>
+     * 輸入範例：[-5, 5]，[8, 10]
+     * 回傳：[]
+     * <p>
+     * 輸入範例：[-5, 5]，[-6, -5]
+     * 回傳：[-5, -5]
+     */
+    public static int[] getOverlappingRange(int[] range1, int[] range2) {
+//        Set<Integer> set1 = new LinkedHashSet<>();
+//        for (int i = range1[0]; i <= range1[1]; i++) {
+//            set1.add(i);
+//        }
+//
+//        Set<Integer> set2 = new LinkedHashSet<>();
+//        for (int i = range2[0]; i <= range2[1]; i++) {
+//            set2.add(i);
+//        }
+//
+//        set1.retainAll(set2);
+//
+//        if (!set1.isEmpty()) {
+//            List<Integer> list = new ArrayList<>(set1);
+//            return new int[]{list.get(0), list.get(list.size() - 1)};
+//        }
+//
+//        return new int[]{};
+
+        int min = Math.max(range1[0], range2[0]);
+        int max = Math.min(range1[1], range2[1]);
+
+        if (max >= min) {
+            return new int[]{min, max};
+        }
+
+        return new int[]{};
     }
 
     /**
