@@ -334,20 +334,148 @@ public class WeHelpCoding {
         System.out.println(suggestKey(new String[]{"test", "zbz", "pply", "zbaa", "zxy"}, "zb"));
          */
 
+        /*
+        // 46. 十二生肖查詢
+        System.out.println(getChineseZodiac(1912));
+        System.out.println(getChineseZodiac(1946));
+        System.out.println(getChineseZodiac(1855));
+        System.out.println(getChineseZodiac(2024));
+         */
+
+        /*
+        // 47. 計算包含幾個關鍵字
+        System.out.println(countKeywords("", "ac"));
+        System.out.println(countKeywords("kKjaeAcxAC", "ac"));
+        System.out.println(countKeywords("abababazz", "Aba"));
+         */
+
+
+        // 48. 產生對應的英文序數
+        System.out.println(generateOrdinalNumber(101));
+        System.out.println(generateOrdinalNumber(311));
+        System.out.println(generateOrdinalNumber(1523));
+    }
+
+
+    /**
+     * 48. 產生對應的英文序數
+     * 每個數字，都有一個對應的英文序數表示法 ( Ordinal Numbers )，規則如下：
+     * <p>
+     * 1 對應到 1st
+     * 2 對應到 2nd
+     * 3 對應到 3rd
+     * 4 對應到 4th
+     * 4 到 19 都可以在後面加上 th 表達序數
+     * 20 到 100 則以個位數的數字為準，個位數為 0 則使用 th
+     * 101 以上，則以後面兩位數為準，使用以上規則轉換，例如 101st、311th、1523rd。
+     * 你的函式接受一個小於 10000 的正整數輸入，用字串的形式，回傳對應的序數。
+     */
+    public static String generateOrdinalNumber(int number) {
+        if (number <= 0 || number > 10000) {
+            throw new IllegalArgumentException();
+        }
+
+        String ordinalNumber = String.valueOf(number);
+
+        if (number % 100 >= 11 && number % 100 <= 13) {
+            return ordinalNumber + "th";
+        }
+
+        number %= 10;
+        return switch (number) {
+            case 1 -> ordinalNumber + "st";
+            case 2 -> ordinalNumber + "nd";
+            case 3 -> ordinalNumber + "rd";
+            default -> ordinalNumber + "th";
+        };
+    }
+
+    /**
+     * 47. 計算包含幾個關鍵字
+     * 輸入一個包含大小寫英文字母的字串，再輸入一個關鍵字，你的函式能計算並回傳輸入字串中包含幾個關鍵字。
+     * <p>
+     * 計算時，不考慮字母的大小寫，且不重覆計算字母有重疊的關鍵字。
+     * <p>
+     * 輸入範例：""、"ac"
+     * 回傳：0
+     * <p>
+     * 輸入範例："kKjaeAcxAC"、"ac"
+     * 回傳：2
+     * <p>
+     * 輸入範例："abababazz"、"Aba"
+     * 回傳：2
+     */
+    public static int countKeywords(String text, String keyword) {
+        if (text == null || text.isBlank() || keyword == null || keyword.isBlank()) {
+            return 0;
+        }
+
+        text = text.toLowerCase();
+        keyword = keyword.toLowerCase();
+
+        int count = 0;
+        int index = 0;
+        while ((index = text.indexOf(keyword, index)) != -1) {
+            index += keyword.length();
+            count++;
+        }
+
+        return count;
+    }
+
+    /**
+     * 46. 十二生肖查詢
+     * 輸入一個正整數表示西元年份，你的函式回傳該年份所屬的生肖動物名稱。請參考以下規則：
+     * <p>
+     * 已知西元 1912 年為「鼠」年，十二生肖依序為「鼠」、「牛」、「虎」、「兔」、「龍」、「蛇」、「馬」、「羊」、「猴」、「雞」、「狗」、「豬」。
+     * <p>
+     * 輸入範例：1912
+     * 回傳："鼠"
+     * <p>
+     * 輸入範例：1946
+     * 回傳："狗"
+     * <p>
+     * 輸入範例：1855
+     * 回傳："兔"
+     * <p>
+     * 輸入範例：2024
+     * 回傳："龍"
+     */
+    public static String getChineseZodiac(int year) {
+        int i = (year - 1912) % 12;
+        if (i < 0) {
+            i += 12;
+        }
+
+        return switch (i) {
+            case 0 -> "鼠";
+            case 1 -> "牛";
+            case 2 -> "虎";
+            case 3 -> "兔";
+            case 4 -> "龍";
+            case 5 -> "蛇";
+            case 6 -> "馬";
+            case 7 -> "羊";
+            case 8 -> "猴";
+            case 9 -> "雞";
+            case 10 -> "狗";
+            case 11 -> "豬";
+            default -> throw new IllegalArgumentException();
+        };
     }
 
     /**
      * 45. 關鍵字推薦
      * 輸入一個包含小寫英文字母的字串陣列 / 列表，代表所有可能的潛在關鍵字；再輸入一個英文字串，代表目前的提示字。
-     *
+     * <p>
      * 你的函式能從所有潛在的關鍵字中，找到並回傳以目前提示字為前綴的所有關鍵字陣列 / 列表。須按照字母順序由小到大排列，但長度短的關鍵字要排前面。
-     *
+     * <p>
      * 輸入範例：["abc", "xyz", "zzz", "ac", "aa"]、"a"
      * 回傳：["aa", "ac", "abc"]
-     *
+     * <p>
      * 輸入範例：["xyz", "ooo", "test", "cba"]、"k"
      * 回傳：[]
-     *
+     * <p>
      * 輸入範例：["test", "zbz", "pply", "zbaa", "zxy"]、"zb"
      * 回傳：["zbz", "zbaa"]
      */
@@ -362,7 +490,7 @@ public class WeHelpCoding {
 
         Set<String> set = new TreeSet<>(
                 Comparator.comparingInt(String::length)
-                .thenComparing(s -> s)
+                        .thenComparing(s -> s)
         );
 
         for (String str : candidates) {
@@ -377,21 +505,21 @@ public class WeHelpCoding {
     /**
      * 44. 費式數列的第 N 個數
      * 輸入一個非負整數 N，你的函式能取得費式數列中的第 N 個整數並回傳。費式數列定義如下：
-     *
+     * <p>
      * 第 0 個數 = 1
      * 第 1 個數 = 1
      * 第 N 個數 = 第 N-1 個數 + 第 N-2 個數
      * 根據以上定義，得到 1、1、2、3、5、8、13、21、34、55 以此類推，即費式數列 / 。( Fibonacci Sequence )
-     *
+     * <p>
      * 輸入範例：0
      * 回傳：1
-     *
+     * <p>
      * 輸入範例：4
      * 回傳：5
-     *
+     * <p>
      * 輸入範例：9
      * 回傳：55
-     *
+     * <p>
      * 注意事項：
      * 你必須實作一個時間複雜度為 O(N) 的演算法，否則將會因執行逾時而失敗。
      */
@@ -421,7 +549,7 @@ public class WeHelpCoding {
             b = temp;
         }
 
-        return  b;
+        return b;
     }
 
     /**
@@ -463,7 +591,7 @@ public class WeHelpCoding {
                 sb.append(Character.toLowerCase(name.charAt(i)));
             }
 
-            if (Character.isLowerCase(name.charAt(i))){
+            if (Character.isLowerCase(name.charAt(i))) {
                 sb.append(name.charAt(i));
             }
         }
