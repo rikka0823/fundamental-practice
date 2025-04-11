@@ -349,13 +349,11 @@ public class WeHelpCoding {
         System.out.println(countKeywords("abababazz", "Aba"));
          */
 
-
         // 48. 產生對應的英文序數
         System.out.println(generateOrdinalNumber(101));
         System.out.println(generateOrdinalNumber(311));
         System.out.println(generateOrdinalNumber(1523));
     }
-
 
     /**
      * 48. 產生對應的英文序數
