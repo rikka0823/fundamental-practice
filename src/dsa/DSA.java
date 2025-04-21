@@ -10,8 +10,13 @@ public class DSA {
         System.out.println(findMode(new int[]{1, 2, 2, 3, 3, 3, 4}));
          */
 
+        /*
         // 找出陣列中出現次數最多的前 K 個元素
         System.out.println(findKMostFrequentElements(new int[]{1, 1, 1, 2, 2, 3}, 2));
+         */
+
+        // 找出陣列中出現次數最多的元素並計算其出現次數
+        System.out.println(getElementWithHighestFrequency(new int[]{4, 5, 6, 4, 5, 5}));
 
         /*
         // bubbleSort
@@ -62,6 +67,46 @@ public class DSA {
         }
     }
 
+    /**
+     * 找出陣列中出現次數最多的元素並計算其出現次數
+     * 題目描述：
+     *
+     * 給定一個整數陣列 nums，找出其中出現次數最多的元素，並返回這個元素的值以及它出現的次數。
+     *
+     * 範例：
+     *
+     * 輸入: nums = [4, 5, 6, 4, 5, 5]
+     * 輸出: 5 出現次數: 3
+     */
+    public static Map<Integer, Integer> getElementWithHighestFrequency(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.merge(num, 1, Integer::sum);
+        }
+
+//        int maxCount = -1;
+//        int maxKey = Integer.MIN_VALUE;
+//        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+//            int count = entry.getValue();
+//            if (count > maxCount) {
+//                maxCount = count;
+//                maxKey = entry.getKey();
+//            }
+//        }
+//
+//        return Map.of(maxKey, maxCount);
+
+        int maxCount = Collections.max(map.values());
+        Map<Integer, Integer> result = new HashMap<>();
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int count = entry.getValue();
+            if (count == maxCount) {
+                result.put(entry.getKey(), count);
+            }
+        }
+
+        return result;
+    }
 
     /**
      * 找出陣列中出現次數最多的前 K 個元素
