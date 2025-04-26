@@ -15,8 +15,12 @@ public class DSA {
         System.out.println(findKMostFrequentElements(new int[]{1, 1, 1, 2, 2, 3}, 2));
          */
 
+        /*
         // 找出陣列中出現次數最多的元素並計算其出現次數
         System.out.println(getElementWithHighestFrequency(new int[]{4, 5, 6, 4, 5, 5}));
+         */
+
+        System.out.println(removeMostFrequentElement(new int[]{1, 1, 2, 2, 2, 3}));
 
         /*
         // bubbleSort
@@ -68,13 +72,41 @@ public class DSA {
     }
 
     /**
+     * 找出陣列中出現次數最多的元素並移除它
+     * 題目描述：
+     * <p>
+     * 給定一個整數陣列 nums，找出陣列中出現次數最多的元素，然後將該元素從陣列中移除。返回處理後的陣列。
+     * <p>
+     * 範例：
+     * <p>
+     * 輸入: nums = [1, 1, 2, 2, 2, 3]
+     * 輸出: [1, 1, 3]
+     */
+    public static List<Integer> removeMostFrequentElement(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        int maxCount = 0;
+
+        for (int num : nums) {
+            list.add(num);
+            int count = map.merge(num, 1, Integer::sum);
+            maxCount = Math.max(count, maxCount);
+        }
+
+        int finalMaxCount = maxCount;
+        list.removeIf(item -> map.get(item) == finalMaxCount);
+
+        return list;
+    }
+
+    /**
      * 找出陣列中出現次數最多的元素並計算其出現次數
      * 題目描述：
-     *
+     * <p>
      * 給定一個整數陣列 nums，找出其中出現次數最多的元素，並返回這個元素的值以及它出現的次數。
-     *
+     * <p>
      * 範例：
-     *
+     * <p>
      * 輸入: nums = [4, 5, 6, 4, 5, 5]
      * 輸出: 5 出現次數: 3
      */
@@ -111,18 +143,18 @@ public class DSA {
     /**
      * 找出陣列中出現次數最多的前 K 個元素
      * 題目描述：
-     *
+     * <p>
      * 給定一個整數陣列 nums 和一個整數 k，返回陣列中出現次數最多的 k 個元素，按出現次數降序排列。如果有多個元素出現次數相同，則可以按數字大小排序。
-     *
+     * <p>
      * 範例：
-     *
+     * <p>
      * 輸入: nums = [1, 1, 1, 2, 2, 3], k = 2
      * 輸出: [1, 2]
-     *
+     * <p>
      * 提示：
-     *
+     * <p>
      * k 小於或等於 nums 的長度。
-     *
+     * <p>
      * 你可以假設 nums 不會為空。
      */
     public static List<Integer> findKMostFrequentElements(int[] nums, int k) {
@@ -155,16 +187,16 @@ public class DSA {
     /**
      * 找出陣列中最常出現的元素
      * 題目描述：
-     *
+     * <p>
      * 給定一個整數陣列 nums，找出其中出現次數最多的元素。如果有多個元素的出現次數相同，則返回其中任意一個。
-     *
+     * <p>
      * 範例：
-     *
+     * <p>
      * 輸入: nums = [1, 2, 2, 3, 3, 3, 4]
      * 輸出: 3
-     *
+     * <p>
      * 提示：
-     *
+     * <p>
      * 你可以假設陣列至少有一個元素。
      */
     public static int findMode(int[] nums) {
