@@ -25,7 +25,13 @@ public class DSA {
         System.out.println(removeMostFrequentElement(new int[]{1, 1, 2, 2, 2, 3}));
          */
 
+        /*
+        // 找出陣列中出現次數最多的元素的索引
         System.out.println(indexOfMostFrequentElement(new int[]{1, 3, 3, 2, 3, 1}));
+         */
+
+        // 找出出現次數最多的元素，並計算其出現次數差
+        System.out.println(findMostFrequentElementDiff(new int[]{1, 1, 2, 3, 3, 3}));
 
         /*
         // bubbleSort
@@ -77,13 +83,44 @@ public class DSA {
     }
 
     /**
+     * 找出出現次數最多的元素，並計算其出現次數差
+     * 題目描述：
+     * <p>
+     * 給定一個整數陣列 nums，找出出現次數最多的元素與出現次數最少的元素的出現次數差。
+     * <p>
+     * 範例：
+     * <p>
+     * 輸入: nums = [1, 1, 2, 3, 3, 3]
+     * 輸出: 2 (3 出現了 3 次，1 出現了 2 次，差為 1)
+     */
+    public static int findMostFrequentElementDiff(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int maxCount = 0;
+        int minCount = Integer.MAX_VALUE;
+        for (int num : nums) {
+            map.merge(num, 1, Integer::sum);
+            maxCount = Math.max(maxCount, map.get(num));
+        }
+
+        for (int count : map.values()) {
+            minCount = Math.min(minCount, count);
+        }
+
+        return maxCount - minCount;
+    }
+
+    /**
      * 找出陣列中出現次數最多的元素的索引
      * 題目描述：
-     *
+     * <p>
      * 給定一個整數陣列 nums，找出出現次數最多的元素，並返回該元素第一次出現的位置索引。
-     *
+     * <p>
      * 範例：
-     *
+     * <p>
      * 輸入: nums = [1, 3, 3, 2, 3, 1]
      * 輸出: 1 (元素 3 最多，第一次出現的索引是 1)
      */
