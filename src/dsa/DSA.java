@@ -30,8 +30,13 @@ public class DSA {
         System.out.println(indexOfMostFrequentElement(new int[]{1, 3, 3, 2, 3, 1}));
          */
 
+        /*
         // 找出出現次數最多的元素，並計算其出現次數差
         System.out.println(findMostFrequentElementDiff(new int[]{1, 1, 2, 3, 3, 3}));
+         */
+
+        // solid / outline triangle
+        printTriangle();
 
         /*
         // bubbleSort
@@ -79,6 +84,68 @@ public class DSA {
             if (!flag) {
                 break;
             }
+        }
+    }
+
+    public static void printTriangle() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("請輸入階層數: ");
+            int n = scanner.nextInt();
+            if (n <= 0) {
+                throw new IllegalArgumentException();
+            }
+
+            /*
+            // solid
+            for (int j = 1; j <= n; j++) {
+                for (int k = j; k <= n - 1; k++) {
+                    System.out.print(" ");
+                }
+                for (int i = 1; i <= j * 2 - 1; i++) {
+                    System.out.print("*");
+                }
+                System.out.println();
+            }
+             */
+
+            // outline
+//            for (int j = 1; j <= n; j++) {
+//                if (j != n) {
+//                    for (int k = j; k <= n - 1; k++) {
+//                        System.out.print(" ");
+//                    }
+//
+//                    for (int i = 1; i <= j * 2 - 1; i++) {
+//                        if (i == 1 || i == j * 2 - 2) {
+//                            System.out.print("*");
+//                        }
+//                        System.out.print(" ");
+//                    }
+//                    System.out.println();
+//                }
+//
+//                if (j == n) {
+//                    for (int i = 1; i <= j * 2 - 1; i++) {
+//                        System.out.print("*");
+//                    }
+//                }
+//            }
+
+            for (int i = 1; i <= n; i++) {
+                for (int k = 1; k <= n - i; k++) {
+                    System.out.print(" ");
+                }
+                for (int j = 1; j <= i * 2 - 1; j++) {
+                    if (j == 1 || i == n || j == i * 2 - 1) {
+                        System.out.print("*");
+                        continue;
+                    }
+                    System.out.print(" ");
+                }
+                System.out.println();
+            }
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
     }
 
