@@ -900,14 +900,9 @@ public class WeHelpCoding {
      * 回傳："100%"
      */
     public static String toPercentage(int completed, int total) {
-        if (completed < 0 || total < 0) {
+        if (completed < 0 || total <= 0) {
             throw new IllegalArgumentException();
         }
-
-        if (total == 0) {
-            throw new IllegalArgumentException();
-        }
-
 //        double c = completed;
 //        double t = total;
 //
@@ -1300,7 +1295,6 @@ public class WeHelpCoding {
      * 回傳：[1, 3, 46, 40]
      */
     public static int[] convertSeconds(int sec) {
-        int i = 5 / sec;
         if (sec < 0) {
             return null;
         }
@@ -1969,6 +1963,10 @@ public class WeHelpCoding {
 //        return nums[nums.length - 1];
 
         // O(n)
+        if (nums == null || nums.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
         int max = nums[0];
 
         for (int num : nums) {
