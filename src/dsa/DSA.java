@@ -411,6 +411,15 @@ public class DSA {
             }
         }
 
+//        int mode = nums[0];
+//        Map<Integer, Integer> map = new HashMap<>();
+//        for (int num : nums) {
+//            map.merge(num, 1, Integer::sum);
+//            if (map.get(num) > map.get(mode)) {
+//                mode = num;
+//            }
+//        }
+
         return mode;
     }
 }
