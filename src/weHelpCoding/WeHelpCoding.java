@@ -174,7 +174,7 @@ public class WeHelpCoding {
          */
 
         /*
-        // 24. Stack &#x5806;&#x758A;&#x7684;&#x57FA;&#x672C;&#x64CD;&#x4F5C;
+        // 24. Stack 堆疊的基本操作
         System.out.println(Arrays.toString(processStackOperations("push 5,push 4,pop")));
         System.out.println(Arrays.toString(processStackOperations("pop,push 1,push -3,push 5,pop,push 10")));
         System.out.println(Arrays.toString(processStackOperations("push 3,push -2,pop,pop,pop")));

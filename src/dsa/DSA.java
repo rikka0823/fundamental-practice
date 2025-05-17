@@ -40,8 +40,8 @@ public class DSA {
         printTriangle();
          */
 
-        System.out.println(mergeSortedLists( List.of(1, 3, 5), List.of(2, 4, 6)));
-
+        // 合併兩個已排序的數字列表
+        System.out.println(mergeSortedLists(List.of(1, 2, 5), List.of(2, 4, 6)));
 
         /*
         // bubbleSort
@@ -97,14 +97,41 @@ public class DSA {
      * 給定兩個已經排序的整數列表 list1 和 list2，請編寫一個方法將它們合併成一個新的列表，並且保持結果列表的順序也是排序的。
      * 輸入：
      * 兩個已經排序的 List<Integer>，其中 list1 和 list2 可能有不同的長度，且每個元素都滿足 -10^6 <= element <= 10^6。
-     *
+     * <p>
      * 輸出：
      * 返回一個新的 List<Integer>，該列表包含 list1 和 list2 中的所有元素，並且保持排序。
      */
     public static List<Integer> mergeSortedLists(List<Integer> list1, List<Integer> list2) {
+        /*
         List<Integer> list = new ArrayList<>(list1);
         list.addAll(list2);
         Collections.sort(list);
+        return list;
+         */
+
+        List<Integer> list = new ArrayList<>();
+        int i = 0;
+        int j = 0;
+
+        while (i < list1.size() && j < list2.size()) {
+            if (list1.get(i) < list2.get(j)) {
+                list.add(list1.get(i));
+                i++;
+            } else {
+                list.add(list2.get(j));
+                j++;
+            }
+        }
+
+        while (i < list1.size()) {
+            list.add(list1.get(i));
+            i++;
+        }
+        while (j < list2.size()) {
+            list.add(list2.get(j));
+            j++;
+        }
+
         return list;
     }
 
