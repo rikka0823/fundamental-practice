@@ -6,6 +6,20 @@ public class DSA {
 
     public static void main(String[] args) {
         /*
+        // bubbleSort
+        int[] nums = new int[]{5, 4, 3, 2, 1};
+        bubbleSort(nums);
+        System.out.println(Arrays.toString(nums));
+         */
+
+        /*
+        // selectionSort
+        int[] nums = new int[]{5, 4, 3, 2, 1};
+        selectionSort(nums);
+        System.out.println(Arrays.toString(nums));
+         */
+
+        /*
         // 找出陣列中最常出現的元素
         System.out.println(findMode(new int[]{1, 2, 2, 3, 3, 3, 4}));
          */
@@ -40,56 +54,54 @@ public class DSA {
         printTriangle();
          */
 
+        /*
         // 合併兩個已排序的數字列表
         System.out.println(mergeSortedLists(List.of(1, 2, 5), List.of(2, 4, 6)));
-
-        /*
-        // bubbleSort
-        int[] nums = new int[]{5, 4, 3, 2, 1};
-        bubbleSort(nums);
-        System.out.println(Arrays.toString(nums));
          */
 
-        /*
-        // selectionSort
-        int[] nums = new int[]{5, 4, 3, 2, 1};
-        selectionSort(nums);
-        System.out.println(Arrays.toString(nums));
-         */
+        // 移除重複並排序字串（不區分大小寫）
+        System.out.println(toLowercaseSortedList(List.of("Banana", "apple", "Orange", "banana", "APPLE")));
+
     }
 
-    public static void selectionSort(int[] nums) {
-        for (int k = 0; k < nums.length - 1; k++) {
-            int j = k;
-            for (int i = k + 1; i < nums.length; i++) {
-                if (nums[i] < nums[j]) {
-                    j = i;
-                }
-            }
-
-            if (j != k) {
-                int temp = nums[k];
-                nums[k] = nums[j];
-                nums[j] = temp;
-            }
+    /**
+     * 移除重複並排序字串（不區分大小寫）
+     * 請實作一個方法 processList(List<String> input)，輸入是一個字串清單。請你完成以下任務：
+     *
+     * 移除重複的字串，不區分大小寫（例如 "Apple" 和 "apple" 視為相同）。
+     *
+     * 將結果以字典順序（不區分大小寫）排序。
+     *
+     * 若大小寫版本都存在，優先保留小寫版本。
+     *
+     * 若某個字只出現一次，無論原本是大寫還是小寫，請將其轉為小寫加入結果。
+     *
+     * 回傳一個處理後的新清單，不可修改原始輸入 List。
+     *
+     * 限制條件
+     * 輸入 List 長度範圍：0 <= input.size() <= 10^4
+     *
+     * 每個字串僅包含英文字母 A-Z 或 a-z
+     *
+     * 回傳結果需全部為小寫字母，且不能有重複字串
+     *
+     * 結果需按照字典順序（lexicographical order）排列
+     * 輸入：
+     * ["Banana", "apple", "Orange", "banana", "APPLE"]
+     * 輸出：
+     *["apple", "banana", "orange"]
+     */
+    public static List<String> toLowercaseSortedList(List<String> input) {
+        if (input == null) {
+            return List.of();
         }
-    }
 
-    public static void bubbleSort(int[] nums) {
-        for (int j = nums.length - 1; j > 0; j--) {
-            boolean flag = false;
-            for (int i = 0; i < j; i++) {
-                if (nums[i] > nums[i + 1]) {
-                    int temp = nums[i];
-                    nums[i] = nums[i + 1];
-                    nums[i + 1] = temp;
-                    flag = true;
-                }
-            }
-            if (!flag) {
-                break;
-            }
+        Set<String> set = new TreeSet<>();
+        for (String str : input) {
+            set.add(str.toLowerCase());
         }
+
+        return List.of(set.toArray(new String[0]));
     }
 
     /**
@@ -421,5 +433,39 @@ public class DSA {
 //        }
 
         return mode;
+    }
+
+    public static void selectionSort(int[] nums) {
+        for (int k = 0; k < nums.length - 1; k++) {
+            int j = k;
+            for (int i = k + 1; i < nums.length; i++) {
+                if (nums[i] < nums[j]) {
+                    j = i;
+                }
+            }
+
+            if (j != k) {
+                int temp = nums[k];
+                nums[k] = nums[j];
+                nums[j] = temp;
+            }
+        }
+    }
+
+    public static void bubbleSort(int[] nums) {
+        for (int j = nums.length - 1; j > 0; j--) {
+            boolean flag = false;
+            for (int i = 0; i < j; i++) {
+                if (nums[i] > nums[i + 1]) {
+                    int temp = nums[i];
+                    nums[i] = nums[i + 1];
+                    nums[i + 1] = temp;
+                    flag = true;
+                }
+            }
+            if (!flag) {
+                break;
+            }
+        }
     }
 }
