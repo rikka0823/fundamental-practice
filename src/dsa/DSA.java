@@ -59,9 +59,45 @@ public class DSA {
         System.out.println(mergeSortedLists(List.of(1, 2, 5), List.of(2, 4, 6)));
          */
 
+        /*
         // 移除重複並排序字串（不區分大小寫）
         System.out.println(toLowercaseSortedList(List.of("Banana", "apple", "Orange", "banana", "APPLE")));
+         */
 
+        System.out.println(mostFrequentWord(Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple")));
+        System.out.println(mostFrequentWord(Arrays.asList("cat", "dog", "dog", "cat", "mouse")));
+        System.out.println(mostFrequentWord(Arrays.asList("zzz", "aaa", "zzz", "aaa")));
+    }
+
+    /**
+     * 找出出現次數最多的字串（頻率最高）
+     * 給定一個 List<String>，請找出出現次數最多的字串。如果有多個字串的出現次數相同，請回傳字典序最小的那一個字串。
+     * 輸入：
+     * ["apple", "banana", "apple", "orange", "banana", "apple"]
+     * 輸出：
+     * "apple"
+     */
+    public static String mostFrequentWord(List<String> words) {
+        if (words == null || words.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<String, Integer> map = new TreeMap<>();
+        for (String word : words) {
+            map.merge(word, 1, Integer::sum);
+        }
+
+        int maxCount = 0;
+        String mostFrequentWord = null;
+        for (String word : map.keySet()) {
+            int count = map.get(word);
+            if (count > maxCount) {
+                maxCount = count;
+                mostFrequentWord = word;
+            }
+        }
+
+        return mostFrequentWord;
     }
 
     /**
