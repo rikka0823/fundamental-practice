@@ -64,9 +64,54 @@ public class DSA {
         System.out.println(toLowercaseSortedList(List.of("Banana", "apple", "Orange", "banana", "APPLE")));
          */
 
+        /*
+        // 找出出現次數最多的字串（頻率最高）
         System.out.println(mostFrequentWord(Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple")));
         System.out.println(mostFrequentWord(Arrays.asList("cat", "dog", "dog", "cat", "mouse")));
         System.out.println(mostFrequentWord(Arrays.asList("zzz", "aaa", "zzz", "aaa")));
+         */
+
+        // findMostFrequentElement
+        System.out.println(findMostFrequentElement(Arrays.asList(3, 1, 4, 4, 2, 1, 4)));
+        System.out.println(findMostFrequentElement(Arrays.asList(1, 1, 4, 4, 2, 1, 4)));
+    }
+
+    /**
+     * 題目：
+     * 給定一個 List<Integer>，請編寫一個方法來找出並返回這個列表中出現頻率最高的元素。如果有多個元素頻率相同，請返回其中最小的元素。你不能使用額外的資料結構來儲存頻率。
+     * 輸入：
+     * List<Integer> nums = Arrays.asList(3, 1, 4, 4, 2, 1, 4);
+     * 輸出：
+     * 4
+     * 要求：
+     * 不允許使用 Map 或其他額外的資料結構來儲存頻率。
+     * 必須使用 List 本身的功能來解決問題。
+     */
+    public static int findMostFrequentElement(List<Integer> nums) {
+        if (nums == null || nums.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        int mode = Integer.MIN_VALUE;
+        int maxCount = 0;
+
+        for (int j = 0; j < nums.size(); j++) {
+            int current = nums.get(j);
+            int count = 0;
+
+            for (int num : nums) {
+                if (num == current) {
+                    count++;
+                }
+            }
+
+            if (count > maxCount || (current < mode && count == maxCount)) {
+                maxCount = count;
+                mode = current;
+            }
+        }
+
+        return mode;
     }
 
     /**
@@ -128,7 +173,7 @@ public class DSA {
      *["apple", "banana", "orange"]
      */
     public static List<String> toLowercaseSortedList(List<String> input) {
-        if (input == null) {
+        if (input == null || input.isEmpty()) {
             return List.of();
         }
 
@@ -443,7 +488,7 @@ public class DSA {
      * 你可以假設陣列至少有一個元素。
      */
     public static int findMode(int[] nums) {
-        if (nums.length == 0) {
+        if (nums == null || nums.length == 0) {
             throw new IllegalArgumentException();
         }
 
