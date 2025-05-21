@@ -71,9 +71,67 @@ public class DSA {
         System.out.println(mostFrequentWord(Arrays.asList("zzz", "aaa", "zzz", "aaa")));
          */
 
+        /*
         // findMostFrequentElement
         System.out.println(findMostFrequentElement(Arrays.asList(3, 1, 4, 4, 2, 1, 4)));
         System.out.println(findMostFrequentElement(Arrays.asList(1, 1, 4, 4, 2, 1, 4)));
+         */
+
+        // 找出缺少的整數
+        System.out.println(findMissingNumbers(Arrays.asList(1, 2, 4, 6)));
+        System.out.println(findMissingNumbers(Arrays.asList(1, 2, 3, 4, 5)));
+    }
+
+    /**
+     * 題目：找出缺少的整數
+     * 請實作一個方法 findMissingNumbers，輸入為一個遞增排序但有缺漏的 List<Integer>，內容包含 1 到 n（n 是最大數字），但中間可能漏了一些數字。
+     *
+     * 請找出所有缺少的整數，並以 List<Integer> 回傳，數字需由小到大排序。
+     * 輸入： [1, 2, 4, 6]
+     * 輸出： [3, 5]
+     *
+     * 輸入： [1, 2, 3, 4, 5]
+     * 輸出： []
+     */
+    public static List<Integer> findMissingNumbers(List<Integer> nums) {
+        if (nums == null || nums.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        // O(n^2)
+//        List<Integer> res = new ArrayList<>();
+//        int max = Collections.max(nums);
+//
+//        for (int i = 1; i <= max; i++) {
+//            if (!nums.contains(i)) {
+//                res.add(i);
+//            }
+//        }
+
+         // O(n)
+//        List<Integer> res = new ArrayList<>();
+//        int i = 1;
+//        int index = 0;
+//
+//        while (i <= nums.get(nums.size() - 1)) {
+//            if (index < nums.size() && nums.get(index).equals(i)) {
+//                index++;
+//            } else {
+//                res.add(i);
+//            }
+//            i++;
+//        }
+
+        // O(n)
+        List<Integer> res = new ArrayList<>();
+        Set<Integer> set = new HashSet<>(nums);
+        for (int i = 1; i <= Collections.max(nums); i++) {
+            if (!set.contains(i)) {
+                res.add(i);
+            }
+        }
+
+        return res;
     }
 
     /**
