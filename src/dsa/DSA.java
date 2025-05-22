@@ -77,9 +77,67 @@ public class DSA {
         System.out.println(findMostFrequentElement(Arrays.asList(1, 1, 4, 4, 2, 1, 4)));
          */
 
+        /*
         // 找出缺少的整數
         System.out.println(findMissingNumbers(Arrays.asList(1, 2, 4, 6)));
         System.out.println(findMissingNumbers(Arrays.asList(1, 2, 3, 4, 5)));
+         */
+
+        // 找出重複出現的元素
+        System.out.println(findDuplicates(Arrays.asList(1, 2, 3, 2, 4, 5, 1, 1)));
+        System.out.println(findDuplicates(Arrays.asList(5, 6, 7, 8)));
+    }
+
+    /**
+     * 題目：找出重複出現的元素
+     * 請實作一個方法 findDuplicates，給定一個 List<Integer>，請回傳其中所有出現過兩次以上的數字（順序不限、不重複列出）。
+     * 範例 1：
+     * 輸入： [1, 2, 3, 2, 4, 5, 1, 1]
+     * 輸出： [1, 2]
+     *
+     *  範例 2：
+     *  輸入： [5, 6, 7, 8]
+     *  輸出： []
+     *
+     * 限制條件：
+     * 回傳的 list 不需排序
+     * 不可使用 Map
+     * 可使用 Set
+     */
+    public static List<Integer> findDuplicates(List<Integer> nums) {
+        if (nums == null || nums.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+//        int count = 0;
+//        Set<Integer> set = new HashSet<>();
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            for (int j = i + 1; j < nums.size(); j++) {
+//                if (nums.get(i).equals(nums.get(j))) {
+//                    count++;
+//                }
+//
+//                if (count == 1) {
+//                    set.add(nums.get(i));
+//                    count = 0;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return new ArrayList<>(set);
+
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+
+        for (int num : nums) {
+            if (!set1.add(num)) {
+                set2.add(num);
+            }
+        }
+
+        return new ArrayList<>(set2);
     }
 
     /**
