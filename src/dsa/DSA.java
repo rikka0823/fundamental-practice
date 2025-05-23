@@ -83,9 +83,44 @@ public class DSA {
         System.out.println(findMissingNumbers(Arrays.asList(1, 2, 3, 4, 5)));
          */
 
+        /*
         // 找出重複出現的元素
         System.out.println(findDuplicates(Arrays.asList(1, 2, 3, 2, 4, 5, 1, 1)));
         System.out.println(findDuplicates(Arrays.asList(5, 6, 7, 8)));
+         */
+
+        // 找出第一個重複出現的數字
+        System.out.println(findFirstDuplicate(Arrays.asList(4, 1, 3, 2, 5, 3, 2)));
+        System.out.println(findFirstDuplicate(Arrays.asList(1, 2, 3, 4)));
+    }
+
+    /**
+     * 題目：找出第一個重複出現的數字
+     * 請實作一個方法 findFirstDuplicate，輸入一個 List<Integer>，找出第一個出現兩次的數字，並回傳它。
+     * 輸入： [4, 1, 3, 2, 5, 3, 2]
+     * 輸出： 3   // 3 是第一個「第二次出現」的數字
+     *
+     * 輸入： [1, 2, 3, 4]
+     * 輸出： -1  // 沒有任何重複
+     *
+     * 限制條件：
+     * 不可使用 Map
+     * 可使用 Set
+     * 若沒有重複，請回傳 -1
+     */
+    public static int findFirstDuplicate(List<Integer> nums) {
+        if (nums == null || nums.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (!set.add(num)) {
+                return num;
+            }
+        }
+
+        return -1;
     }
 
     /**
