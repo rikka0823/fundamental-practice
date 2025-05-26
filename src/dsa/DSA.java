@@ -89,9 +89,46 @@ public class DSA {
         System.out.println(findDuplicates(Arrays.asList(5, 6, 7, 8)));
          */
 
+        /*
         // 找出第一個重複出現的數字
         System.out.println(findFirstDuplicate(Arrays.asList(4, 1, 3, 2, 5, 3, 2)));
         System.out.println(findFirstDuplicate(Arrays.asList(1, 2, 3, 4)));
+         */
+
+        System.out.println(findFirstUnique(Arrays.asList(4, 5, 1, 2, 0, 4, 1, 2)));
+        System.out.println(findFirstUnique(Arrays.asList(1, 2, 2, 1)));
+    }
+
+    /**
+     * 題目：找出第一個只出現一次的數字
+     * 請實作一個方法 findFirstUnique，給定一個 List<Integer>，找出第一個只出現一次的數字，並回傳它。如果所有數字都重複，請回傳 -1。
+     *
+     * 輸入： [4, 5, 1, 2, 0, 4, 1, 2]
+     * 輸出： 5
+     *
+     * 輸入： [1, 2, 2, 1]
+     * 輸出： -1
+     *
+     * 限制條件：
+     * 可使用 Map 或 Set
+     * 請保留「原始順序」
+     * 若無唯一數字，回傳 -1
+     */
+    public static int findFirstUnique(List<Integer> nums) {
+        int res = -1;
+
+        Map<Integer, Integer> map = new LinkedHashMap<>();
+        for (int num : nums) {
+            map.merge(num, 1, Integer::sum);
+        }
+
+        for (int key : map.keySet()) {
+            if (map.get(key).equals(1)) {
+                return key;
+            }
+        }
+
+        return res;
     }
 
     /**
