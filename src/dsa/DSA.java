@@ -95,8 +95,38 @@ public class DSA {
         System.out.println(findFirstDuplicate(Arrays.asList(1, 2, 3, 4)));
          */
 
+        /*
+        // 找出第一個只出現一次的數字
         System.out.println(findFirstUnique(Arrays.asList(4, 5, 1, 2, 0, 4, 1, 2)));
         System.out.println(findFirstUnique(Arrays.asList(1, 2, 2, 1)));
+         */
+
+        // 刪除 List 中的重複元素
+        System.out.println(removeDuplicatesPreserveOrder(Arrays.asList("apple", "banana", "apple", "orange", "banana", "grape")));
+    }
+
+    /**
+     * 題目：刪除 List 中的重複元素
+     * 描述：
+     * 給定一個 ArrayList<String>，其中包含一些可能重複的字串，請寫一個方法，回傳一個不包含重複元素的新 ArrayList<String>，且保留原本的元素順序（第一次出現的順序）。
+     * 輸入：
+     * ["apple", "banana", "apple", "orange", "banana", "grape"]
+     * 輸出：
+     * ["apple", "banana", "orange", "grape"]：
+     */
+    public static List<String> removeDuplicatesPreserveOrder(List<String> input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        List<String> list = new ArrayList<>();
+        for (String str : input) {
+            if (!list.contains(str)) {
+                list.add(str);
+            }
+        }
+
+        return new ArrayList<>(new LinkedHashSet<>(input));
     }
 
     /**
