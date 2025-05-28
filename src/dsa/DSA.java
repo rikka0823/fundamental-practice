@@ -1,6 +1,7 @@
 package dsa;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DSA {
 
@@ -101,8 +102,44 @@ public class DSA {
         System.out.println(findFirstUnique(Arrays.asList(1, 2, 2, 1)));
          */
 
+        /*
         // 刪除 List 中的重複元素
         System.out.println(removeDuplicatesPreserveOrder(Arrays.asList("apple", "banana", "apple", "orange", "banana", "grape")));
+         */
+
+        // 整數 List 中找出所有偶數，並排序回傳
+        System.out.println(getSortedEvenNumbers(Arrays.asList(5, 2, 8, 1, 3, 10, 6)));
+    }
+
+    /**
+     * 題目：從整數 List 中找出所有偶數，並排序回傳
+     * 描述：
+     * 請寫一個方法，接收一個 List<Integer>，回傳一個新的 List<Integer>，其中包含原始 List 中所有的偶數，並且按照從小到大的順序排序。
+     * 輸入：
+     * [5, 2, 8, 1, 3, 10, 6]
+     * 輸出：
+     * [2, 6, 8, 10]
+     */
+    public static List<Integer> getSortedEvenNumbers(List<Integer> input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        List<Integer> list;
+//        for (int num : input) {
+//            if (num % 2 == 0) {
+//                list.add(num);
+//            }
+//        }
+//
+//        Collections.sort(list);
+
+        list = input.stream()
+                .filter(num -> num % 2 == 0)
+                .sorted()
+                .collect(Collectors.toList());
+
+        return list;
     }
 
     /**
@@ -119,12 +156,12 @@ public class DSA {
             throw new IllegalArgumentException();
         }
 
-        List<String> list = new ArrayList<>();
-        for (String str : input) {
-            if (!list.contains(str)) {
-                list.add(str);
-            }
-        }
+//        List<String> list = new ArrayList<>();
+//        for (String str : input) {
+//            if (!list.contains(str)) {
+//                list.add(str);
+//            }
+//        }
 
         return new ArrayList<>(new LinkedHashSet<>(input));
     }
