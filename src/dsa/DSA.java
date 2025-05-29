@@ -107,8 +107,43 @@ public class DSA {
         System.out.println(removeDuplicatesPreserveOrder(Arrays.asList("apple", "banana", "apple", "orange", "banana", "grape")));
          */
 
+        /*
         // 整數 List 中找出所有偶數，並排序回傳
         System.out.println(getSortedEvenNumbers(Arrays.asList(5, 2, 8, 1, 3, 10, 6)));
+         */
+
+        System.out.println(filterGreaterThanAverage(Arrays.asList(10, 20, 30, 40, 50)));
+    }
+
+    /**
+     * 題目：找出大於平均值的數字
+     * 描述：
+     * 請寫一個方法，接收一個 List<Integer>，回傳一個新的 List<Integer>，其中包含所有大於平均值的整數（平均值為浮點數，取所有數字的總和除以個數）。
+     *
+     * 輸入：
+     * [10, 20, 30, 40, 50]
+     * 平均值為 30，輸出：
+     * [40, 50]
+     */
+    public static List<Integer> filterGreaterThanAverage(List<Integer> input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        int sum = 0;
+        for (int i : input) {
+            sum += i;
+        }
+        double average = (double) sum / input.size();
+
+        List<Integer> list = new ArrayList<>();
+        for (int i : input) {
+            if (i > average) {
+                list.add(i);
+            }
+        }
+
+        return list;
     }
 
     /**
