@@ -112,7 +112,48 @@ public class DSA {
         System.out.println(getSortedEvenNumbers(Arrays.asList(5, 2, 8, 1, 3, 10, 6)));
          */
 
+        /*
+        // 找出大於平均值的數字
         System.out.println(filterGreaterThanAverage(Arrays.asList(10, 20, 30, 40, 50)));
+         */
+
+        // 依字首分組並統計數量（不區分大小寫）
+        System.out.println(countByFirstLetter(Arrays.asList("apple", "banana", "Avocado", "Blueberry", "123", "", null, "apricot")));
+    }
+
+    /**
+     * 題目：依字首分組並統計數量（不區分大小寫）
+     * 描述：
+     * 請寫一個方法，接收一個 List<String>，回傳一個 Map<Character, Integer>，統計每個「開頭字母（a-z）」開頭的字串有幾個（不區分大小寫）。
+     *
+     * 忽略開頭不是英文字母的字串（例如數字、符號）
+     *
+     * 忽略 null 或空字串
+     *
+     * 統一以小寫英文字母當作 key
+     *
+     * 輸入：
+     * ["apple", "banana", "Avocado", "Blueberry", "123", "", null, "apricot"]
+     *
+     * 輸出：
+     * {a=3, b=2}
+     */
+    public static Map<Character, Integer> countByFirstLetter(List<String> input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<Character, Integer> map = new HashMap<>();
+        for (String str : input) {
+            if (str != null && !str.isBlank()) {
+                char c = str.toLowerCase().charAt(0);
+                if (c >= 'a' && c <= 'z') {
+                    map.merge(c, 1, Integer::sum);
+                }
+            }
+        }
+
+        return map;
     }
 
     /**
