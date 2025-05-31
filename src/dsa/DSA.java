@@ -117,8 +117,51 @@ public class DSA {
         System.out.println(filterGreaterThanAverage(Arrays.asList(10, 20, 30, 40, 50)));
          */
 
+        /*
         // 依字首分組並統計數量（不區分大小寫）
         System.out.println(countByFirstLetter(Arrays.asList("apple", "banana", "Avocado", "Blueberry", "123", "", null, "apricot")));
+         */
+
+        // 找交集
+        System.out.println(getIntersection("Alice,Bob,Charlie,diana", "bob,Diana,Edward"));
+    }
+
+    /**
+     * 題目：找交集
+     * 從兩組學生名單，找出兩位老師課程都選修的學生（交集），並印出學生名單（依照字母順序）。
+     *
+     * 讀入兩個學生名單（每組資料用逗號分隔，學生名字不重複，英文名字，不區分大小寫但輸出需統一轉為小寫）。
+     * 印出交集的學生名單，依照字母排序後印出。
+     *
+     * A 的學生名單：
+     * Alice,Bob,Charlie,diana
+     *
+     * 老師 B 的學生名單：
+     * bob,Diana,Edward
+     *
+     * 輸出:
+     * [bob, diana]
+     */
+    public static Set<String> getIntersection(String name1, String name2) {
+        if (name1 == null || name1.isBlank() || name2 == null || name2.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        Set<String> set1 = new TreeSet<>(Arrays.asList(name1.toLowerCase().split(",")));
+        Set<String> set2 = new TreeSet<>(Arrays.asList(name2.toLowerCase().split(",")));
+//        Set<String> res = new TreeSet<>();
+//
+//        for (String str : set1) {
+//            if (!set2.contains(str)) {
+//                res.add(str);
+//            }
+//        }
+
+//        return res;
+
+        set1.retainAll(set2);
+
+        return set1;
     }
 
     /**
