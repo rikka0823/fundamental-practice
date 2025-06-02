@@ -122,8 +122,53 @@ public class DSA {
         System.out.println(countByFirstLetter(Arrays.asList("apple", "banana", "Avocado", "Blueberry", "123", "", null, "apricot")));
          */
 
+        /*
         // 找交集
         System.out.println(getIntersection("Alice,Bob,Charlie,diana", "bob,Diana,Edward"));
+         */
+
+        // groupWordsByFirstLetterIgnoreCase
+        System.out.println(groupWordsByFirstLetterIgnoreCase(Arrays.asList("Apple", "apricot", "Banana", "berry", "Cherry", "cranberry", "Avocado")));
+    }
+
+    /**
+     * 題目：
+     * 接收一個字串清單 words。
+     * 將清單中每個字串根據**字串首字母（忽略大小寫）**分類，存入一個 Map，
+     * Key 是字串首字母（小寫字元），
+     * Value 是該首字母對應的所有字串集合（Set），
+     * 集合內字串要保持原始大小寫。
+     * 回傳這個 Map。
+     *
+     * 輸入：
+     * ["Apple", "apricot", "Banana", "berry", "Cherry", "cranberry", "Avocado"]
+     *
+     * 輸出：
+     * {
+     *   'a' : ["Apple", "apricot", "Avocado"],
+     *   'b' : ["Banana", "berry"],
+     *   'c' : ["Cherry", "cranberry"]
+     * }
+     */
+    public static Map<Character, Set<String>> groupWordsByFirstLetterIgnoreCase(List<String> words) {
+        Map<Character, Set<String>> map = new HashMap<>();
+        Set<Character> set = new TreeSet<>();
+
+        for (String word : words) {
+            set.add(word.toLowerCase().charAt(0));
+        }
+
+        for (char c : set) {
+            Set<String> values = new HashSet<>();
+            for (String word : words) {
+                if (c == word.toLowerCase().charAt(0)) {
+                    values.add(word);
+                }
+            }
+            map.put(c, values);
+        }
+
+        return map;
     }
 
     /**
