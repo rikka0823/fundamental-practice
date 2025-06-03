@@ -151,21 +151,25 @@ public class DSA {
      * }
      */
     public static Map<Character, Set<String>> groupWordsByFirstLetterIgnoreCase(List<String> words) {
-        Map<Character, Set<String>> map = new HashMap<>();
-        Set<Character> set = new TreeSet<>();
+        Map<Character, Set<String>> map = new LinkedHashMap<>();
+//        Set<Character> set = new TreeSet<>();
+//
+//        for (String word : words) {
+//            set.add(word.toLowerCase().charAt(0));
+//        }
+//
+//        for (char c : set) {
+//            Set<String> values = new LinkedHashSet<>();
+//            for (String word : words) {
+//                if (c == word.toLowerCase().charAt(0)) {
+//                    values.add(word);
+//                }
+//            }
+//            map.put(c, values);
+//        }
 
         for (String word : words) {
-            set.add(word.toLowerCase().charAt(0));
-        }
-
-        for (char c : set) {
-            Set<String> values = new HashSet<>();
-            for (String word : words) {
-                if (c == word.toLowerCase().charAt(0)) {
-                    values.add(word);
-                }
-            }
-            map.put(c, values);
+            map.computeIfAbsent(word.toLowerCase().charAt(0),  k -> new LinkedHashSet<>()).add(word);
         }
 
         return map;
