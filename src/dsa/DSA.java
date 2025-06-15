@@ -127,8 +127,33 @@ public class DSA {
         System.out.println(getIntersection("Alice,Bob,Charlie,diana", "bob,Diana,Edward"));
          */
 
+        /*
         // groupWordsByFirstLetterIgnoreCase
         System.out.println(groupWordsByFirstLetterIgnoreCase(Arrays.asList("Apple", "apricot", "Banana", "berry", "Cherry", "cranberry", "Avocado")));
+         */
+
+        // saveWordPositions
+        System.out.println(saveWordPositions(new String[]{"apple", "banana", "apple", "orange", "banana", "apple"}));
+    }
+
+    /**
+     * 題目：
+     * 請設計一個方法，接收一個字串陣列，儲存每個單字出現的位置索引。
+     *
+     * 範例：
+     * String[] words = {"apple", "banana", "apple", "orange", "banana", "apple"};
+     * 輸出:
+     * apple -> [0, 2, 5]
+     * banana -> [1, 4]
+     * orange -> [3]
+     */
+    public static Map<String, List<Integer>> saveWordPositions(String[] strs) {
+        Map<String, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < strs.length; i++) {
+            map.computeIfAbsent(strs[i], k -> new ArrayList<>()).add(i);
+        }
+
+        return map;
     }
 
     /**
