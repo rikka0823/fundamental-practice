@@ -132,8 +132,28 @@ public class DSA {
         System.out.println(groupWordsByFirstLetterIgnoreCase(Arrays.asList("Apple", "apricot", "Banana", "berry", "Cherry", "cranberry", "Avocado")));
          */
 
+        /*
         // saveWordPositions
         System.out.println(saveWordPositions(new String[]{"apple", "banana", "apple", "orange", "banana", "apple"}));
+         */
+
+        // EvenMultiplicationTable
+        printEvenMultiplicationTable();
+    }
+
+    /**
+     * 題目：九九乘法表（條件過濾版）
+     * 列印出 1 到 9 的九九乘法表，但只印出乘積為 偶數 的項目。
+     */
+    public static void printEvenMultiplicationTable() {
+        for (int j = 1; j <= 9; j++) {
+            for (int i = 1; i <= 9; i++) {
+                if (j * i % 2 == 0) {
+                    System.out.print(j + " x " + i + " = " + j * i + "\t");
+                }
+            }
+            System.out.println();
+        }
     }
 
     /**
