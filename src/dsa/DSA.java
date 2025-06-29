@@ -137,8 +137,59 @@ public class DSA {
         System.out.println(saveWordPositions(new String[]{"apple", "banana", "apple", "orange", "banana", "apple"}));
          */
 
+        /*
         // EvenMultiplicationTable
         printEvenMultiplicationTable();
+         */
+
+        System.out.println(compressString("aaabbccccd"));
+        System.out.println(compressString("abcd"));
+        System.out.println(compressString("aabb"));
+        System.out.println(compressString("AAaa"));
+
+    }
+
+    /**
+     * 題目：字串壓縮器（String Compressor）
+     * 請撰寫一個 Java 方法 compressString(String input)，這個方法會壓縮連續重複出現的字元。例如：
+     *
+     * "aaabbccccd" → "a3b2c4d1"
+     *
+     * "abcd" → "a1b1c1d1"
+     *
+     * "aabb" → "a2b2"
+     *
+     * 要求：
+     * 若壓縮後的字串長度沒有變短，請回傳原本的字串。
+     * 大小寫視為不同字元（例如 'A' 和 'a' 不一樣）
+     *
+     * compressString("aaabbccccd") → "a3b2c4d1"
+     * compressString("abcd") → "abcd"   // 因為壓縮後是 "a1b1c1d1"，比原字串長
+     * compressString("aabb") → "a2b2"
+     * compressString("AAaa") → "A2a2"
+     * 。
+     */
+    public static String compressString(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<String, Integer> map = new LinkedHashMap<>();
+        for (int i = 0; i < input.length(); i++) {
+            map.merge(String.valueOf(input.charAt(i)),  1, Integer::sum);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            sb.append(entry.getKey())
+                    .append(entry.getValue());
+        }
+
+        if (sb.length() > input.length()) {
+            return input;
+        }
+
+        return sb.toString();
     }
 
     /**
