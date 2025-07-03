@@ -142,6 +142,7 @@ public class DSA {
         printEvenMultiplicationTable();
          */
 
+        // compressString
         System.out.println(compressString("aaabbccccd"));
         System.out.println(compressString("abcd"));
         System.out.println(compressString("aabb"));
@@ -152,17 +153,17 @@ public class DSA {
     /**
      * 題目：字串壓縮器（String Compressor）
      * 請撰寫一個 Java 方法 compressString(String input)，這個方法會壓縮連續重複出現的字元。例如：
-     *
+     * <p>
      * "aaabbccccd" → "a3b2c4d1"
-     *
+     * <p>
      * "abcd" → "a1b1c1d1"
-     *
+     * <p>
      * "aabb" → "a2b2"
-     *
+     * <p>
      * 要求：
      * 若壓縮後的字串長度沒有變短，請回傳原本的字串。
      * 大小寫視為不同字元（例如 'A' 和 'a' 不一樣）
-     *
+     * <p>
      * compressString("aaabbccccd") → "a3b2c4d1"
      * compressString("abcd") → "abcd"   // 因為壓縮後是 "a1b1c1d1"，比原字串長
      * compressString("aabb") → "a2b2"
@@ -174,16 +175,19 @@ public class DSA {
             throw new IllegalArgumentException();
         }
 
-        Map<String, Integer> map = new LinkedHashMap<>();
-        for (int i = 0; i < input.length(); i++) {
-            map.merge(String.valueOf(input.charAt(i)),  1, Integer::sum);
-        }
-
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            sb.append(entry.getKey())
-                    .append(entry.getValue());
+        int count = 1;
+        for (int i = 1; i < input.length(); i++) {
+            if (input.charAt(i) == input.charAt(i - 1)) {
+                count++;
+            } else {
+                sb.append(input.charAt(i - 1))
+                        .append(count);
+                count = 1;
+            }
         }
+        sb.append(input.charAt(input.length() - 1))
+                .append(count);
 
         if (sb.length() > input.length()) {
             return input;
@@ -210,7 +214,7 @@ public class DSA {
     /**
      * 題目：
      * 請設計一個方法，接收一個字串陣列，儲存每個單字出現的位置索引。
-     *
+     * <p>
      * 範例：
      * String[] words = {"apple", "banana", "apple", "orange", "banana", "apple"};
      * 輸出:
@@ -235,15 +239,15 @@ public class DSA {
      * Value 是該首字母對應的所有字串集合（Set），
      * 集合內字串要保持原始大小寫。
      * 回傳這個 Map。
-     *
+     * <p>
      * 輸入：
      * ["Apple", "apricot", "Banana", "berry", "Cherry", "cranberry", "Avocado"]
-     *
+     * <p>
      * 輸出：
      * {
-     *   'a' : ["Apple", "apricot", "Avocado"],
-     *   'b' : ["Banana", "berry"],
-     *   'c' : ["Cherry", "cranberry"]
+     * 'a' : ["Apple", "apricot", "Avocado"],
+     * 'b' : ["Banana", "berry"],
+     * 'c' : ["Cherry", "cranberry"]
      * }
      */
     public static Map<Character, Set<String>> groupWordsByFirstLetterIgnoreCase(List<String> words) {
@@ -265,7 +269,7 @@ public class DSA {
 //        }
 
         for (String word : words) {
-            map.computeIfAbsent(word.toLowerCase().charAt(0),  k -> new LinkedHashSet<>()).add(word);
+            map.computeIfAbsent(word.toLowerCase().charAt(0), k -> new LinkedHashSet<>()).add(word);
         }
 
         return map;
@@ -274,16 +278,16 @@ public class DSA {
     /**
      * 題目：找交集
      * 從兩組學生名單，找出兩位老師課程都選修的學生（交集），並印出學生名單（依照字母順序）。
-     *
+     * <p>
      * 讀入兩個學生名單（每組資料用逗號分隔，學生名字不重複，英文名字，不區分大小寫但輸出需統一轉為小寫）。
      * 印出交集的學生名單，依照字母排序後印出。
-     *
+     * <p>
      * A 的學生名單：
      * Alice,Bob,Charlie,diana
-     *
+     * <p>
      * 老師 B 的學生名單：
      * bob,Diana,Edward
-     *
+     * <p>
      * 輸出:
      * [bob, diana]
      */
@@ -313,16 +317,16 @@ public class DSA {
      * 題目：依字首分組並統計數量（不區分大小寫）
      * 描述：
      * 請寫一個方法，接收一個 List<String>，回傳一個 Map<Character, Integer>，統計每個「開頭字母（a-z）」開頭的字串有幾個（不區分大小寫）。
-     *
+     * <p>
      * 忽略開頭不是英文字母的字串（例如數字、符號）
-     *
+     * <p>
      * 忽略 null 或空字串
-     *
+     * <p>
      * 統一以小寫英文字母當作 key
-     *
+     * <p>
      * 輸入：
      * ["apple", "banana", "Avocado", "Blueberry", "123", "", null, "apricot"]
-     *
+     * <p>
      * 輸出：
      * {a=3, b=2}
      */
@@ -348,7 +352,7 @@ public class DSA {
      * 題目：找出大於平均值的數字
      * 描述：
      * 請寫一個方法，接收一個 List<Integer>，回傳一個新的 List<Integer>，其中包含所有大於平均值的整數（平均值為浮點數，取所有數字的總和除以個數）。
-     *
+     * <p>
      * 輸入：
      * [10, 20, 30, 40, 50]
      * 平均值為 30，輸出：
@@ -433,13 +437,13 @@ public class DSA {
     /**
      * 題目：找出第一個只出現一次的數字
      * 請實作一個方法 findFirstUnique，給定一個 List<Integer>，找出第一個只出現一次的數字，並回傳它。如果所有數字都重複，請回傳 -1。
-     *
+     * <p>
      * 輸入： [4, 5, 1, 2, 0, 4, 1, 2]
      * 輸出： 5
-     *
+     * <p>
      * 輸入： [1, 2, 2, 1]
      * 輸出： -1
-     *
+     * <p>
      * 限制條件：
      * 可使用 Map 或 Set
      * 請保留「原始順序」
@@ -467,10 +471,10 @@ public class DSA {
      * 請實作一個方法 findFirstDuplicate，輸入一個 List<Integer>，找出第一個出現兩次的數字，並回傳它。
      * 輸入： [4, 1, 3, 2, 5, 3, 2]
      * 輸出： 3   // 3 是第一個「第二次出現」的數字
-     *
+     * <p>
      * 輸入： [1, 2, 3, 4]
      * 輸出： -1  // 沒有任何重複
-     *
+     * <p>
      * 限制條件：
      * 不可使用 Map
      * 可使用 Set
@@ -497,11 +501,11 @@ public class DSA {
      * 範例 1：
      * 輸入： [1, 2, 3, 2, 4, 5, 1, 1]
      * 輸出： [1, 2]
-     *
-     *  範例 2：
-     *  輸入： [5, 6, 7, 8]
-     *  輸出： []
-     *
+     * <p>
+     * 範例 2：
+     * 輸入： [5, 6, 7, 8]
+     * 輸出： []
+     * <p>
      * 限制條件：
      * 回傳的 list 不需排序
      * 不可使用 Map
@@ -546,11 +550,11 @@ public class DSA {
     /**
      * 題目：找出缺少的整數
      * 請實作一個方法 findMissingNumbers，輸入為一個遞增排序但有缺漏的 List<Integer>，內容包含 1 到 n（n 是最大數字），但中間可能漏了一些數字。
-     *
+     * <p>
      * 請找出所有缺少的整數，並以 List<Integer> 回傳，數字需由小到大排序。
      * 輸入： [1, 2, 4, 6]
      * 輸出： [3, 5]
-     *
+     * <p>
      * 輸入： [1, 2, 3, 4, 5]
      * 輸出： []
      */
@@ -569,7 +573,7 @@ public class DSA {
 //            }
 //        }
 
-         // O(n)
+        // O(n)
 //        List<Integer> res = new ArrayList<>();
 //        int i = 1;
 //        int index = 0;
@@ -667,29 +671,29 @@ public class DSA {
     /**
      * 移除重複並排序字串（不區分大小寫）
      * 請實作一個方法 processList(List<String> input)，輸入是一個字串清單。請你完成以下任務：
-     *
+     * <p>
      * 移除重複的字串，不區分大小寫（例如 "Apple" 和 "apple" 視為相同）。
-     *
+     * <p>
      * 將結果以字典順序（不區分大小寫）排序。
-     *
+     * <p>
      * 若大小寫版本都存在，優先保留小寫版本。
-     *
+     * <p>
      * 若某個字只出現一次，無論原本是大寫還是小寫，請將其轉為小寫加入結果。
-     *
+     * <p>
      * 回傳一個處理後的新清單，不可修改原始輸入 List。
-     *
+     * <p>
      * 限制條件
      * 輸入 List 長度範圍：0 <= input.size() <= 10^4
-     *
+     * <p>
      * 每個字串僅包含英文字母 A-Z 或 a-z
-     *
+     * <p>
      * 回傳結果需全部為小寫字母，且不能有重複字串
-     *
+     * <p>
      * 結果需按照字典順序（lexicographical order）排列
      * 輸入：
      * ["Banana", "apple", "Orange", "banana", "APPLE"]
      * 輸出：
-     *["apple", "banana", "orange"]
+     * ["apple", "banana", "orange"]
      */
     public static List<String> toLowercaseSortedList(List<String> input) {
         if (input == null || input.isEmpty()) {
