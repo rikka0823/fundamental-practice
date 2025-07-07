@@ -142,12 +142,69 @@ public class DSA {
         printEvenMultiplicationTable();
          */
 
-        // compressString
-        System.out.println(compressString("aaabbccccd"));
-        System.out.println(compressString("abcd"));
-        System.out.println(compressString("aabb"));
-        System.out.println(compressString("AAaa"));
+        // computeAverageScores
+        List<Map<String, Object>> studentScoreList = List.of(
+                Map.of("name", "Alice", "score", 90),
+                Map.of("name", "Bob", "score", 80),
+                Map.of("name", "alice", "score", 70),
+                Map.of("name", "Bob", "score", 85),
+                Map.of("name", "Charlie", "score", 60)
+        );
+        System.out.println(computeAverageScores(studentScoreList));
+    }
 
+    /**
+     * 題目：統計學生成績
+     * 說明：
+     * 請你寫一段 Java 程式，讀入一組學生的成績資料，使用 Map<String, List<Integer>> 結構儲存每位學生的成績，並計算每位學生的平均分數，最後輸出結果。
+     * <p>
+     * 輸入資料格式；
+     * [
+     * {"name": "Alice", "score": 90},
+     * {"name": "Bob", "score": 80},
+     * {"name": "Alice", "score": 70},
+     * {"name": "Bob", "score": 85},
+     * {"name": "Charlie", "score": 60}
+     * ]
+     * <p>
+     * 輸出：
+     * 計算並印出每個學生的平均成績。
+     * 學生名稱不重複區分大小寫（"alice" 與 "Alice" 為同一人）。
+     * 輸出學生時依照平均成績從高到低排序。
+     */
+    public static Map<String, Double> computeAverageScores(List<Map<String, Object>> studentScoreList) {
+        if (studentScoreList == null || studentScoreList.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<String, List<Integer>> scoresMap = new HashMap<>();
+        for (Map<String, Object> studentScore : studentScoreList) {
+            for (Map.Entry<String, Object> entry : studentScore.entrySet()) {
+                String entryKey = entry.getKey();
+                String key = entryKey.substring(0, 1).toUpperCase() + entryKey.substring(1).toLowerCase();
+                int value = (Integer) entry.getValue();
+                scoresMap.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
+            }
+        }
+
+        Map<String, Double> res = new HashMap<>();
+        for (Map.Entry<String, List<Integer>> listEntry : scoresMap.entrySet()) {
+            int sum = 0;
+            for (int score : listEntry.getValue()) {
+                sum += score;
+            }
+            Double average = (double) sum / listEntry.getValue().size();
+            res.put(listEntry.getKey(), average);
+        }
+
+        List<Map.Entry<String, Double>> list = new ArrayList<>(res.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        Map<String, Double> sortedRes = new LinkedHashMap<>();
+        for (Map.Entry<String, Double> entry : list) {
+            sortedRes.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedRes;
     }
 
     /**
