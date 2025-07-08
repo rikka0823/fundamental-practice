@@ -179,12 +179,10 @@ public class DSA {
 
         Map<String, List<Integer>> scoresMap = new HashMap<>();
         for (Map<String, Object> studentScore : studentScoreList) {
-            for (Map.Entry<String, Object> entry : studentScore.entrySet()) {
-                String entryKey = entry.getKey();
-                String key = entryKey.substring(0, 1).toUpperCase() + entryKey.substring(1).toLowerCase();
-                int value = (Integer) entry.getValue();
-                scoresMap.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
-            }
+            String key = (String) studentScore.get("name");
+            String name = key.substring(0, 1).toUpperCase() + key.substring(1).toLowerCase();
+            int score = (Integer) studentScore.get("score");
+            scoresMap.computeIfAbsent(name, k -> new ArrayList<>()).add(score);
         }
 
         Map<String, Double> res = new HashMap<>();
@@ -198,7 +196,8 @@ public class DSA {
         }
 
         List<Map.Entry<String, Double>> list = new ArrayList<>(res.entrySet());
-        list.sort(Map.Entry.comparingByValue());
+//        list.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
+        list.sort(Comparator.comparing(Map.Entry<String, Double>::getValue).reversed());
         Map<String, Double> sortedRes = new LinkedHashMap<>();
         for (Map.Entry<String, Double> entry : list) {
             sortedRes.put(entry.getKey(), entry.getValue());
