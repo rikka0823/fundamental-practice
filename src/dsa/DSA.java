@@ -128,21 +128,22 @@ public class DSA {
          */
 
         /*
-        // groupWordsByFirstLetterIgnoreCase
+        // 將清單中每個字串根據字串首字母分類
         System.out.println(groupWordsByFirstLetterIgnoreCase(Arrays.asList("Apple", "apricot", "Banana", "berry", "Cherry", "cranberry", "Avocado")));
          */
 
         /*
-        // saveWordPositions
+        // 接收一個字串陣列，儲存每個單字出現的位置索引。
         System.out.println(saveWordPositions(new String[]{"apple", "banana", "apple", "orange", "banana", "apple"}));
          */
 
         /*
-        // EvenMultiplicationTable
+        // 九九乘法表（條件過濾版）
         printEvenMultiplicationTable();
          */
 
-        // computeAverageScores
+        /*
+        // 統計學生成績
         List<Map<String, Object>> studentScoreList = List.of(
                 Map.of("name", "Alice", "score", 90),
                 Map.of("name", "Bob", "score", 80),
@@ -151,6 +152,42 @@ public class DSA {
                 Map.of("name", "Charlie", "score", 60)
         );
         System.out.println(computeAverageScores(studentScoreList));
+         */
+
+        // 找出最常出現的字串（Java Stream）
+        System.out.println(mostFrequentWordByStream(Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple")));
+    }
+
+    /**
+     * 題目：找出最常出現的字串（Java Stream）
+     * 給定一個 List<String>，其中包含一些重複的字串，請使用 Java Stream API，找出出現次數最多的字串。
+     * <p>
+     * 若有多個字串出現次數相同，請回傳字典順序最小的那一個。
+     * 輸入：
+     * List<String> words = Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple");
+     * <p>
+     * 輸出：
+     * apple
+     * <p>
+     * 限制條件：
+     * 必須使用 Java Stream API 處理（不能用 for 迴圈）。
+     */
+    public static String mostFrequentWordByStream(List<String> words) {
+        Map<String, Integer> map = words.stream()
+                .collect(Collectors.toMap(
+                        word -> word,
+                        word -> 1,
+                        Integer::sum
+                ));
+
+        List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(map.entrySet());
+        sortedList.sort(
+                Comparator.comparing(Map.Entry<String, Integer>::getValue)
+                        .reversed()
+                        .thenComparing(Map.Entry<String, Integer>::getKey)
+        );
+
+        return sortedList.get(0).getKey();
     }
 
     /**
@@ -290,7 +327,7 @@ public class DSA {
     /**
      * 題目：
      * 接收一個字串清單 words。
-     * 將清單中每個字串根據**字串首字母（忽略大小寫）**分類，存入一個 Map，
+     * 將清單中每個字串根據字串首字母（忽略大小寫）**分類，存入一個 Map，
      * Key 是字串首字母（小寫字元），
      * Value 是該首字母對應的所有字串集合（Set），
      * 集合內字串要保持原始大小寫。
