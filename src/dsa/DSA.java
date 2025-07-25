@@ -154,8 +154,60 @@ public class DSA {
         System.out.println(computeAverageScores(studentScoreList));
          */
 
+        /*
         // 找出最常出現的字串（Java Stream）
         System.out.println(mostFrequentWordByStream(Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple")));
+         */
+
+        System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(1,2,3,1,2,1,2,3), 2));
+        System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(5,5,5,5,5), 3));
+        System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(10,20,10,30,40,10,20), 2));
+
+    }
+
+    /**
+     * 題目：移除清單中出現次數超過 K 次的元素
+     *
+     * 給定一個整數清單 nums 和一個整數 k，請你移除所有在清單中出現次數超過 k 次的元素，並回傳處理後的新清單，保持原來的順序。
+     *
+     * 輸入參數：
+     * nums: 一個整數清單（1 <= nums.length <= 10^4, 每個數字範圍為 -10^4 <= nums[i] <= 10^4）
+     *
+     * k: 一個整數，代表最大允許的重複次數（1 <= k <= 10^4）
+     *
+     * 輸出：
+     * 一個新的 List<Integer>，移除了所有出現超過 k 次的數字，並保留剩下的數字的原順序。
+     *
+     * Input: nums = [1,2,3,1,2,1,2,3], k = 2
+     * Output: [3,3]
+     *
+     * 解釋：
+     * - 1 出現了 3 次 → 超過 k = 2 → 移除所有的 1
+     * - 2 出現了 3 次 → 超過 k = 2 → 移除所有的 2
+     * - 3 出現了 2 次 → 保留
+     */
+    public static List<Integer> removeElementsAppearingMoreThanKTimes(List<Integer> nums, int k) {
+        if (nums == null || k < 0 || nums.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.merge(num, 1, Integer::sum);
+        }
+
+        List<Integer> res = new ArrayList<>();
+        for (int num : nums) {
+//            if (map.get(num) > k) {
+//                continue;
+//            }
+//            res.add(num);
+            if (map.get(num) <= k) {
+                res.add(num);
+            }
+        }
+
+        return res;
     }
 
     /**
