@@ -159,10 +159,59 @@ public class DSA {
         System.out.println(mostFrequentWordByStream(Arrays.asList("apple", "banana", "apple", "orange", "banana", "apple")));
          */
 
+        /*
+        // 移除清單中出現次數超過 K 次的元素
         System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(1,2,3,1,2,1,2,3), 2));
         System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(5,5,5,5,5), 3));
         System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(10,20,10,30,40,10,20), 2));
+         */
 
+        // mostFrequentBigram
+        System.out.println(mostFrequentBigram(new String[]{"the", "quick", "brown", "fox", "quick", "brown", "fox"}));
+        System.out.println(mostFrequentBigram(new String[]{"a", "b", "a", "b", "a", "b"}));
+
+    }
+
+    /**
+     * 題目：找出最多出現的字串對組合
+     *
+     * 給定一個字串陣列 words，請找出在這些字串中，**兩兩相鄰字串組合（bigram）**中出現頻率最高的組合。
+     *
+     * 一個「字串組合」定義為 words[i] + " " + words[i+1]。請找出所有出現次數最多的組合，若有多個，請回傳字典序最小的一個。
+     *
+     *  輸入格式：
+     * words 是一個字串陣列，長度範圍為 2 <= len(words) <= 10^5
+     *
+     * 每個字串長度為 1 <= len(words[i]) <= 20
+     *
+     * 所有字串皆只包含小寫英文字母 'a' 到 'z'
+     *
+     * 範例：
+     * Input: words = ["the", "quick", "brown", "fox", "quick", "brown", "fox"]
+     * Output: "quick brown"
+     */
+    public static String mostFrequentBigram(String[] words) {
+        if (words == null || words.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        Map<String, Integer> map = new TreeMap<>();
+        for (int i = 0; i < words.length - 1; i++) {
+            String key = words[i] + " " + words[i + 1];
+            map.merge(key, 1, Integer::sum);
+        }
+
+        String res = null;
+        int frequent = 0;
+        for (String key : map.keySet()) {
+            int value = map.get(key);
+            if (value > frequent) {
+                frequent = value;
+                res = key;
+            }
+        }
+
+        return res;
     }
 
     /**
