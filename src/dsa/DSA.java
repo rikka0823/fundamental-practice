@@ -166,12 +166,51 @@ public class DSA {
         System.out.println(removeElementsAppearingMoreThanKTimes(Arrays.asList(10,20,10,30,40,10,20), 2));
          */
 
-        // mostFrequentBigram
+        /*
+        // 找出最多出現的字串對組合
         System.out.println(mostFrequentBigram(new String[]{"the", "quick", "brown", "fox", "quick", "brown", "fox"}));
         System.out.println(mostFrequentBigram(new String[]{"a", "b", "a", "b", "a", "b"}));
+         */
 
+        // Filter Words Containing a Substring
+        System.out.println(filterWordsContainingKeyword(Arrays.asList("Apple", "banana", "application", "grape", "Pineapple"), "app"));
+        System.out.println(filterWordsContainingKeyword(Arrays.asList("Dog", "Cat", "mouse", "MoUsepad"), "mouse"));
+        System.out.println(filterWordsContainingKeyword(Arrays.asList("", " ", "abc", "ABC"), "a"));
+        System.out.println(filterWordsContainingKeyword(new ArrayList<>(), "a"));
+        System.out.println(filterWordsContainingKeyword(Arrays.asList("test", "Test", "TEST"), "TeSt"));
     }
 
+    /**
+     * 題目：Filter Words Containing a Substring
+     * 
+     * 給定一個字串陣列 words 和一個關鍵字 keyword，請使用 Java Stream API 過濾出所有包含 keyword 的字串（不區分大小寫），並回傳一個新的 List<String>，結果需按照原本輸入的順序保留。
+     * 
+     * 輸入：
+     * List<String> words：一個包含多個字串的列表。
+     * String keyword：要搜尋的子字串。
+     * 
+     * Input:
+     * words = ["Apple", "banana", "application", "grape", "Pineapple"]
+     * keyword = "app"
+     * Output:
+     * ["Apple", "application", "Pineapple"]
+     * 
+     * ["Dog", "Cat", "mouse", "MoUsepad"], keyword = "mouse" → ["mouse", "MoUsepad"]
+     * ["", " ", "abc", "ABC"], keyword = "a" → ["abc", "ABC"]
+     * [], keyword = "a" → []
+     * ["test", "Test", "TEST"], keyword = "TeSt" → ["test", "Test", "TEST"]
+     * 
+     */
+    public static List<String> filterWordsContainingKeyword(List<String> words, String keyword) {
+        if (words == null || keyword == null || keyword.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        return words.stream()
+                .filter(word -> word.toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+    
     /**
      * 題目：找出最多出現的字串對組合
      *
