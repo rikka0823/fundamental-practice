@@ -172,12 +172,57 @@ public class DSA {
         System.out.println(mostFrequentBigram(new String[]{"a", "b", "a", "b", "a", "b"}));
          */
 
+        /*
         // Filter Words Containing a Substring
         System.out.println(filterWordsContainingKeyword(Arrays.asList("Apple", "banana", "application", "grape", "Pineapple"), "app"));
         System.out.println(filterWordsContainingKeyword(Arrays.asList("Dog", "Cat", "mouse", "MoUsepad"), "mouse"));
         System.out.println(filterWordsContainingKeyword(Arrays.asList("", " ", "abc", "ABC"), "a"));
         System.out.println(filterWordsContainingKeyword(new ArrayList<>(), "a"));
         System.out.println(filterWordsContainingKeyword(Arrays.asList("test", "Test", "TEST"), "TeSt"));
+         */
+
+        // 移除相鄰重複字元
+        System.out.println(removeDuplicates("abbaca"));
+        System.out.println(removeDuplicates("azxxzy"));
+    }
+
+    /**
+     *  題目：移除相鄰重複字元
+     *
+     * 給定一個只包含小寫字母的字串 s，當字串中有兩個相鄰且相同的字元時，將這兩個字元刪除，並重複這個操作直到無法刪除為止。
+     * 請你回傳最終剩下的字串。如果最後字串為空，則回傳空字串 ""。
+     *
+     * Input: "abbaca"
+     * Output: "ca"
+     * Explanation:
+     * "abbaca" → "a**bb**aca" → "aaca" → "a**a**ca" → "ca"
+     *
+     * Input: "azxxzy"
+     * Output: "ay"
+     * Explanation:
+     * "azxxzy" → "az**xx**zy" → "azzy" → "a**zz**y" → "ay"
+     *
+     */
+    public static String removeDuplicates(String s) {
+        if (s == null || s.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        Stack<Character> resStack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (!resStack.isEmpty() && resStack.peek() == c) {
+                resStack.pop();
+            } else {
+                resStack.push(c);
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (char c : resStack) {
+            res.append(c);
+        }
+
+        return res.toString();
     }
 
     /**
