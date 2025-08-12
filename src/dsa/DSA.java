@@ -181,9 +181,52 @@ public class DSA {
         System.out.println(filterWordsContainingKeyword(Arrays.asList("test", "Test", "TEST"), "TeSt"));
          */
 
+        /*
         // 移除相鄰重複字元
         System.out.println(removeDuplicates("abbaca"));
         System.out.println(removeDuplicates("azxxzy"));
+         */
+
+        // Join Unique Lowercase Words
+        System.out.println(joinUniqueLowercaseWords(new String[]{"Apple", "", "Banana", "apple", "banana", "CHERRY"}, "-"));
+        System.out.println(joinUniqueLowercaseWords(new String[]{"JAVA", null, "Python", "", "python", "Go"}, ","));
+        System.out.println(joinUniqueLowercaseWords(new String[]{"", "", "ONLY"}, "|"));
+
+    }
+
+    /**
+     * 題目：Join Unique Lowercase Words
+     *
+     * 給定一個字串陣列 words 和一個分隔符號字串 delimiter，請實作一個方法，回傳以下處理後的結果：
+     * 1.移除陣列中的空字串（""）。
+     * 2.將所有字串轉為小寫。
+     * 3.移除重複的字串（保留第一次出現的順序）。
+     * 4.用 delimiter 將結果合併成一個字串（使用 String.join()）。
+     *
+     * Input: words = ["Apple", "", "Banana", "apple", "banana", "CHERRY"], delimiter = "-"
+     * Output: "apple-banana-cherry"
+     *
+     * Input: words = ["JAVA", "java", "Python", "", "python", "Go"], delimiter = ","
+     * Output: "java,python,go"
+     *
+     * Input: words = ["", "", "ONLY"], delimiter = "|"
+     * Output: "only"
+     *
+     */
+    public static String joinUniqueLowercaseWords(String[] words, String delimiter) {
+        if (words == null || words.length == 0 || delimiter == null) {
+            throw new IllegalArgumentException();
+        }
+
+        Set<String> newWords = new LinkedHashSet<>();
+
+        for (String word : words) {
+            if (word != null && !word.isBlank()) {
+                newWords.add(word.toLowerCase());
+            }
+        }
+
+        return String.join(delimiter, newWords);
     }
 
     /**
