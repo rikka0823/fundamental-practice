@@ -187,28 +187,86 @@ public class DSA {
         System.out.println(removeDuplicates("azxxzy"));
          */
 
+        /*
         // Join Unique Lowercase Words
         System.out.println(joinUniqueLowercaseWords(new String[]{"Apple", "", "Banana", "apple", "banana", "CHERRY"}, "-"));
         System.out.println(joinUniqueLowercaseWords(new String[]{"JAVA", null, "Python", "", "python", "Go"}, ","));
-        System.out.println(joinUniqueLowercaseWords(new String[]{"", "", "ONLY"}, "|"));
+        System.out.println(joinUniqueLowercaseWords(new String[]{"", "", "ONLY", null}, "|"));
+         */
 
+        // 擷取訂單編號
+        System.out.println(extractOrderId("Thank you for your purchase. Order ID: AB1234. We will process it soon."));
+        System.out.println(extractOrderId("Order received. Your Order ID: XY789 is now being processed."));
+        System.out.println(extractOrderId("Reminder: Order ID: 2023XYZ Please make the payment."));
+    }
+
+    /**
+     * 題目：擷取訂單編號
+     * <p>
+     * 題目描述：
+     * 請撰寫一個 Java 方法 extractOrderId(String message)，從傳入的訊息中擷取訂單編號。
+     * 每段訊息都包含一個訂單編號，格式為 "Order ID: XXXX"，其中 XXXX 是由英文字母與數字組成的訂單編號。
+     * <p>
+     * input1 = "Thank you for your purchase. Order ID: AB1234. We will process it soon."
+     * input2 = "Order received. Your Order ID: XY789 is now being processed."
+     * input3 = "Reminder: Order ID: 2023XYZ. Please make the payment."
+     * <p>
+     * output1 = "AB1234"
+     * output2 = "XY789"
+     * output3 = "2023XYZ"
+     * <p>
+     * 如果找不到訂單編號，請回傳 null。
+     * 請處理前後可能有不同的標點符號（如 .、,、空格等）。
+     * 不可使用正規表達式
+     *
+     */
+    public static String extractOrderId(String message) {
+        String orderId;
+        String keyWord = "Order ID: ";
+
+        int startIndex = message.indexOf(keyWord);
+        if (startIndex == -1) {
+            return null;
+        }
+
+        startIndex += keyWord.length();
+        int endIndex = message.length();
+        int endIndexOfSpace = message.indexOf(" ", startIndex);
+        int endIndexOfDot = message.indexOf(".", startIndex);
+        int endInxOfComma = message.indexOf(",", startIndex);
+
+        if (endIndexOfSpace == -1 && endIndexOfDot == -1 && endInxOfComma == -1) {
+            return message.substring(startIndex, endIndex);
+        }
+
+        if (endIndexOfDot != -1 && endIndexOfDot != message.length() -1) {
+            endIndex = endIndexOfDot;
+        } else if (endInxOfComma != -1) {
+            endIndex = endInxOfComma;
+        } else {
+            endIndex = endIndexOfSpace;
+        }
+
+        orderId = message.substring(startIndex, endIndex);
+
+        return orderId;
     }
 
     /**
      * 題目：Join Unique Lowercase Words
-     *
+     * <p>
      * 給定一個字串陣列 words 和一個分隔符號字串 delimiter，請實作一個方法，回傳以下處理後的結果：
      * 1.移除陣列中的空字串（""）。
      * 2.將所有字串轉為小寫。
      * 3.移除重複的字串（保留第一次出現的順序）。
      * 4.用 delimiter 將結果合併成一個字串（使用 String.join()）。
-     *
+     * <p>
      * Input: words = ["Apple", "", "Banana", "apple", "banana", "CHERRY"], delimiter = "-"
      * Output: "apple-banana-cherry"
-     *
+     * <p>
      * Input: words = ["JAVA", "java", "Python", "", "python", "Go"], delimiter = ","
      * Output: "java,python,go"
-     *
+     * <p>
      * Input: words = ["", "", "ONLY"], delimiter = "|"
      * Output: "only"
      *
@@ -230,16 +288,16 @@ public class DSA {
     }
 
     /**
-     *  題目：移除相鄰重複字元
-     *
+     * 題目：移除相鄰重複字元
+     * <p>
      * 給定一個只包含小寫字母的字串 s，當字串中有兩個相鄰且相同的字元時，將這兩個字元刪除，並重複這個操作直到無法刪除為止。
      * 請你回傳最終剩下的字串。如果最後字串為空，則回傳空字串 ""。
-     *
+     * <p>
      * Input: "abbaca"
      * Output: "ca"
      * Explanation:
      * "abbaca" → "a**bb**aca" → "aaca" → "a**a**ca" → "ca"
-     *
+     * <p>
      * Input: "azxxzy"
      * Output: "ay"
      * Explanation:
@@ -270,24 +328,24 @@ public class DSA {
 
     /**
      * 題目：Filter Words Containing a Substring
-     * 
+     * <p>
      * 給定一個字串陣列 words 和一個關鍵字 keyword，請使用 Java Stream API 過濾出所有包含 keyword 的字串（不區分大小寫），並回傳一個新的 List<String>，結果需按照原本輸入的順序保留。
-     * 
+     * <p>
      * 輸入：
      * List<String> words：一個包含多個字串的列表。
      * String keyword：要搜尋的子字串。
-     * 
+     * <p>
      * Input:
      * words = ["Apple", "banana", "application", "grape", "Pineapple"]
      * keyword = "app"
      * Output:
      * ["Apple", "application", "Pineapple"]
-     * 
+     * <p>
      * ["Dog", "Cat", "mouse", "MoUsepad"], keyword = "mouse" → ["mouse", "MoUsepad"]
      * ["", " ", "abc", "ABC"], keyword = "a" → ["abc", "ABC"]
      * [], keyword = "a" → []
      * ["test", "Test", "TEST"], keyword = "TeSt" → ["test", "Test", "TEST"]
-     * 
+     *
      */
     public static List<String> filterWordsContainingKeyword(List<String> words, String keyword) {
         if (words == null || keyword == null || keyword.isEmpty()) {
@@ -298,21 +356,21 @@ public class DSA {
                 .filter(word -> word.toLowerCase().contains(keyword.toLowerCase()))
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * 題目：找出最多出現的字串對組合
-     *
+     * <p>
      * 給定一個字串陣列 words，請找出在這些字串中，**兩兩相鄰字串組合（bigram）**中出現頻率最高的組合。
-     *
+     * <p>
      * 一個「字串組合」定義為 words[i] + " " + words[i+1]。請找出所有出現次數最多的組合，若有多個，請回傳字典序最小的一個。
-     *
-     *  輸入格式：
+     * <p>
+     * 輸入格式：
      * words 是一個字串陣列，長度範圍為 2 <= len(words) <= 10^5
-     *
+     * <p>
      * 每個字串長度為 1 <= len(words[i]) <= 20
-     *
+     * <p>
      * 所有字串皆只包含小寫英文字母 'a' 到 'z'
-     *
+     * <p>
      * 範例：
      * Input: words = ["the", "quick", "brown", "fox", "quick", "brown", "fox"]
      * Output: "quick brown"
@@ -343,20 +401,20 @@ public class DSA {
 
     /**
      * 題目：移除清單中出現次數超過 K 次的元素
-     *
+     * <p>
      * 給定一個整數清單 nums 和一個整數 k，請你移除所有在清單中出現次數超過 k 次的元素，並回傳處理後的新清單，保持原來的順序。
-     *
+     * <p>
      * 輸入參數：
      * nums: 一個整數清單（1 <= nums.length <= 10^4, 每個數字範圍為 -10^4 <= nums[i] <= 10^4）
-     *
+     * <p>
      * k: 一個整數，代表最大允許的重複次數（1 <= k <= 10^4）
-     *
+     * <p>
      * 輸出：
      * 一個新的 List<Integer>，移除了所有出現超過 k 次的數字，並保留剩下的數字的原順序。
-     *
+     * <p>
      * Input: nums = [1,2,3,1,2,1,2,3], k = 2
      * Output: [3,3]
-     *
+     * <p>
      * 解釋：
      * - 1 出現了 3 次 → 超過 k = 2 → 移除所有的 1
      * - 2 出現了 3 次 → 超過 k = 2 → 移除所有的 2
