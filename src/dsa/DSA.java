@@ -194,10 +194,42 @@ public class DSA {
         System.out.println(joinUniqueLowercaseWords(new String[]{"", "", "ONLY", null}, "|"));
          */
 
+        /*
         // 擷取訂單編號
         System.out.println(extractOrderId("Thank you for your purchase. Order ID: AB1234. We will process it soon."));
         System.out.println(extractOrderId("Order received. Your Order ID: XY789 is now being processed."));
         System.out.println(extractOrderId("Reminder: Order ID: 2023XYZ Please make the payment."));
+         */
+
+        // 檢查字串開頭與結尾是否相同
+        System.out.println(isSameStartAndEnd("abxxxxab"));
+        System.out.println(isSameStartAndEnd("ab1234ba"));
+        System.out.println(isSameStartAndEnd("hellohl"));
+        System.out.println(isSameStartAndEnd("abab"));
+        System.out.println(isSameStartAndEnd("a"));
+    }
+
+    /**
+     * 題目：檢查字串開頭與結尾是否相同
+     *
+     * 接收一個字串 str，如果該字串長度大於等於2，且開頭的兩個字元與結尾的兩個字元相同，則回傳 true，否則回傳 false。
+     *
+     * isSameStartAndEnd("abxxxxab") → true
+     * isSameStartAndEnd("ab1234ba") → false
+     * isSameStartAndEnd("hellohl")  → false
+     * isSameStartAndEnd("abab")     → true
+     * isSameStartAndEnd("a")        → false  // 長度不夠
+     */
+    public static boolean isSameStartAndEnd(String str) {
+        if (str == null || str.length() < 2) {
+            return false;
+        }
+
+        if (str.substring(0, 2).equals(str.substring(str.length() - 2))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
