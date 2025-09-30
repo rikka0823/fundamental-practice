@@ -201,12 +201,107 @@ public class DSA {
         System.out.println(extractOrderId("Reminder: Order ID: 2023XYZ Please make the payment."));
          */
 
+        /*
         // 檢查字串開頭與結尾是否相同
         System.out.println(isSameStartAndEnd("abxxxxab"));
         System.out.println(isSameStartAndEnd("ab1234ba"));
         System.out.println(isSameStartAndEnd("hellohl"));
         System.out.println(isSameStartAndEnd("abab"));
         System.out.println(isSameStartAndEnd("a"));
+         */
+
+        /*
+        // 轉換字串中的數字字樣成數字符號
+        System.out.println(convertNumberWords("I have one apple and two bananas"));
+        System.out.println(convertNumberWords("zero is not included"));
+        System.out.println(convertNumberWords("fivefourthreesix"));
+        System.out.println(convertNumberWords("no number here"));
+         */
+
+        // 計算每個字出現次數
+        System.out.println(countWords(List.of("apple", "banana", "apple", "orange", "banana", "apple")));
+
+    }
+
+    /**
+     * 題目：計算每個字出現次數
+     *
+     * 此方法接收一個字串的 List<String>，例如：["apple", "banana", "apple", "orange", "banana", "apple"]
+     * 請回傳一個 Map<String, Integer>，其中 key 是字串，value 是它出現的次數。
+     *
+     * List<String> input = List.of("apple", "banana", "apple", "orange", "banana", "apple");
+     *
+     * 回傳：
+     * {
+     *   "apple" : 3,
+     *   "banana": 2,
+     *   "orange": 1
+     * }
+     *
+     * 限制與要求：
+     * 必須使用 Map 來記錄結果
+     * 使用 if 判斷 key 是否已存在
+     * 不可以使用 Map.merge() 或 Map.getOrDefault()（if-else）
+     * 大小寫視為不同（"Apple" 和 "apple" 視為兩個字）
+     */
+    public static Map<String, Integer> countWords(List<String> words) {
+        if (words == null || words.isEmpty()) {
+            return new HashMap<>();
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : words) {
+            Integer value = map.get(word);
+            if (value == null) {
+                map.put(word, 1);
+            } else {
+                map.put(word, value + 1);
+            }
+        }
+
+        return map;
+    }
+
+    /**
+     * 題目：轉換字串中的數字字樣成數字符號
+     *
+     * 此方法接收一個字串 str，其中可能包含英文的數字字樣（像是 "one", "two", ..., "nine"），請將它們替換成對應的數字字符（'1' ~ '9'），然後回傳轉換後的字串。
+     *
+     *convertNumberWords("I have one apple and two bananas")
+     * → "I have 1 apple and 2 bananas"
+     *
+     * convertNumberWords("zero is not included")
+     * → "zero is not included"  // 不處理 zero
+     *
+     * convertNumberWords("fivefourthreesix")
+     * → "5436"
+     *
+     * convertNumberWords("no number here")
+     * → "no number here"
+     *
+     */
+    public static String convertNumberWords(String str) {
+        if (str == null || str.isBlank()) {
+            return "";
+        }
+
+        Map<String, String> map = Map.of(
+                "one", "1",
+                "two", "2",
+                "three", "3",
+                "four", "4",
+                "five", "5",
+                "six", "6",
+                "seven", "7",
+                "eight", "8",
+                "nine", "9"
+                );
+
+        for (String num : map.keySet()) {
+            str = str.replace(num, map.get(num));
+        }
+
+        return str;
     }
 
     /**
