@@ -218,9 +218,64 @@ public class DSA {
         System.out.println(convertNumberWords("no number here"));
          */
 
+        /*
         // 計算每個字出現次數
         System.out.println(countWords(List.of("apple", "banana", "apple", "orange", "banana", "apple")));
+         */
 
+        // sortWordsByFrequency
+        System.out.println(sortWordsByFrequency(List.of("apple", "banana", "apple", "orange", "banana", "apple", "orange")));
+        System.out.println(sortWordsByFrequency(List.of("dog", "cat", "cat", "dog", "dog", "rabbit")));
+
+    }
+
+    /**
+     * 題目：按頻率排序字串
+     * 此方法接收一個字串的 List<String>，然後返回一個 按頻率降序排列 的字串 List。如果有多個字串出現相同的次數，則按字典順序排序。
+     *
+     * 實作要求：
+     * 使用 Map 來記錄每個字串的出現次數。
+     * 使用 List 來存放最終的結果，並將字串按照頻率降序排列。如果頻率相同，則按照字典順序排列。
+     * 結果中字串的順序應該符合要求。
+     *
+     * List<String> input = List.of("apple", "banana", "apple", "orange", "banana", "apple", "orange");
+     *
+     * sortWordsByFrequency(input)
+     * // 輸出: ["apple", "banana", "orange"]
+     *
+     * List<String> input2 = List.of("dog", "cat", "cat", "dog", "dog", "rabbit");
+     *
+     * sortWordsByFrequency(input2)
+     * // 輸出: ["dog", "cat", "rabbit"]
+     *
+     * 限制與要求：
+     * 不能直接使用排序方法（例如：Collections.sort()），需要手動處理排序。
+     * 必須先使用 Map 記錄頻率，再進行排序。
+     * 頻率相同的字串需要按字典順序排列。
+     */
+    public static List<String> sortWordsByFrequency(List<String> words) {
+        if (words == null || words.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : words) {
+            map.merge(word, 1, Integer::sum);
+        }
+
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort(
+                Comparator.comparing(Map.Entry<String, Integer>::getValue)
+                .reversed()
+                .thenComparing(Map.Entry::getKey)
+        );
+
+        List<String> res = new ArrayList<>();
+        for (Map.Entry<String, Integer> entryMap : list) {
+            res.add(entryMap.getKey());
+        }
+
+        return res;
     }
 
     /**
