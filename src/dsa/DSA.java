@@ -1,6 +1,7 @@
 package dsa;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DSA {
@@ -223,10 +224,55 @@ public class DSA {
         System.out.println(countWords(List.of("apple", "banana", "apple", "orange", "banana", "apple")));
          */
 
+        /*
         // sortWordsByFrequency
         System.out.println(sortWordsByFrequency(List.of("apple", "banana", "apple", "orange", "banana", "apple", "orange")));
         System.out.println(sortWordsByFrequency(List.of("dog", "cat", "cat", "dog", "dog", "rabbit")));
+         */
 
+        // countCharacters
+        System.out.println(countCharacters("Hello, World!"));
+
+    }
+
+    /**
+     * 題目：統計字串中每個字元出現的次數
+     *
+     * 題目描述：
+     * 請你寫一個 Java 類別 CharCounter，它有一個靜態方法：
+     * 此方法會接收一個字串 input，回傳一個 Map，其中包含每個字元（不區分大小寫）的出現次數。
+     * 忽略所有非英文字母（a-z, A-Z 以外的字元不計入統計）。
+     * 統計時大小寫視為相同字母（例如 'A' 和 'a' 視為同一個字母）。
+     * 回傳的 Map 中的 key 為轉換成小寫後的字母。
+     *
+     * "Hello, World!"
+     * ->{d=1, e=1, h=1, l=3, o=2, r=1, w=1}
+     */
+    public static Map<Character, Integer> countCharacters(String input) {
+        if (input == null || input.isBlank()) {
+            return new HashMap<>();
+        }
+
+        /*
+        Map<Character, Integer> map = new TreeMap<>();
+        Pattern pattern = Pattern.compile("[A-Za-z]");
+        String str = input.toLowerCase();
+        for (char c : str.toCharArray()) {
+            if (pattern.matcher(String.valueOf(c)).matches()) {
+                map.merge(c, 1, Integer::sum);
+            }
+        }\
+         */
+
+        Map<Character, Integer> map = new TreeMap<>();
+        String str = input.toLowerCase();
+        for (char c : str.toCharArray()) {
+            if (Character.isLetter(c)) {
+                map.merge(c, 1, Integer::sum);
+            }
+        }
+
+        return map;
     }
 
     /**
