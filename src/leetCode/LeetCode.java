@@ -9,13 +9,6 @@ public class LeetCode {
 
     public static void main(String[] args) {
         /*
-        // 53. Maximum Subarray
-        System.out.println(maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
-        System.out.println(maxSubArray(new int[]{1}));
-        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
-         */
-
-        /*
         // 1. Two Sum
         System.out.println(Arrays.toString(twoSum(new int[]{2, 7, 11, 15}, 9)));
         System.out.println(Arrays.toString(twoSum(new int[]{3, 2, 4}, 6)));
@@ -31,9 +24,137 @@ public class LeetCode {
         System.out.println(isValid("([)]"));
          */
 
+        /*
         // 21. Merge Two Sorted Lists
         System.out.println(mergeTwoLists(new ListNode(1, new ListNode(2, new ListNode(4))),
                 new ListNode(1, new ListNode(3, new ListNode(4)))));
+         */
+
+         /*
+        // 53. Maximum Subarray
+        System.out.println(maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        System.out.println(maxSubArray(new int[]{1}));
+        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
+         */
+
+        // 70. Climbing Stairs
+        System.out.println(climbStairs(2)); // Output: 2
+        System.out.println(climbStairs(3)); // Output: 3
+        System.out.println(climbStairs(5)); // Output: 8
+    }
+
+    /**
+     * 70. Climbing Stairs
+     *
+     * You are climbing a staircase. It takes n steps to reach the top.
+     * Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+     *
+     * Example 1:
+     * Input: n = 2
+     * Output: 2
+     * Explanation: There are two ways to climb to the top.
+     * 1. 1 step + 1 step
+     * 2. 2 steps
+     *
+     * Example 2:
+     * Input: n = 3
+     * Output: 3
+     * Explanation: There are three ways to climb to the top.
+     * 1. 1 step + 1 step + 1 step
+     * 2. 1 step + 2 steps
+     * 3. 2 steps + 1 step
+     *
+     * Constraints:
+     * 1 <= n <= 45
+     */
+    public static int climbStairs(int n) {
+        // f(0) = 1
+        // f(1) = 1
+        // f(2) = f(0) + f(1)
+        // f(3) = f(1) + f(2)
+
+        if (n <= 2) {
+            return n;
+        }
+
+        /*
+        int[] dp = new int[n];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+
+        return dp[n];
+         */
+
+        int a = 1; // dp[0]
+        int b = 1; // dp[1]
+        for (int i = 2; i <= n; i++) {
+            int temp = a + b;
+            a = b;
+            b = temp;
+        }
+
+        return b;
+    }
+
+    /**
+     * 53. Maximum Subarray
+     * <p>
+     * Given an integer array nums, find the subarray with the largest sum, and return its sum.
+     * <p>
+     * Example 1:
+     * Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+     * Output: 6
+     * Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+     * <p>
+     * Example 2:
+     * Input: nums = [1]
+     * Output: 1
+     * Explanation: The subarray [1] has the largest sum 1.
+     * <p>
+     * Example 3:
+     * Input: nums = [5,4,-1,7,8]
+     * Output: 23
+     * Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+     * <p>
+     * Constraints:
+     * 1 <= nums.length <= 105
+     * -104 <= nums[i] <= 104
+     * <p>
+     * Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+     */
+    public static int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        /*
+        int res = nums[0];
+        for (int j = 0; j < nums.length; j++) {
+            int sum = 0;
+            for (int i = j; i < nums.length; i++) {
+                sum += nums[i];
+//                if (sum > res) {
+//                    res = sum;
+//                }
+                res = Math.max(res, sum);
+            }
+        }
+
+        return res;
+         */
+
+        int currentSum = nums[0];
+        int maxSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            currentSum = Math.max(nums[i], currentSum + nums[i]);
+            maxSum = Math.max(currentSum, maxSum);
+        }
+
+        return maxSum;
     }
 
     /**
@@ -220,63 +341,5 @@ public class LeetCode {
         }
 
         return new int[]{};
-    }
-
-    /**
-     * 53. Maximum Subarray
-     * <p>
-     * Given an integer array nums, find the subarray with the largest sum, and return its sum.
-     * <p>
-     * Example 1:
-     * Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
-     * Output: 6
-     * Explanation: The subarray [4,-1,2,1] has the largest sum 6.
-     * <p>
-     * Example 2:
-     * Input: nums = [1]
-     * Output: 1
-     * Explanation: The subarray [1] has the largest sum 1.
-     * <p>
-     * Example 3:
-     * Input: nums = [5,4,-1,7,8]
-     * Output: 23
-     * Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
-     * <p>
-     * Constraints:
-     * 1 <= nums.length <= 105
-     * -104 <= nums[i] <= 104
-     * <p>
-     * Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
-     */
-    public static int maxSubArray(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            throw new IllegalArgumentException();
-        }
-
-        /*
-        int res = nums[0];
-        for (int j = 0; j < nums.length; j++) {
-            int sum = 0;
-            for (int i = j; i < nums.length; i++) {
-                sum += nums[i];
-//                if (sum > res) {
-//                    res = sum;
-//                }
-                res = Math.max(res, sum);
-            }
-        }
-
-        return res;
-         */
-
-        int currentSum = nums[0];
-        int maxSum = nums[0];
-
-        for (int i = 1; i < nums.length; i++) {
-            currentSum = Math.max(nums[i], currentSum + nums[i]);
-            maxSum = Math.max(currentSum, maxSum);
-        }
-
-        return maxSum;
     }
 }
