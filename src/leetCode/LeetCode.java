@@ -37,25 +37,169 @@ public class LeetCode {
         System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
          */
 
+        /*
         // 70. Climbing Stairs
         System.out.println(climbStairs(2)); // Output: 2
         System.out.println(climbStairs(3)); // Output: 3
         System.out.println(climbStairs(5)); // Output: 8
+         */
+
+        /*
+        // 121. Best Time to Buy and Sell Stock
+        System.out.println(maxProfit(new int[]{7, 1, 5, 3, 6, 4}));
+        System.out.println(maxProfit(new int[]{7, 6, 4, 3, 1}));
+         */
+
+        // 125. Valid Palindrome
+        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+        System.out.println(isPalindrome("race a car"));
+        System.out.println(isPalindrome(" "));
+        System.out.println(isPalindrome(".,,,,,,"));
+
+    }
+
+    /**
+     * 125. Valid Palindrome
+     *
+     * A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+     * Given a string s, return true if it is a palindrome, or false otherwise.
+     *
+     * Example 1:
+     * Input: s = "A man, a plan, a canal: Panama"
+     * Output: true
+     * Explanation: "amanaplanacanalpanama" is a palindrome.
+     *
+     * Example 2:
+     * Input: s = "race a car"
+     * Output: false
+     * Explanation: "raceacar" is not a palindrome.
+     *
+     * Example 3:
+     * Input: s = " "
+     * Output: true
+     * Explanation: s is an empty string "" after removing non-alphanumeric characters.
+     * Since an empty string reads the same forward and backward, it is a palindrome.
+     *
+     * Constraints:
+     * 1 <= s.length <= 2 * 105
+     * s consists only of printable ASCII characters.
+     */
+    public static boolean isPalindrome(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException();
+        }
+
+        /*
+        String str = s.toLowerCase();
+        StringBuilder sb = new StringBuilder();
+        for (char c : str.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                sb.append(c);
+            }
+        }
+
+        String newStr = sb.toString();
+        for (int i = 0; i < newStr.length() / 2; i++) {
+            if (newStr.charAt(i) != newStr.charAt(newStr.length() - 1 - i)) {
+                return false;
+            }
+        }
+
+        return true;
+         */
+
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left < right) {
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+
+    /**
+     * 121. Best Time to Buy and Sell Stock
+     * <p>
+     * You are given an array prices where prices[i] is the price of a given stock on the ith day.
+     * You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+     * Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+     * <p>
+     * Example 1:
+     * Input: prices = [7,1,5,3,6,4]
+     * Output: 5
+     * Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+     * Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+     * <p>
+     * Example 2:
+     * Input: prices = [7,6,4,3,1]
+     * Output: 0
+     * Explanation: In this case, no transactions are done and the max profit = 0.
+     * <p>
+     * Constraints:
+     * 1 <= prices.length <= 105
+     * 0 <= prices[i] <= 104
+     */
+    public static int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        /*
+        int profit = 0;
+        for (int j = 0; j < prices.length - 1; j++) {
+            int buy = prices[j];
+            for (int i = j + 1; i < prices.length; i++) {
+                int sell = prices[i];
+                int temp = sell - buy;
+                if (temp > profit) {
+                    profit = temp;
+                }
+            }
+        }
+
+        return profit;
+         */
+
+        int minPrice = prices[0];
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            } else {
+                profit = Math.max(profit, prices[i] - minPrice);
+            }
+        }
+
+        return profit;
     }
 
     /**
      * 70. Climbing Stairs
-     *
+     * <p>
      * You are climbing a staircase. It takes n steps to reach the top.
      * Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
-     *
+     * <p>
      * Example 1:
      * Input: n = 2
      * Output: 2
      * Explanation: There are two ways to climb to the top.
      * 1. 1 step + 1 step
      * 2. 2 steps
-     *
+     * <p>
      * Example 2:
      * Input: n = 3
      * Output: 3
@@ -63,7 +207,7 @@ public class LeetCode {
      * 1. 1 step + 1 step + 1 step
      * 2. 1 step + 2 steps
      * 3. 2 steps + 1 step
-     *
+     * <p>
      * Constraints:
      * 1 <= n <= 45
      */
@@ -159,23 +303,23 @@ public class LeetCode {
 
     /**
      * 21. Merge Two Sorted Lists
-     *
+     * <p>
      * You are given the heads of two sorted linked lists list1 and list2.
      * Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
      * Return the head of the merged linked list.
-     *
+     * <p>
      * Example 1:
      * Input: list1 = [1,2,4], list2 = [1,3,4]
      * Output: [1,1,2,3,4,4]
-     *
+     * <p>
      * Example 2:
      * Input: list1 = [], list2 = []
      * Output: []
-     *
+     * <p>
      * Example 3:
      * Input: list1 = [], list2 = [0]
      * Output: [0]
-     *
+     * <p>
      * Constraints:
      * The number of nodes in both lists is in the range [0, 50].
      * -100 <= Node.val <= 100
