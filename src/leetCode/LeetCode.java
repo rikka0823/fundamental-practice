@@ -50,12 +50,134 @@ public class LeetCode {
         System.out.println(maxProfit(new int[]{7, 6, 4, 3, 1}));
          */
 
+        /*
         // 125. Valid Palindrome
         System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
         System.out.println(isPalindrome("race a car"));
         System.out.println(isPalindrome(" "));
         System.out.println(isPalindrome(".,,,,,,"));
+         */
 
+        /*
+        // 136. Single Number
+        System.out.println(singleNumber(new int[]{2, 2, 1}));
+        System.out.println(singleNumber(new int[]{4, 1, 2, 1, 2}));
+        System.out.println(singleNumber(new int[]{1}));
+         */
+
+        // 141. Linked List Cycle
+        ListNode a = new ListNode(1);
+        ListNode b = new ListNode(2);
+        ListNode c = new ListNode(3);
+        ListNode d = new ListNode(4);
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        d.next = b;
+        System.out.println(hasCycle(a));
+
+    }
+
+    /**
+     * 141. Linked List Cycle
+     *
+     * Given head, the head of a linked list, determine if the linked list has a cycle in it.
+     * There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+     * Return true if there is a cycle in the linked list. Otherwise, return false.
+     *
+     * Example 1:
+     * Input: head = [3,2,0,-4], pos = 1
+     * Output: true
+     * Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+     *
+     * Example 2:
+     * Input: head = [1,2], pos = 0
+     * Output: true
+     * Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+     *
+     * Example 3:
+     * Input: head = [1], pos = -1
+     * Output: false
+     * Explanation: There is no cycle in the linked list.
+     *
+     * Constraints:
+     * The number of the nodes in the list is in the range [0, 104].
+     * -105 <= Node.val <= 105
+     * pos is -1 or a valid index in the linked-list.
+     *
+     * Follow up: Can you solve it using O(1) (i.e. constant) memory
+     */
+    public static boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 136. Single Number
+     *
+     * Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+     * You must implement a solution with a linear runtime complexity and use only constant extra space.
+     *
+     * Example 1:
+     * Input: nums = [2,2,1]
+     * Output: 1
+     *
+     * Example 2:
+     * Input: nums = [4,1,2,1,2]
+     * Output: 4
+     *
+     * Example 3:
+     * Input: nums = [1]
+     * Output: 1
+     *
+     * Constraints:
+     * 1 <= nums.length <= 3 * 104
+     * -3 * 104 <= nums[i] <= 3 * 104
+     * Each element in the array appears twice except for one element which appears only once.
+     */
+    public static int singleNumber(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        /*
+        int target = nums[0];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int key = nums[i];
+            map.merge(key, 1, Integer::sum);
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 1) {
+                target = entry.getKey();
+                break;
+            }
+        }
+
+        return target;
+         */
+
+
+        // a ^ a = 0, a ^ b = 1, 0 ^ a = a
+        int target = 0;
+        for (int i : nums) {
+            target ^= i;
+        }
+
+        return target;
     }
 
     /**
