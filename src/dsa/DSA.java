@@ -230,9 +230,49 @@ public class DSA {
         System.out.println(sortWordsByFrequency(List.of("dog", "cat", "cat", "dog", "dog", "rabbit")));
          */
 
+        /*
         // countCharacters
         System.out.println(countCharacters("Hello, World!"));
+         */
 
+        System.out.println(reverseWords("Hello World"));
+    }
+
+    /**
+     * 題目：反轉字串中的每個單詞
+     *
+     * 描述：
+     * 給定一個字符串 s，其中包含由空格分隔的單詞。請寫一個 Java 函數來反轉字符串中的每個單詞，但保持單詞的順序不變。
+     *
+     * 例如：
+     * 輸入："Hello World"
+     * 輸出："olleH dlroW"
+     *
+     * 額外要求：
+     * 不可以使用內建的 reverse() 方法或其他輔助庫。
+     * 請編寫 reverseWords(String s) 方法，並對其進行測試。
+     *
+     * 提示：
+     * 你需要逐一反轉每個單詞。
+     * 可以使用 split(" ") 方法將字符串分割成單詞數組，然後反轉每個單詞。
+     */
+    public static String reverseWords(String s) {
+        if (s == null || s.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        String[] strings = s.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < strings.length; j++) {
+            for (int i = strings[j].length() - 1; i >= 0; i--) {
+                sb.append(strings[j].charAt(i));
+            }
+            if (j < strings.length - 1) {
+                sb.append(" ");
+            }
+        }
+
+        return sb.toString();
     }
 
     /**
