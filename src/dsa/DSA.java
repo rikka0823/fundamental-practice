@@ -235,23 +235,78 @@ public class DSA {
         System.out.println(countCharacters("Hello, World!"));
          */
 
+        /*
+        // reverseWords
         System.out.println(reverseWords("Hello World"));
+         */
+
+        // averageExcludingMinMax
+        System.out.println(averageExcludingMinMax(new int[]{1, 2, 3, 4, 5}));
+        System.out.println(averageExcludingMinMax(new int[]{10, 10, 10}));
+        System.out.println(averageExcludingMinMax(new int[]{5, 7}));
+        System.out.println(averageExcludingMinMax(new int[]{1, 1, 2, 2, 3, 3}));
+    }
+
+    /**
+     * 題目：計算陣列元素的平均值（不含最大與最小值）
+     * <p>
+     * 給定一個整數陣列 numbers，計算並回傳陣列中元素的平均值，不包含最大值與最小值。
+     * 如果陣列長度小於 3，請回傳 0.0
+     * <p>
+     * 範例輸入與輸出：
+     * averageExcludingMinMax(new int[]{1, 2, 3, 4, 5})     → 3.0   // 除去1與5，平均(2+3+4)/3=3.0
+     * averageExcludingMinMax(new int[]{10, 10, 10})        → 10.0  // 最大最小都一樣，除去後剩一個10
+     * averageExcludingMinMax(new int[]{5, 7})              → 0.0   // 少於3個元素
+     * averageExcludingMinMax(new int[]{1, 1, 2, 2, 3, 3})  → 2.0   // 除去最大3與最小1，剩下(1,2,2,3)
+     * <p>
+     * 限制條件：
+     * 不使用內建排序方法
+     * 使用迴圈找最大最小值
+     * 不需處理 null 陣列
+     */
+    public static double averageExcludingMinMax(int[] numbers) {
+        if (numbers.length < 3) {
+            return 0.0;
+        }
+
+        List<Integer> list = new ArrayList<>();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int num : numbers) {
+            if (num < min) {
+                min = num;
+            }
+            if (num > max) {
+                max = num;
+            }
+            list.add(num);
+        }
+
+        list.remove(Integer.valueOf(min));
+        list.remove(Integer.valueOf(max));
+
+        double sum = 0.0;
+        for (int num : list) {
+            sum += num;
+        }
+
+        return sum / (numbers.length - 2);
     }
 
     /**
      * 題目：反轉字串中的每個單詞
-     *
+     * <p>
      * 描述：
      * 給定一個字符串 s，其中包含由空格分隔的單詞。請寫一個 Java 函數來反轉字符串中的每個單詞，但保持單詞的順序不變。
-     *
+     * <p>
      * 例如：
      * 輸入："Hello World"
      * 輸出："olleH dlroW"
-     *
+     * <p>
      * 額外要求：
      * 不可以使用內建的 reverse() 方法或其他輔助庫。
      * 請編寫 reverseWords(String s) 方法，並對其進行測試。
-     *
+     * <p>
      * 提示：
      * 你需要逐一反轉每個單詞。
      * 可以使用 split(" ") 方法將字符串分割成單詞數組，然後反轉每個單詞。
@@ -277,14 +332,14 @@ public class DSA {
 
     /**
      * 題目：統計字串中每個字元出現的次數
-     *
+     * <p>
      * 題目描述：
      * 請你寫一個 Java 類別 CharCounter，它有一個靜態方法：
      * 此方法會接收一個字串 input，回傳一個 Map，其中包含每個字元（不區分大小寫）的出現次數。
      * 忽略所有非英文字母（a-z, A-Z 以外的字元不計入統計）。
      * 統計時大小寫視為相同字母（例如 'A' 和 'a' 視為同一個字母）。
      * 回傳的 Map 中的 key 為轉換成小寫後的字母。
-     *
+     * <p>
      * "Hello, World!"
      * ->{d=1, e=1, h=1, l=3, o=2, r=1, w=1}
      */
@@ -318,22 +373,22 @@ public class DSA {
     /**
      * 題目：按頻率排序字串
      * 此方法接收一個字串的 List<String>，然後返回一個 按頻率降序排列 的字串 List。如果有多個字串出現相同的次數，則按字典順序排序。
-     *
+     * <p>
      * 實作要求：
      * 使用 Map 來記錄每個字串的出現次數。
      * 使用 List 來存放最終的結果，並將字串按照頻率降序排列。如果頻率相同，則按照字典順序排列。
      * 結果中字串的順序應該符合要求。
-     *
+     * <p>
      * List<String> input = List.of("apple", "banana", "apple", "orange", "banana", "apple", "orange");
-     *
+     * <p>
      * sortWordsByFrequency(input)
      * // 輸出: ["apple", "banana", "orange"]
-     *
+     * <p>
      * List<String> input2 = List.of("dog", "cat", "cat", "dog", "dog", "rabbit");
-     *
+     * <p>
      * sortWordsByFrequency(input2)
      * // 輸出: ["dog", "cat", "rabbit"]
-     *
+     * <p>
      * 限制與要求：
      * 不能直接使用排序方法（例如：Collections.sort()），需要手動處理排序。
      * 必須先使用 Map 記錄頻率，再進行排序。
@@ -352,8 +407,8 @@ public class DSA {
         List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
         list.sort(
                 Comparator.comparing(Map.Entry<String, Integer>::getValue)
-                .reversed()
-                .thenComparing(Map.Entry::getKey)
+                        .reversed()
+                        .thenComparing(Map.Entry::getKey)
         );
 
         List<String> res = new ArrayList<>();
@@ -366,19 +421,19 @@ public class DSA {
 
     /**
      * 題目：計算每個字出現次數
-     *
+     * <p>
      * 此方法接收一個字串的 List<String>，例如：["apple", "banana", "apple", "orange", "banana", "apple"]
      * 請回傳一個 Map<String, Integer>，其中 key 是字串，value 是它出現的次數。
-     *
+     * <p>
      * List<String> input = List.of("apple", "banana", "apple", "orange", "banana", "apple");
-     *
+     * <p>
      * 回傳：
      * {
-     *   "apple" : 3,
-     *   "banana": 2,
-     *   "orange": 1
+     * "apple" : 3,
+     * "banana": 2,
+     * "orange": 1
      * }
-     *
+     * <p>
      * 限制與要求：
      * 必須使用 Map 來記錄結果
      * 使用 if 判斷 key 是否已存在
@@ -405,18 +460,18 @@ public class DSA {
 
     /**
      * 題目：轉換字串中的數字字樣成數字符號
-     *
+     * <p>
      * 此方法接收一個字串 str，其中可能包含英文的數字字樣（像是 "one", "two", ..., "nine"），請將它們替換成對應的數字字符（'1' ~ '9'），然後回傳轉換後的字串。
-     *
-     *convertNumberWords("I have one apple and two bananas")
+     * <p>
+     * convertNumberWords("I have one apple and two bananas")
      * → "I have 1 apple and 2 bananas"
-     *
+     * <p>
      * convertNumberWords("zero is not included")
      * → "zero is not included"  // 不處理 zero
-     *
+     * <p>
      * convertNumberWords("fivefourthreesix")
      * → "5436"
-     *
+     * <p>
      * convertNumberWords("no number here")
      * → "no number here"
      *
@@ -436,7 +491,7 @@ public class DSA {
                 "seven", "7",
                 "eight", "8",
                 "nine", "9"
-                );
+        );
 
         for (String num : map.keySet()) {
             str = str.replace(num, map.get(num));
@@ -447,9 +502,9 @@ public class DSA {
 
     /**
      * 題目：檢查字串開頭與結尾是否相同
-     *
+     * <p>
      * 接收一個字串 str，如果該字串長度大於等於2，且開頭的兩個字元與結尾的兩個字元相同，則回傳 true，否則回傳 false。
-     *
+     * <p>
      * isSameStartAndEnd("abxxxxab") → true
      * isSameStartAndEnd("ab1234ba") → false
      * isSameStartAndEnd("hellohl")  → false
@@ -507,7 +562,7 @@ public class DSA {
             return message.substring(startIndex, endIndex);
         }
 
-        if (endIndexOfDot != -1 && endIndexOfDot != message.length() -1) {
+        if (endIndexOfDot != -1 && endIndexOfDot != message.length() - 1) {
             endIndex = endIndexOfDot;
         } else if (endInxOfComma != -1) {
             endIndex = endInxOfComma;
