@@ -240,11 +240,70 @@ public class DSA {
         System.out.println(reverseWords("Hello World"));
          */
 
+        /*
         // averageExcludingMinMax
         System.out.println(averageExcludingMinMax(new int[]{1, 2, 3, 4, 5}));
         System.out.println(averageExcludingMinMax(new int[]{10, 10, 10}));
         System.out.println(averageExcludingMinMax(new int[]{5, 7}));
         System.out.println(averageExcludingMinMax(new int[]{1, 1, 2, 2, 3, 3}));
+         */
+
+        System.out.println(shiftLettersBy3("Hello"));
+        System.out.println(shiftLettersBy3("xyz"));
+        System.out.println(shiftLettersBy3("Java 2025!"));
+
+    }
+
+    /**
+     * 題目：Shift Letters by 3 (英文字母加 3)
+     *
+     * 描述：
+     * 給定一個只包含英文字母和其他字元的字串 s，請將字串中所有的英文字母往後平移 3 個字母。
+     * 字母之間的平移需保留大小寫。
+     * 若平移超過 'z' 或 'Z'，則需從 'a' 或 'A' 重新開始。
+     * 非英文字母（例如數字、空白、符號）不需改變。
+     *
+     * 輸入：s = "Hello"
+     * 輸出："Khoor"
+     * 解釋：H→K, e→h, l→o, l→o, o→r
+     *
+     * 輸入：s = "xyz"
+     * 輸出："abc"
+     * 解釋：x→a, y→b, z→c
+     *
+     * 輸入：s = "Java 2025!"
+     * 輸出："Mdyd 2025!"
+     * 解釋：字母往後移 3，其餘字元不變。
+     */
+    public static String shiftLettersBy3(String s) {
+        if (s == null || s.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (Character.isLetter(c)) {
+                if (c == 'x') {
+                    c = 'a';
+                } else if (c == 'X') {
+                    c = 'A';
+                } else if (c == 'y') {
+                    c = 'b';
+                } else if (c == 'Y') {
+                    c = 'B';
+                } else if (c == 'z') {
+                    c = 'c';
+                } else if (c == 'Z') {
+                    c = 'C';
+                } else {
+                    c += 3;
+                }
+            }
+            sb.append(c);
+        }
+
+        return sb.toString();
     }
 
     /**
