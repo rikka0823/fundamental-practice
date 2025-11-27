@@ -248,9 +248,12 @@ public class DSA {
         System.out.println(averageExcludingMinMax(new int[]{1, 1, 2, 2, 3, 3}));
          */
 
+        /*
+        // Shift Letters by 3
         System.out.println(shiftLettersBy3("Hello"));
         System.out.println(shiftLettersBy3("xyz"));
         System.out.println(shiftLettersBy3("Java 2025!"));
+         */
 
     }
 

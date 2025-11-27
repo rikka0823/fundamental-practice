@@ -1,6 +1,5 @@
 package leetCode;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -65,6 +64,7 @@ public class LeetCode {
         System.out.println(singleNumber(new int[]{1}));
          */
 
+        /*
         // 141. Linked List Cycle
         ListNode a = new ListNode(1);
         ListNode b = new ListNode(2);
@@ -75,36 +75,147 @@ public class LeetCode {
         c.next = d;
         d.next = b;
         System.out.println(hasCycle(a));
+         */
+
+        // 3. Longest Substring Without Repeating Characters
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("bbbbb"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
+        System.out.println(lengthOfLongestSubstring(""));
 
     }
 
     /**
+     * 3. Longest Substring Without Repeating Characters
+     * <p>
+     * Given a string s, find the length of the longest substring without duplicate characters.
+     * <p>
+     * Example 1:
+     * Input: s = "abcabcbb"
+     * Output: 3
+     * Explanation: The answer is "abc", with the length of 3. Note that "bca" and "cab" are also correct answers.
+     * <p>
+     * Example 2:
+     * Input: s = "bbbbb"
+     * Output: 1
+     * Explanation: The answer is "b", with the length of 1.
+     * <p>
+     * Example 3:
+     * Input: s = "pwwkew"
+     * Output: 3
+     * Explanation: The answer is "wke", with the length of 3.
+     * Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+     * <p>
+     * Constraints:
+     * 0 <= s.length <= 5 * 104
+     * s consists of English letters, digits, symbols and spaces.
+     */
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException();
+        }
+
+        if (s.isBlank()) {
+            return 0;
+        }
+
+        /*
+        int length = 0;
+        int currentLength = 0;
+        Set<Character> set = new HashSet<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!set.contains(c)) {
+                set.add(c);
+                currentLength++;
+            } else {
+                if (currentLength > length) {
+                    length = currentLength;
+                }
+                set.clear();
+                set.add(c);
+                currentLength = 1;
+            }
+        }
+
+        if (currentLength > length) {
+            length = currentLength;
+        }
+
+        return length;
+         */
+
+        /*
+        int length;
+        int maxLength = 0;
+        int left = 0;
+        Set<Character> set = new HashSet<>();
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+
+            while (set.contains(c)) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+
+            set.add(c);
+
+            length = right - left + 1;
+            if (length > maxLength) {
+                maxLength = length;
+            }
+        }
+
+        return maxLength;
+         */
+
+        int maxLength = 0;
+        int left = 0;
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+
+            if (map.containsKey(c)) {
+                left = Math.max(left, map.get(c) + 1);
+            }
+
+            map.put(c, right);
+
+            maxLength = Math.max(maxLength, right - left + 1);
+        }
+
+        return maxLength;
+    }
+
+    /**
      * 141. Linked List Cycle
-     *
+     * <p>
      * Given head, the head of a linked list, determine if the linked list has a cycle in it.
      * There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
      * Return true if there is a cycle in the linked list. Otherwise, return false.
-     *
+     * <p>
      * Example 1:
      * Input: head = [3,2,0,-4], pos = 1
      * Output: true
      * Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
-     *
+     * <p>
      * Example 2:
      * Input: head = [1,2], pos = 0
      * Output: true
      * Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
-     *
+     * <p>
      * Example 3:
      * Input: head = [1], pos = -1
      * Output: false
      * Explanation: There is no cycle in the linked list.
-     *
+     * <p>
      * Constraints:
      * The number of the nodes in the list is in the range [0, 104].
      * -105 <= Node.val <= 105
      * pos is -1 or a valid index in the linked-list.
-     *
+     * <p>
      * Follow up: Can you solve it using O(1) (i.e. constant) memory
      */
     public static boolean hasCycle(ListNode head) {
@@ -127,22 +238,22 @@ public class LeetCode {
 
     /**
      * 136. Single Number
-     *
+     * <p>
      * Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
      * You must implement a solution with a linear runtime complexity and use only constant extra space.
-     *
+     * <p>
      * Example 1:
      * Input: nums = [2,2,1]
      * Output: 1
-     *
+     * <p>
      * Example 2:
      * Input: nums = [4,1,2,1,2]
      * Output: 4
-     *
+     * <p>
      * Example 3:
      * Input: nums = [1]
      * Output: 1
-     *
+     * <p>
      * Constraints:
      * 1 <= nums.length <= 3 * 104
      * -3 * 104 <= nums[i] <= 3 * 104
@@ -182,26 +293,26 @@ public class LeetCode {
 
     /**
      * 125. Valid Palindrome
-     *
+     * <p>
      * A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
      * Given a string s, return true if it is a palindrome, or false otherwise.
-     *
+     * <p>
      * Example 1:
      * Input: s = "A man, a plan, a canal: Panama"
      * Output: true
      * Explanation: "amanaplanacanalpanama" is a palindrome.
-     *
+     * <p>
      * Example 2:
      * Input: s = "race a car"
      * Output: false
      * Explanation: "raceacar" is not a palindrome.
-     *
+     * <p>
      * Example 3:
      * Input: s = " "
      * Output: true
      * Explanation: s is an empty string "" after removing non-alphanumeric characters.
      * Since an empty string reads the same forward and backward, it is a palindrome.
-     *
+     * <p>
      * Constraints:
      * 1 <= s.length <= 2 * 105
      * s consists only of printable ASCII characters.
