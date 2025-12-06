@@ -1,8 +1,6 @@
 package leetCode;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class LeetCode {
 
@@ -65,6 +63,13 @@ public class LeetCode {
          */
 
         /*
+        // 268. Missing Number
+        System.out.println(missingNumber(new int[]{3, 0, 1}));
+        System.out.println(missingNumber(new int[]{0, 1}));
+        System.out.println(missingNumber(new int[]{9, 6, 4, 2, 3, 5, 7, 0, 1}));
+         */
+
+        /*
         // 141. Linked List Cycle
         ListNode a = new ListNode(1);
         ListNode b = new ListNode(2);
@@ -77,11 +82,13 @@ public class LeetCode {
         System.out.println(hasCycle(a));
          */
 
+        /*
         // 3. Longest Substring Without Repeating Characters
         System.out.println(lengthOfLongestSubstring("abcabcbb"));
         System.out.println(lengthOfLongestSubstring("bbbbb"));
         System.out.println(lengthOfLongestSubstring("pwwkew"));
         System.out.println(lengthOfLongestSubstring(""));
+         */
 
     }
 
@@ -234,6 +241,72 @@ public class LeetCode {
         }
 
         return false;
+    }
+
+    /**
+     * 268. Missing Number
+     *
+     * Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+     *
+     * Example 1:
+     * Input: nums = [3,0,1]
+     * Output: 2
+     *
+     * Explanation:
+     * n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+     *
+     * Example 2:
+     * Input: nums = [0,1]
+     * Output: 2
+     *
+     * Explanation:
+     * n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
+     *
+     * Example 3:
+     * Input: nums = [9,6,4,2,3,5,7,0,1]
+     * Output: 8
+     *
+     * Explanation:
+     * n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+     *
+     * Constraints:
+     * n == nums.length
+     * 1 <= n <= 104
+     * 0 <= nums[i] <= n
+     * All the numbers of nums are unique.
+     *
+     * Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
+     */
+    public static int missingNumber(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        /*
+        int missingNum = -1;
+
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        for (int i = 0; i <= nums.length; i++) {
+            if (!set.contains(i)) {
+                missingNum = i;
+                break;
+            }
+        }
+
+        return missingNum;
+         */
+
+        int n = nums.length;
+        int missingNum = n;
+        for (int i = 0; i < n; i++) {
+            missingNum ^= i ^ nums[i];
+        }
+
+        return missingNum;
     }
 
     /**
