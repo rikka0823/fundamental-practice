@@ -1,7 +1,6 @@
 package dsa;
 
 import java.util.*;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DSA {
@@ -255,6 +254,63 @@ public class DSA {
         System.out.println(shiftLettersBy3("Java 2025!"));
          */
 
+        // Replace Substring in a Sentence
+        replaceSubString();
+    }
+
+    /**
+     * 題目：Replace Substring in a Sentence
+     *
+     * You are given three strings:
+     * str — the original sentence
+     * repstr — the substring to search for
+     * newstr — the substring used to replace repstr
+     *
+     * Your task is to manually implement, using a loop, the process of finding the first occurrence of repstr inside str and replacing it with newstr.
+     * You must not use built-in replace functions.
+     *
+     * Requirements
+     * Initialize:
+     * str = "I am a teacher!"
+     * repstr = "teacher"
+     * newstr = "professor"
+     *
+     * Print the original string.
+     * Use a loop to:
+     * search for the substring repstr inside str
+     * build a new string with repstr replaced by newstr
+     * Print the modified string.
+     *
+     * Constraints
+     * The replacement must be implemented manually using iteration.
+     * Only the first occurrence of repstr must be replaced.
+     * All strings contain only visible ASCII characters.
+     */
+    public static void replaceSubString() {
+        String str = "I am a teacher!";
+        String repStr = "teacher";
+        String newStr = "professor";
+
+        System.out.println("origin: " + str);
+
+        int index = str.indexOf(repStr);
+        if (index == -1) {
+            System.out.println("not found");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (i != index) {
+                sb.append(c);
+            } else {
+                sb.append(newStr)
+                        .append(str.substring(index + repStr.length()));
+                break;
+            }
+        }
+        System.out.println("modification: " + sb);
     }
 
     /**
