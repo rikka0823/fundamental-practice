@@ -90,9 +90,105 @@ public class LeetCode {
         System.out.println(lengthOfLongestSubstring(""));
          */
 
+        /*
         // 206. Reverse Linked List
         System.out.println(reverseList(new ListNode(1, new ListNode(2, new ListNode(3)))));
+         */
 
+        /*
+        // 217. Contains Duplicate
+        System.out.println(containsDuplicate(new int[]{1, 2, 3, 1}));
+        System.out.println(containsDuplicate(new int[]{1, 2, 3, 4}));
+        System.out.println(containsDuplicate(new int[]{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}));
+         */
+
+        // 412. Fizz Buzz
+        System.out.println(fizzBuzz(3));
+        System.out.println(fizzBuzz(5));
+        System.out.println(fizzBuzz(15));
+    }
+
+    /**
+     * 412. Fizz Buzz
+     *
+     * Given an integer n, return a string array answer (1-indexed) where:
+     * answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
+     * answer[i] == "Fizz" if i is divisible by 3.
+     * answer[i] == "Buzz" if i is divisible by 5.
+     * answer[i] == i (as a string) if none of the above conditions are true.
+     *
+     *
+     * Example 1:
+     * Input: n = 3
+     * Output: ["1","2","Fizz"]
+     *
+     * Example 2:
+     * Input: n = 5
+     * Output: ["1","2","Fizz","4","Buzz"]
+     *
+     * Example 3:
+     * Input: n = 15
+     * Output: ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]
+     *
+     * Constraints:
+     * 1 <= n <= 104
+     */
+    public static List<String> fizzBuzz(int n) {
+        List<String> list = new ArrayList<>();
+
+        for (int i = 1; i <= n; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
+                list.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                list.add("Fizz");
+            } else if (i % 5 == 0) {
+                list.add("Buzz");
+            } else {
+                list.add(String.valueOf(i));
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * 217. Contains Duplicate
+     *
+     * Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+     *
+     * Example 1:
+     * Input: nums = [1,2,3,1]
+     * Output: true
+     *
+     * Explanation:
+     * The element 1 occurs at the indices 0 and 3.
+     *
+     * Example 2:
+     * Input: nums = [1,2,3,4]
+     * Output: false
+     *
+     * Explanation:
+     * All elements are distinct.
+     *
+     * Example 3:
+     * Input: nums = [1,1,1,3,3,4,3,2,4,2]
+     * Output: true
+     *
+     * Constraints:
+     * 1 <= nums.length <= 105
+     * -109 <= nums[i] <= 109
+     */
+    public static boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return true;
+            }
+            set.add(num);
+        }
+
+        return false;
     }
 
     /**
