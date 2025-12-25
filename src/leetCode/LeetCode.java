@@ -109,19 +109,111 @@ public class LeetCode {
         System.out.println(fizzBuzz(15));
          */
 
+        /*
         // 13. Roman to Integer
         System.out.println(romanToInt("III"));
         System.out.println(romanToInt("IV"));
         System.out.println(romanToInt("IX"));
         System.out.println(romanToInt("LVIII"));
         System.out.println(romanToInt("MCMXCIV"));
+         */
+
+        /*
+        // 283. Move Zeroes
+        int[] nums = {1, 0, 3};
+        moveZeroes(nums);
+        System.out.println(Arrays.toString(nums));
+         */
+
+        // 349. Intersection of Two Arrays
+        System.out.println(Arrays.toString(intersection(new int[]{1,2,2,1}, new int[]{2, 2})));
+        System.out.println(Arrays.toString(intersection(new int[]{4, 9, 5}, new int[]{9, 4, 9, 8, 4})));
+    }
+
+    /**
+     * 349. Intersection of Two Arrays
+     *
+     * Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+     *
+     * Example 1:
+     * Input: nums1 = [1,2,2,1], nums2 = [2,2]
+     * Output: [2]
+     *
+     * Example 2:
+     * Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+     * Output: [9,4]
+     * Explanation: [4,9] is also accepted.
+     *
+     * Constraints:
+     * 1 <= nums1.length, nums2.length <= 1000
+     * 0 <= nums1[i], nums2[i] <= 1000
+     */
+    public static int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        for (int num : nums1) {
+            set1.add(num);
+        }
+
+        Set<Integer> set2 = new HashSet<>();
+        for (int num : nums2) {
+            set2.add(num);
+        }
+
+        List<Integer> list = new ArrayList<>();
+        for (int i : set1) {
+            if (set2.contains(i)) {
+                list.add(i);
+            }
+        }
+
+        int[] res = new int[list.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = list.get(i);
+        }
+
+        return res;
+    }
+
+    /**
+     * 283. Move Zeroes
+     * <p>
+     * Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+     * <p>
+     * Note that you must do this in-place without making a copy of the array.
+     * <p>
+     * Example 1:
+     * Input: nums = [0,1,0,3,12]
+     * Output: [1,3,12,0,0]
+     * <p>
+     * Example 2:
+     * Input: nums = [0]
+     * Output: [0]
+     * <p>
+     * Constraints:
+     * 1 <= nums.length <= 104
+     * -231 <= nums[i] <= 231 - 1
+     * <p>
+     * Follow up: Could you minimize the total number of operations done?
+     */
+    public static void moveZeroes(int[] nums) {
+        int index = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                if (i != index) {
+                    int temp = nums[index];
+                    nums[index] = nums[i];
+                    nums[i] = temp;
+                }
+                index++;
+            }
+        }
     }
 
     /**
      * 13. Roman to Integer
-     *
+     * <p>
      * Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
-     *
+     * <p>
      * Symbol       Value
      * I             1
      * V             5
@@ -130,30 +222,30 @@ public class LeetCode {
      * C             100
      * D             500
      * M             1000
-     *
+     * <p>
      * For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
      * Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
-     *
+     * <p>
      * I can be placed before V (5) and X (10) to make 4 and 9.
      * X can be placed before L (50) and C (100) to make 40 and 90.
      * C can be placed before D (500) and M (1000) to make 400 and 900.
      * Given a roman numeral, convert it to an integer.
-     *
+     * <p>
      * Example 1:
      * Input: s = "III"
      * Output: 3
      * Explanation: III = 3.
-     *
+     * <p>
      * Example 2:
      * Input: s = "LVIII"
      * Output: 58
      * Explanation: L = 50, V= 5, III = 3.
-     *
+     * <p>
      * Example 3:
      * Input: s = "MCMXCIV"
      * Output: 1994
      * Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
-     *
+     * <p>
      * Constraints:
      * 1 <= s.length <= 15
      * s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
@@ -181,7 +273,7 @@ public class LeetCode {
 
             if (map.get(s.charAt(i)) < map.get(s.charAt(i + 1))) {
                 res -= map.get(s.charAt(i));
-            }  else {
+            } else {
                 res += map.get(s.charAt(i));
             }
         }
@@ -191,26 +283,26 @@ public class LeetCode {
 
     /**
      * 412. Fizz Buzz
-     *
+     * <p>
      * Given an integer n, return a string array answer (1-indexed) where:
      * answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
      * answer[i] == "Fizz" if i is divisible by 3.
      * answer[i] == "Buzz" if i is divisible by 5.
      * answer[i] == i (as a string) if none of the above conditions are true.
-     *
-     *
+     * <p>
+     * <p>
      * Example 1:
      * Input: n = 3
      * Output: ["1","2","Fizz"]
-     *
+     * <p>
      * Example 2:
      * Input: n = 5
      * Output: ["1","2","Fizz","4","Buzz"]
-     *
+     * <p>
      * Example 3:
      * Input: n = 15
      * Output: ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]
-     *
+     * <p>
      * Constraints:
      * 1 <= n <= 104
      */
@@ -234,27 +326,27 @@ public class LeetCode {
 
     /**
      * 217. Contains Duplicate
-     *
+     * <p>
      * Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
-     *
+     * <p>
      * Example 1:
      * Input: nums = [1,2,3,1]
      * Output: true
-     *
+     * <p>
      * Explanation:
      * The element 1 occurs at the indices 0 and 3.
-     *
+     * <p>
      * Example 2:
      * Input: nums = [1,2,3,4]
      * Output: false
-     *
+     * <p>
      * Explanation:
      * All elements are distinct.
-     *
+     * <p>
      * Example 3:
      * Input: nums = [1,1,1,3,3,4,3,2,4,2]
      * Output: true
-     *
+     * <p>
      * Constraints:
      * 1 <= nums.length <= 105
      * -109 <= nums[i] <= 109
@@ -274,25 +366,25 @@ public class LeetCode {
 
     /**
      * 206. Reverse Linked List
-     *
+     * <p>
      * Given the head of a singly linked list, reverse the list, and return the reversed list.
-     *
+     * <p>
      * Example 1:
      * Input: head = [1,2,3,4,5]
      * Output: [5,4,3,2,1]
-     *
+     * <p>
      * Example 2:
      * Input: head = [1,2]
      * Output: [2,1]
-     *
+     * <p>
      * Example 3:
      * Input: head = []
      * Output: []
-     *
+     * <p>
      * Constraints:
      * The number of nodes in the list is the range [0, 5000].
      * -5000 <= Node.val <= 5000
-     *
+     * <p>
      * Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
      */
     public static ListNode reverseList(ListNode head) {
@@ -462,36 +554,36 @@ public class LeetCode {
 
     /**
      * 268. Missing Number
-     *
+     * <p>
      * Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
-     *
+     * <p>
      * Example 1:
      * Input: nums = [3,0,1]
      * Output: 2
-     *
+     * <p>
      * Explanation:
      * n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
-     *
+     * <p>
      * Example 2:
      * Input: nums = [0,1]
      * Output: 2
-     *
+     * <p>
      * Explanation:
      * n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
-     *
+     * <p>
      * Example 3:
      * Input: nums = [9,6,4,2,3,5,7,0,1]
      * Output: 8
-     *
+     * <p>
      * Explanation:
      * n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
-     *
+     * <p>
      * Constraints:
      * n == nums.length
      * 1 <= n <= 104
      * 0 <= nums[i] <= n
      * All the numbers of nums are unique.
-     *
+     * <p>
      * Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
      */
     public static int missingNumber(int[] nums) {
