@@ -125,9 +125,59 @@ public class LeetCode {
         System.out.println(Arrays.toString(nums));
          */
 
+        /*
         // 349. Intersection of Two Arrays
         System.out.println(Arrays.toString(intersection(new int[]{1,2,2,1}, new int[]{2, 2})));
         System.out.println(Arrays.toString(intersection(new int[]{4, 9, 5}, new int[]{9, 4, 9, 8, 4})));
+         */
+
+        // 387. First Unique Character in a String
+        System.out.println(firstUniqChar("leetcode"));
+        System.out.println(firstUniqChar("loveleetcode"));
+        System.out.println(firstUniqChar("aabb"));
+    }
+
+    /**
+     * 387. First Unique Character in a String
+     *
+     * Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.
+     *
+     * Example 1:
+     * Input: s = "leetcode"
+     * Output: 0
+     *
+     * Explanation:
+     * The character 'l' at index 0 is the first character that does not occur at any other index.
+     *
+     * Example 2:
+     * Input: s = "loveleetcode"
+     * Output: 2
+     *
+     * Example 3:
+     * Input: s = "aabb"
+     * Output: -1
+     *
+     * Constraints:
+     * 1 <= s.length <= 105
+     * s consists of only lowercase English letters.
+     */
+    public static int firstUniqChar(String s) {
+        if (s == null || s.isEmpty()) {
+            return -1;
+        }
+
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        for (char c : s.toCharArray()) {
+            map.merge(c, 1, Integer::sum);
+        }
+
+        for (char c : map.keySet()) {
+            if (map.get(c) == 1) {
+                return s.indexOf(c);
+            }
+        }
+
+        return -1;
     }
 
     /**
