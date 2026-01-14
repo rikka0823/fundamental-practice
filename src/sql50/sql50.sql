@@ -14,7 +14,6 @@ LEFT JOIN course AS c ON t.tno = c.tno
 WHERE t.tname = '諶燕'
 GROUP BY t.tname;
 
-
 -- 4.查詢所有老師所帶的課程數量
 SELECT t.tname, COUNT(c.cno) AS courses
 FROM teacher AS t
@@ -23,6 +22,44 @@ GROUP BY t.tname;
 
 -- 5.查詢姓”張”的學生名單
 SELECT * FROM student WHERE sname LIKE '張%';
+
+-- 6.查詢課程名稱為'Oracle'且分數低於60的學號和分數
+SELECT sc.sno AS no, c.cname as course_name, sc.score as score
+FROM course AS c
+JOIN score AS sc ON c.cno = sc.cno
+WHERE c.cname = 'Oracle' AND sc.score < 60;
+
+-- 7.查詢所有學生的選課課程名稱
+SELECT s.sno AS no, c.cname AS course_name
+FROM student AS s
+LEFT JOIN score AS sc ON s.sno = sc.sno
+LEFT JOIN course AS c ON sc.cno = c.cno;
+
+-- 8.查詢任何一門課程成績在70分以上的學生姓名、課程名稱和分數
+SELECT s.sname AS name, c.cname AS course_name, sc.score AS score
+FROM score AS sc
+JOIN student AS s ON sc.sno = s.sno
+JOIN course AS c ON sc.cno = c.cno
+WHERE sc.score > 70;
+
+-- 9.查詢不及格的課程,並按課程號從大到小排列，學號,課程號,課程名,分數
+SELECT s.sno AS no, c.cno AS course_no, c.cname AS course_name, sc.score AS score
+FROM score AS sc
+JOIN student AS s ON sc.sno = s.sno
+JOIN course AS c ON sc.cno = c.cno
+WHERE sc.score < 60
+ORDER BY course_no DESC;
+
+-- 10.查詢沒學過”諶燕”老師講授的任一門課程的學號,學生姓名
+SELECT sno AS no, sname AS name
+FROM student
+WHERE sno NOT IN (
+	SELECT sc.sno
+	FROM score AS sc
+	JOIN course AS c ON sc.cno = c.cno
+	JOIN teacher AS t ON c.tno = t.tno
+    WHERE t.tname = '諶燕'
+);
 
 create database sql50;
 
