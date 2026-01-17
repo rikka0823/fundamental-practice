@@ -61,6 +61,47 @@ WHERE sno NOT IN (
     WHERE t.tname = '諶燕'
 );
 
+-- 11.查詢兩門以上不及格課程的同學的學號及其平均成績
+SELECT sno AS no, AVG(score) AS avg_score
+FROM score
+WHERE sno IN (
+	SELECT sno
+	FROM score
+	WHERE score < 60
+	GROUP BY sno
+	HAVING COUNT(*) >= 2
+)
+GROUP BY sno;
+
+SELECT sno AS no, AVG(score) AS avg_score
+FROM score
+GROUP BY sno
+HAVING SUM(CASE WHEN score < 60 THEN 1 ELSE 0 END) >= 2;
+
+-- 12.檢索'c004'課程分數小於60,按分數降序排列的同學學號
+SELECT sno, score
+FROM score
+WHERE cno = 'c004' AND score < 60
+ORDER BY score DESC;
+
+-- 13.查詢'c001'課程比'c002'課程成績高的所有學生的學號
+SELECT a.sno AS no
+FROM score AS a
+JOIN score AS b ON a.sno = b.sno
+WHERE a.cno = 'c001' AND b.cno = 'c002' AND a.score > b.score;
+
+-- 14.查詢平均成績大於60分的同學的學號和平均成績
+SELECT sno AS no, AVG(score) AS avg_score
+FROM score
+GROUP BY sno
+HAVING AVG(score) > 60;
+
+-- 15.查詢所有同學的學號.姓名.選課數.總成績
+SELECT s.sno AS no, s.sname AS name, COUNT(cno) AS course_quantity, SUM(score) AS sum_score
+FROM student AS s
+LEFT JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno;
+
 create database sql50;
 
 create table student(
