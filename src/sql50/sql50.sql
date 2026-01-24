@@ -102,6 +102,66 @@ FROM student AS s
 LEFT JOIN score AS sc ON s.sno = sc.sno
 GROUP BY s.sno;
 
+-- 16.查詢姓”劉”的老師的個數
+SELECT COUNT(*) AS teacher_count
+FROM teacher
+WHERE tname LIKE '劉%';
+
+-- 17.查詢只學”諶燕”老師所教的課的同學的學號、姓名
+SELECT  s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+JOIN course AS c ON sc.cno = c.cno
+JOIN teacher AS t ON c.tno = t.tno
+GROUP BY s.sno, s.sname
+HAVING COUNT(DISTINCT t.tno) = 1 AND MAX(t.tname) = '諶燕';
+
+-- 18.查詢學過”c001″並且也學過編號”c002″課程的同學的學號、姓名
+ SELECT s.sno AS no, s.sname AS name
+ FROM student AS s
+ JOIN score AS a ON s.sno = a.sno
+ JOIN score AS b ON s.sno = b.sno
+ WHERE a.cno = 'c001' AND b.cno = 'c002';
+
+ SELECT s.sno AS no, s.sname AS name
+ FROM student AS s
+ JOIN score AS sc1 ON s.sno = sc1.sno AND sc1.cno = 'c001'
+ JOIN score AS sc2 ON s.sno = sc2.sno AND sc2.cno = 'c002';
+
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+WHERE sc.cno IN ('c001', 'c002')
+GROUP BY s.sno, s.sname
+HAVING COUNT(DISTINCT sc.cno) = 2;
+
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+WHERE EXISTS (
+	SELECT 1 FROM score AS sc WHERE sc.sno = s.sno AND cno = 'c001'
+)
+AND EXISTS (
+	SELECT 1 FROM score AS sc WHERE sc.sno = s.sno AND cno = 'c002'
+);
+
+-- 19.查詢學過”諶燕”老師所教的所有課的同學的學號、姓名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+JOIN course AS c ON sc.cno = c.cno
+JOIN teacher AS t ON c.tno = t.tno
+WHERE t.tname = '諶燕'
+GROUP BY s.sno, s.sname;
+
+--20.查詢課程編號”c004″的成績比課程編號”c001″和”c002″課程低的所有同學的學號、姓名
+ SELECT s.sno AS no, s.sname AS name
+ FROM student AS s
+ JOIN score AS sc4 ON s.sno = sc1.sno AND sc1.cno = 'c004'
+ JOIN score AS sc1 ON s.sno = sc2.sno AND sc2.cno = 'c001'
+ JOIN score AS sc2 ON s.sno = sc3.sno AND sc3.cno = 'c002'
+ WHERE sc4.score < sc1.score AND sc4.score < sc2.score;
+
+
 create database sql50;
 
 create table student(
