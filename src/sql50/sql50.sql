@@ -151,7 +151,13 @@ JOIN score AS sc ON s.sno = sc.sno
 JOIN course AS c ON sc.cno = c.cno
 JOIN teacher AS t ON c.tno = t.tno
 WHERE t.tname = '諶燕'
-GROUP BY s.sno, s.sname;
+GROUP BY s.sno, s.sname
+HAVING COUNT(sc.cno) = (
+	SELECT COUNT(c2.cno)
+	FROM course AS c2
+	JOIN teacher AS t ON c2.tno = t.tno
+	WHERE t.tname = '諶燕'
+);
 
 --20.查詢課程編號”c004″的成績比課程編號”c001″和”c002″課程低的所有同學的學號、姓名
  SELECT s.sno AS no, s.sname AS name
