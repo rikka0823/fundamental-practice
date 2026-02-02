@@ -167,6 +167,58 @@ HAVING COUNT(sc.cno) = (
  JOIN score AS sc2 ON s.sno = sc3.sno AND sc3.cno = 'c002'
  WHERE sc4.score < sc1.score AND sc4.score < sc2.score;
 
+-- 21.查詢所有課程成績小於60分的同學的學號.姓名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno, s.sname
+HAVING MAX(sc.score) < 60;
+
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno, s.sname
+HAVING MAX(sc.score) < 60;
+
+-- 22.查詢沒有學課的同學的學號.姓名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+WHERE NOT EXISTS (SELECT 1 FROM score AS sc WHERE s.sno = sc.sno);
+
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+LEFT JOIN score AS sc ON s.sno = sc.sno
+WHERE sc.sno IS NULL;
+
+-- 23.查詢與學號為”s001″一起上過課的同學的學號和姓名
+SELECT DISTINCT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+WHERE sc.cno IN (
+	SELECT cno FROM score WHERE sno = 's001'
+ )
+AND s.sno <> 's001';
+
+SELECT DISTINCT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc1 ON s.sno = sc1.sno AND s.sno <> 's001'
+JOIN score AS sc2 ON sc1.cno = sc2.cno AND sc2.sno = 's001';
+
+-- 24.查詢跟學號為”s005″所修課程完全一樣的同學的學號和姓名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+WHERE sc.cno IN (SELECT cno FROM score WHERE sno = 's005')
+AND s.sno <> 's005'
+GROUP BY s.sno, s.sname
+HAVING COUNT(sc.cno) = (SELECT COUNT(*) FROM score WHERE sno = 's005')
+AND COUNT(sc.cno) = (SELECT COUNT(*) FROM score WHERE sno = s.sno);
+
+-- 25.查詢各科成績最高和最低的分 顯示:課程ID,最高分,最低分
+SELECT c.cno AS course_id, MAX(sc.score) AS max_score, MIN(sc.score) AS min_score
+FROM course AS c
+JOIN score AS sc ON c.cno = sc.cno
+GROUP BY c.cno;
 
 create database sql50;
 
