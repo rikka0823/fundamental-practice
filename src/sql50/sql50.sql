@@ -220,6 +220,59 @@ FROM course AS c
 JOIN score AS sc ON c.cno = sc.cno
 GROUP BY c.cno;
 
+-- 26.按各科平均成績和及格率的百分數 照平均從低到高顯示
+SELECT
+	c.cno AS course_no,
+	c.cname AS course_name,
+	COALESCE(AVG(score), 0) AS avg_score,
+	COALESCE(CONCAT(ROUND(AVG(CASE WHEN sc.score >= 60 THEN 1 ELSE 0 END) * 100, 2), '%') , '0%') AS pass_rate
+FROM course AS c
+LEFT JOIN score AS sc ON c.cno = sc.cno
+GROUP BY c.cno, c.cname
+ORDER BY AVG(sc.score);
+
+-- 27.查詢每個課程的老師及平均分從高到低顯示 老師名稱,課程名稱,平均分數
+SELECT t.tname AS teacher_name, c.cname AS course_name, COALESCE(AVG(sc.score), 0) AS avg_score
+FROM course AS c
+LEFT JOIN score AS sc ON c.cno = sc.cno
+LEFT JOIN teacher AS t ON c.tno = t.tno
+GROUP BY t.tname, c.cname
+ORDER BY AVG(sc.score) DESC;
+
+-- 28.統計列印各科成績,各分數段人數:課程ID,課程名稱,verygood[100-86], good[85-71],average[70-60],bad[<60]
+SELECT
+	c.cno AS course_no,
+	c.cname AS course_name,
+	SUM(CASE WHEN sc.score BETWEEN 86 AND 100 THEN 1 ELSE 0 END) AS 'verygood[100-86]',
+	SUM(CASE WHEN sc.score BETWEEN 71 AND 85 THEN 1 ELSE 0 END) AS 'good[85-71]',
+    SUM(CASE WHEN sc.score BETWEEN 60 AND 70 THEN 1 ELSE 0 END) AS 'average[70-60]',
+	SUM(CASE WHEN sc.score < 60 THEN 1 ELSE 0 END) AS 'bad[<60]'
+FROM course AS c
+LEFT JOIN score AS sc ON c.cno = sc.cno
+GROUP BY c.cno, c.cname;
+
+-- 29.查詢各科成績前三名的記錄:(不考慮成績並列情況)
+SELECT *
+FROM (
+	SELECT
+		c.cno AS course_no,
+		c.cname AS course_name,
+		s.sno AS no,
+		s.sname AS name,
+		sc.score AS score,
+		ROW_NUMBER() OVER(PARTITION BY c.cno ORDER BY sc.score DESC) AS ranking
+	FROM course AS c
+	JOIN score AS sc ON c.cno = sc.cno
+	JOIN student AS s ON sc.sno = s.sno
+) AS ranked_table
+WHERE ranking <= 3;
+
+-- 30.查詢每門課程被選修的學生數
+SELECT c.cno AS course_no, c.cname AS course_name, COUNT(sc.sno) AS people
+FROM course AS c
+LEFT JOIN score AS sc ON c.cno = sc.cno
+GROUP BY c.cno, c.cname;
+
 create database sql50;
 
 create table student(
