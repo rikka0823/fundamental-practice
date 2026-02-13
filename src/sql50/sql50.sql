@@ -273,6 +273,49 @@ FROM course AS c
 LEFT JOIN score AS sc ON c.cno = sc.cno
 GROUP BY c.cno, c.cname;
 
+-- 31.查詢出只選修了兩門課程的全部學生的學號和姓名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno, s.sname
+HAVING COUNT(DISTINCT sc.cno) = 2;
+
+-- 32.查詢男生.女生人數
+SELECT
+	SUM(CASE WHEN ssex = '男' THEN 1 ELSE 0 END) AS male_total,
+	SUM(CASE WHEN ssex = '女' THEN 1 ELSE 0 END) AS female_total
+FROM student;
+
+-- 32-1.查詢每個課程的男生女生總數
+SELECT
+	c.cno,
+	c.cname,
+	SUM(CASE WHEN s.ssex = '男' THEN 1 ELSE 0 END) AS male,
+	SUM(CASE WHEN s.ssex = '女' THEN 1 ELSE 0 END) AS female
+FROM course AS c
+LEFT JOIN score AS sc ON c.cno = sc.cno
+LEFT JOIN student AS s ON sc.sno = s.sno
+GROUP BY c.cno, c.cname;
+
+-- 33.查詢同名同姓學生名單,並統計同名人數
+SELECT s.sname AS name
+FROM student AS s
+GROUP BY s.sname
+HAVING COUNT(*) > 1;
+
+-- 34.查詢年紀最小跟最大的學生名單(注:Student 表中Sage 列的型別是int)
+SELECT sname, sage
+FROM student
+WHERE sage = (SELECT MIN(sage) FROM student) OR  sage = (SELECT MAX(sage) FROM student)
+ORDER BY sage;
+
+-- 35.查詢每門課程的平均成績,結果按平均成績升序排列,平均成績相同時,按課程號降序排列
+SELECT c.cno AS course_no, c.cname AS course_name, COALESCE(AVG(sc.score), 0) AS course_avg
+FROM course AS c
+LEFT JOIN score AS sc ON c.cno = sc.cno
+GROUP BY c.cno, c.cname
+ORDER BY AVG(sc.score) ASC, c.cno DESC;
+
 create database sql50;
 
 create table student(
