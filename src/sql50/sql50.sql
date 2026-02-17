@@ -316,6 +316,45 @@ LEFT JOIN score AS sc ON c.cno = sc.cno
 GROUP BY c.cno, c.cname
 ORDER BY AVG(sc.score) ASC, c.cno DESC;
 
+-- 36,查詢平均成績大於85 的所有學生的學號.姓名和平均成績
+SELECT s.sno AS no, s.sname AS name, AVG(sc.score) AS avg_score
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno, s.sname
+HAVING AVG(score) > 85;
+
+-- 37.查詢課程編號為c001 且課程成績在80 分以上的學生的學號和姓名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+WHERE sc.cno = 'c001' AND sc.score >= 80;
+
+-- 38.檢索每課程第二高分的學號、分數(考慮成績並列)
+SELECT course_no, no, score, ranking
+FROM (
+	SELECT c.cno AS course_no, sc.sno AS no, sc.score AS score, DENSE_RANK() OVER(PARTITION BY c.cno ORDER BY sc.score DESC) AS ranking
+	FROM course AS c
+	LEFT JOIN score AS sc ON c.cno = sc.cno
+) AS ranked_table
+WHERE ranking = 2
+ORDER BY course_no;
+
+-- 39.求選了課程的學生人數
+SELECT COUNT(DISTINCT sno) AS course_people
+FROM score;
+
+-- 40.查詢選修”諶燕”老師所授課程的學生中,成績最高的學生姓名及其成績
+SELECT *
+FROM (
+	SELECT sc.cno AS course_no, s.sname AS name, sc.score AS score, RANK() OVER(PARTITION BY sc.cno ORDER BY sc.score DESC) AS ranking
+	FROM score AS sc
+	JOIN course AS c ON sc.cno = c.cno
+	JOIN teacher AS t ON c.tno = t.tno
+	JOIN student AS s ON sc.sno = s.sno
+    WHERE t.tname = '諶燕'
+) AS ranked_table
+WHERE ranking = 1;
+
 create database sql50;
 
 create table student(
