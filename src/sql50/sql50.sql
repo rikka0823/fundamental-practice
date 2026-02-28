@@ -355,6 +355,63 @@ FROM (
 ) AS ranked_table
 WHERE ranking = 1;
 
+-- 41.查詢不同課程成績有相同的學生的學號.課程號.學生成績
+SELECT
+	sc1.sno AS no,
+	sc1.cno AS course1_no,
+	sc2.cno AS course2_no,
+	sc1.score AS score
+FROM score AS sc1 JOIN score AS sc2 ON sc1.sno = sc2.sno
+AND sc1.score = sc2.score
+AND sc1.cno < sc2.cno;
+
+SELECT sno, cno, score
+ FROM (
+ 	SELECT sno, cno, score, COUNT(sno) OVER(PARTITION BY sno, score) AS people
+ 	FROM score
+ ) AS t
+ WHERE people > 1
+ ORDER BY sno, cno;
+
+-- 42.所有課程排名成績(不考慮並列) 學號,課程號,排名,成績 照課程,排名排序
+SELECT *
+FROM (
+	SELECT
+		sno AS no,
+		cno AS course_no,
+		ROW_NUMBER() OVER(PARTITION BY cno ORDER BY score DESC, sno ASC) AS ranking,
+		score
+	FROM score
+) AS t
+ORDER BY course_no, ranking;
+
+-- 43.所有課程排名成績(考慮並列) 學號,課程號,排名,成績 照課程,排名排序
+SELECT
+	sno AS no,
+	cno AS course_no,
+	RANK() OVER(PARTITION BY cno ORDER BY score DESC) AS ranking,
+	score
+FROM score
+ORDER BY cno, ranking;
+
+-- 44.做所有學生顯示學生名稱,課程名稱,成績,老師名稱的視圖
+ CREATE VIEW class_view AS
+ SELECT s.sname AS student_name, c.cname AS course_name, sc.score, t.tname AS teacher_name
+ FROM student AS s
+ LEFT JOIN score AS sc ON s.sno = sc.sno
+ LEFT JOIN course AS c ON sc.cno = c.cno
+ LEFT JOIN teacher AS t ON c.tno = t.tno;
+
+ SELECT * FROM class_view;
+
+-- 45.查詢上過所有老師教的課程的學生 學號,學生名
+SELECT s.sno AS no, s.sname AS name
+FROM student AS s
+JOIN score AS sc ON s.sno = sc.sno
+JOIN course AS c ON sc.cno = c.cno
+GROUP BY s.sno, s.sname
+HAVING COUNT(DISTINCT c.tno) = (SELECT COUNT(DISTINCT tno) FROM course);
+
 create database sql50;
 
 create table student(
