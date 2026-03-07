@@ -412,6 +412,42 @@ JOIN course AS c ON sc.cno = c.cno
 GROUP BY s.sno, s.sname
 HAVING COUNT(DISTINCT c.tno) = (SELECT COUNT(DISTINCT tno) FROM course);
 
+-- 46.查詢包含數字的課程名
+SELECT cname FROM course WHERE cname REGEXP '[0-9]';
+
+-- 47.查詢只有英文的課程名
+SELECT cname FROM course WHERE cname REGEXP '^[a-zA-Z]+$';
+
+-- 48.查詢所有學生的平均成績 並排名 , 學號,學生名,排名,平均成績(不考慮並列) 對平均成績高到低及學號低到高排序
+SELECT
+	s.sno AS no,
+	s.sname AS student_name,
+	ROW_NUMBER() OVER(ORDER BY AVG(sc.score) DESC, s.sno ASC) AS ranking,
+	COALESCE(AVG(sc.score), 0) AS avg_score
+FROM student AS s
+LEFT JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno, s.sname
+ORDER BY AVG(sc.score) DESC, s.sno ASC;
+
+-- 49.查詢所有學生的平均成績 並排名 , 學號,學生名,排名,平均成績(考慮並列) 對平均成績高到低及學號低到高排序
+SELECT
+	s.sno AS no,
+	s.sname AS name,
+	RANK() OVER(ORDER BY COALESCE(AVG(sc.score), 0) DESC) AS ranking,
+	COALESCE(AVG(sc.score), 0) AS avg_score
+FROM student AS s
+LEFT JOIN score AS sc ON s.sno = sc.sno
+GROUP BY s.sno, s.sname
+ORDER BY AVG(sc.score) DESC, s.sno ASC;
+
+-- 50.查詢課程有學生的成績是其他人成績兩倍的學號 學生名
+SELECT DISTINCT
+	sc1.cno AS course_no, s.sno AS student_no, s.sname AS student_name, sc1.score AS top_score, sc2.score AS half_score
+FROM student AS s
+JOIN score AS sc1 ON s.sno = sc1.sno
+JOIN score AS sc2 ON sc1.cno = sc2.cno AND sc1.sno <> sc2.sno
+WHERE sc1.score = sc2.score * 2 AND sc2.score > 0;
+
 create database sql50;
 
 create table student(
